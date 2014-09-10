@@ -17,7 +17,7 @@ public class Lab4 {
 		LightLocalizer lsl = new LightLocalizer(odo, ls);
 		lsl.doLocalization();			
 		
-		Button.waitForPress();
+		Button.waitForAnyPress();
 	}
 
 }

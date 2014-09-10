@@ -20,9 +20,9 @@ public class ControllerConstants {
 	/**
 	 * The speed at which the controller drifts from the line {@value}
 	 */
-	public static final int DRIFT_SPEED = 10;
+	public static final int KP = 1000;
 	/**
 	 * The speed at which the controller returns to the line: {@value}
 	 */
-	public static final int RETURN_SPEED = 50;
+	public static final int TP = 50;
 }

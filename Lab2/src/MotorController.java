@@ -1,8 +1,7 @@
-package main;
+
 
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
-import Interfaces.MotorControl;
 import constants.MotorConstants;
 
 public class MotorController implements MotorControl{
