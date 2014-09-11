@@ -1,7 +1,7 @@
+import controllers.AbstractController;
+import controllers.BangBangController;
+import controllers.PController;
 import lejos.nxt.Button;
-import Controllers.AbstractController;
-import Controllers.BangBangController;
-import Controllers.PController;
 
 /**
  * Group 43 - ECSE 211

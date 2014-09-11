@@ -13,4 +13,21 @@ public class MotorConstants {
 	 * Ultrasonic Motor High Threshold: {@value}
 	 */
 	public static final int MOTOR_HIGH = 400;
+	/**
+	 * Left wheel radius: {@value}
+	 */
+	public static final double LEFT_RADIUS = 2.8;
+	/**
+	 * Right wheel radius: {@value}
+	 */
+	public static final double RIGHT_RADIUS = 2.8;
+	/**
+	 * Robot width: {@value}
+	 */
+	public static final double WIDTH = 15.24;
+	/**
+	 * 
+	 */
+	public static final int FORWARD_SPEED = 250;
+	public static final int ROTATE_SPEED = 150;
 }

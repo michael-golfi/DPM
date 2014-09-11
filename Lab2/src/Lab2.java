@@ -1,49 +1,59 @@
 /*
  * Lab2.java
  */
-import lejos.nxt.*;
+import constants.MotorConstants;
+import lejos.nxt.Button;
+import lejos.nxt.Motor;
+import lejos.nxt.NXTRegulatedMotor;
+import odometer.Odometer;
+import odometer.OdometryDisplay;
+import utils.LcdScreen;
 
 public class Lab2 {
 	public static void main(String[] args) {
 		LcdScreen.displayMainMenu();
-		
+
 		int buttonChoice = Button.waitForAnyPress();
-		chooseFunction(buttonChoice);		
-		
+		chooseFunction(buttonChoice);
+
 		Button.waitForAnyPress();
 		System.exit(0);
 	}
-	
-	private static void chooseFunction(int buttonChoice){
+
+	private static void chooseFunction(int buttonChoice) {
 		Odometer odometer = new Odometer();
-		OdometryDisplay odometryDisplay = new OdometryDisplay();
-		switch(buttonChoice){
-		case Button.ID_LEFT: 
-			
-			for (NXTRegulatedMotor motor : new NXTRegulatedMotor[] { Motor.A, Motor.B, Motor.C }) {
+		OdometryDisplay odometryDisplay = new OdometryDisplay(odometer);
+		switch (buttonChoice) {
+		case Button.ID_LEFT:
+
+			for (NXTRegulatedMotor motor : new NXTRegulatedMotor[] { Motor.A,
+					Motor.B, Motor.C }) {
 				motor.forward();
 				motor.flt();
 			}
 			odometer.start();
 			odometryDisplay.start();
-			
+
 			break;
-		case Button.ID_RIGHT: 
-			
+		case Button.ID_RIGHT:
+
 			odometer.start();
 			odometryDisplay.start();
 			// odometryCorrection.start();
-			startMotor();
-			
+			startDriver();
+
 			break;
-		default: break;
+		default:
+			break;
 		}
 	}
-	
-	private static void startMotor(){
-		Thread thread = new Thread(){
-			public void run(){
-				SquareDriver.drive(Motor.A, Motor.B, 2.8, 2.8, 15.24);
+
+	private static void startDriver() {
+		Thread thread = new Thread() {
+			public void run() {
+				SquareDriver.drive(Motor.A, Motor.B,
+						MotorConstants.LEFT_RADIUS,
+						MotorConstants.RIGHT_RADIUS, MotorConstants.WIDTH);
 			}
 		};
 		thread.start();

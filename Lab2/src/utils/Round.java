@@ -15,8 +15,8 @@ public class Round {
 	    if (places < 0) 
 	    	throw new IllegalArgumentException();
 
-	    BigDecimal bigDecimal = new BigDecimal(value);
-	    bigDecimal = bigDecimal.setScale(places, RoundingMode.HALF_UP);
-	    return bigDecimal.toString();	    
+	    return new BigDecimal(value)
+	    	.setScale(places, RoundingMode.HALF_UP)
+	    	.toString();	    
 	}
 }
