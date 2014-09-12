@@ -12,5 +12,9 @@ public class MotorConstants {
 	/**
 	 * Ultrasonic Motor High Threshold: {@value}
 	 */
-	public static final int MOTOR_HIGH = 400;
+	public static final int MOTOR_HIGH = 300;
+	/**
+	 * Ultrasonic Sensor direction: {@value}
+	 */
+	public static final int ANGLE = 30;
 }

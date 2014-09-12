@@ -4,7 +4,7 @@ public class ControllerConstants {
 	/**
 	 * Ultrasonic Band Center: {@value}
 	 */
-	public static final int BAND_CENTER = 20;
+	public static final int BAND_CENTER = 28;
 	/**
 	 * Ultrasonic Band Width: {@value}
 	 */
@@ -12,7 +12,7 @@ public class ControllerConstants {
 	/**
 	 * Filter Threshold: {@value}
 	 */
-	public static final int FILTER_OUT = 20;
+	public static final int FILTER_OUT = 30;
 	/**
 	 * The average between black and white light sensor readings: {@value}
 	 */
@@ -20,7 +20,8 @@ public class ControllerConstants {
 	/**
 	 * The speed at which the controller drifts from the line {@value}
 	 */
-	public static final int KP = 1000;
+	public static final int KP = 10;
+	public static final int SCALING = 10;
 	/**
 	 * The speed at which the controller returns to the line: {@value}
 	 */

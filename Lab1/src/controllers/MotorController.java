@@ -3,12 +3,13 @@ package controllers;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import Interfaces.MotorControl;
+import constants.ControllerConstants;
 import constants.MotorConstants;
 
-public class MotorController implements MotorControl{
+public class MotorController implements MotorControl {
 	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
-	private final NXTRegulatedMotor ultrasonicSensorMotor = Motor.C;
-	
+	//private final NXTRegulatedMotor ultrasonicSensorMotor = Motor.C;
+
 	public void start() {
 		start(leftMotor);
 		start(rightMotor);
@@ -81,9 +82,32 @@ public class MotorController implements MotorControl{
 			rightMotor.forward();
 	}
 	
-	@Override
-	public void rotateSensor(int angle){
-		ultrasonicSensorMotor.resetTachoCount();
-		ultrasonicSensorMotor.rotate(angle, true);		
+	public void turnLeft(){
+		setLeftMotorSpeed(100);
+		setRightMotorSpeed(300);
 	}
+	
+	public void turnRight(){
+		leftMotor.setSpeed(MotorConstants.MOTOR_LOW);
+		rightMotor.setSpeed(MotorConstants.MOTOR_HIGH);
+	}
+	
+	public void turnLeft(int error){
+		leftMotor.setSpeed(Math.max((MotorConstants.MOTOR_SPEED - ControllerConstants.KP * error) , MotorConstants.MOTOR_LOW));
+		rightMotor.setSpeed(Math.min((MotorConstants.MOTOR_SPEED + ControllerConstants.KP * error), MotorConstants.MOTOR_HIGH));
+
+		leftMotor.forward();
+		rightMotor.forward();
+	}
+	
+	public void turnRight(int error){	
+		leftMotor.setSpeed(MotorConstants.MOTOR_SPEED + error);
+		rightMotor.setSpeed(MotorConstants.MOTOR_SPEED - error);
+		
+		leftMotor.forward();
+		rightMotor.backward();
+	}
+
+	@Override
+	public void rotateSensor(int angle) {}
 }

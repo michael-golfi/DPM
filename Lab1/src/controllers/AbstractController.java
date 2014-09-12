@@ -12,7 +12,8 @@ public abstract class AbstractController extends Thread {
 
 	public void run() {
 		while (true) {
-			processNewDistance();
+			processNewDistance();			
+			sleep();
 		}
 	}
 
@@ -20,4 +21,12 @@ public abstract class AbstractController extends Thread {
 	 * Controls motors based on current ultrasonic distance value
 	 */
 	public abstract void processNewDistance();
+	
+	public void sleep(){
+		try{
+			sleep(20);
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
+	}
 }
