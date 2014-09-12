@@ -24,7 +24,7 @@ public abstract class AbstractController extends Thread {
 	
 	public void sleep(){
 		try{
-			sleep(20);
+			sleep(10);
 		}catch(InterruptedException e){
 			e.printStackTrace();
 		}

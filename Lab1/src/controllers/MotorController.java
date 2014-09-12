@@ -84,7 +84,7 @@ public class MotorController implements MotorControl {
 	
 	public void turnLeft(){
 		setLeftMotorSpeed(100);
-		setRightMotorSpeed(300);
+		setRightMotorSpeed(200);
 	}
 	
 	public void turnRight(){
