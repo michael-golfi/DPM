@@ -8,7 +8,7 @@ import constants.MotorConstants;
 
 public class MotorController implements MotorControl {
 	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
-	//private final NXTRegulatedMotor ultrasonicSensorMotor = Motor.C;
+	private final NXTRegulatedMotor ultrasonicSensorMotor = Motor.C;
 
 	public void start() {
 		start(leftMotor);
@@ -26,8 +26,10 @@ public class MotorController implements MotorControl {
 	}
 
 	public void inplaceRight() {
-		start(leftMotor);
-		reverse(rightMotor);
+		leftMotor.setSpeed(200);
+		leftMotor.forward();
+		rightMotor.setSpeed(200);
+		rightMotor.backward();
 	}
 
 	public void inplaceLeft() {
@@ -81,33 +83,36 @@ public class MotorController implements MotorControl {
 		else
 			rightMotor.forward();
 	}
-	
-	public void turnLeft(){
-		setLeftMotorSpeed(100);
-		setRightMotorSpeed(200);
+
+	public void turnLeft() {
+		setLeftMotorSpeed(125);
+		setRightMotorSpeed(300);
 	}
-	
-	public void turnRight(){
+
+	public void turnRight() {
 		leftMotor.setSpeed(MotorConstants.MOTOR_LOW);
 		rightMotor.setSpeed(MotorConstants.MOTOR_HIGH);
 	}
-	
-	public void turnLeft(int error){
-		leftMotor.setSpeed(Math.max((MotorConstants.MOTOR_SPEED - ControllerConstants.KP * error) , MotorConstants.MOTOR_LOW));
-		rightMotor.setSpeed(Math.min((MotorConstants.MOTOR_SPEED + ControllerConstants.KP * error), MotorConstants.MOTOR_HIGH));
 
+	public void turnLeft(int error) {
+		leftMotor
+				.setSpeed((MotorConstants.MOTOR_SPEED - (ControllerConstants.KP * error)));
+		rightMotor.setSpeed(MotorConstants.MOTOR_SPEED
+				+ (ControllerConstants.KP * error));
 		leftMotor.forward();
 		rightMotor.forward();
 	}
-	
-	public void turnRight(int error){	
-		leftMotor.setSpeed(MotorConstants.MOTOR_SPEED + error);
-		rightMotor.setSpeed(MotorConstants.MOTOR_SPEED - error);
-		
+
+	public void turnRight(int error) {
+		leftMotor.setSpeed(200 + error);
+		rightMotor.setSpeed(200 - error);
 		leftMotor.forward();
 		rightMotor.backward();
 	}
 
 	@Override
-	public void rotateSensor(int angle) {}
+	public void rotateSensor(int angle) {
+		ultrasonicSensorMotor.resetTachoCount();
+		ultrasonicSensorMotor.rotateTo(angle, true);
+	}
 }

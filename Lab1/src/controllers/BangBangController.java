@@ -23,9 +23,8 @@ public class BangBangController extends AbstractController {
 
 		if (error < -bandWidth) {
 			filter++;
-			if (filter > ControllerConstants.FILTER_OUT) {
+			if (filter > ControllerConstants.FILTER_OUT)
 				motorController.turnLeft();
-			}
 		} else if (error > bandWidth) {
 			filter = 0;
 			motorController.inplaceRight();
