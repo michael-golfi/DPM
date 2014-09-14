@@ -21,8 +21,8 @@ public class PController extends AbstractController {
 		//int correction = kp * (ControllerConstants.BAND_CENTER - distance);
 		
 		int correction = doPID(distance);
-		motorController.setLeftMotorSpeed(300 + correction);
-		motorController.setRightMotorSpeed(300 - correction);
+		motorController.setLeftMotorSpeed(400 + correction);
+		motorController.setRightMotorSpeed(400 - correction);
 		
 		/*if (error < -ControllerConstants.BAND_WIDTH){
 			filterControl++;
@@ -38,7 +38,7 @@ public class PController extends AbstractController {
 			filterControl = 0;
 			motorController.start();
 		}*/
-		Delay.msDelay(15);
+		//Delay.msDelay(10);
 	}
 
 	private float Kp = 8.0f; // proportional value determines the reaction to
@@ -49,7 +49,7 @@ public class PController extends AbstractController {
 	private int deadband = 0;
 	private long cycleTime = 0; // used to calc the time between each call (dt)
 								// to doPID()
-	private int setpoint = 50; // The setpoint to strive for
+	private int setpoint = 40; // The setpoint to strive for
 	private int error; // proportional term
 	private float power = 0;
 	private int rampThresold = 0;
