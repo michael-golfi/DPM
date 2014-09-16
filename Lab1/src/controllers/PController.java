@@ -12,44 +12,24 @@ import constants.ControllerConstants;
  *         .html
  */
 public class PController extends AbstractController {
-	private int filterControl;
 	@Override
 	public void processNewDistance() {
 		int distance = ultrasonicController.getDistance();
-		//int turnRadians = doPID(distance);
-		//int kp = 10;
-		//int correction = kp * (ControllerConstants.BAND_CENTER - distance);
-		
 		int correction = doPID(distance);
-		motorController.setLeftMotorSpeed(400 + correction);
-		motorController.setRightMotorSpeed(400 - correction);
-		
-		/*if (error < -ControllerConstants.BAND_WIDTH){
-			filterControl++;
-			if (filterControl > ControllerConstants.FILTER_OUT){
-				motorController.turnLeft(Math.abs(error));
-			}
-		}
-		else if (error > ControllerConstants.BAND_WIDTH){
-			filterControl = 0;
-			motorController.turnRight(Math.abs(error));
-		}
-		else {
-			filterControl = 0;
-			motorController.start();
-		}*/
-		//Delay.msDelay(10);
+		motorController.setLeftMotorSpeed(340 + correction);
+		motorController.setRightMotorSpeed(300 - correction);
+		Delay.msDelay(50);
 	}
 
-	private float Kp = 8.0f; // proportional value determines the reaction to
+	private float Kp = 12.0f; // proportional value determines the reaction to
 								// the current error
-	private int highLimit = 150; // assuming control of motor speed and thereby
+	private int highLimit = 100; // assuming control of motor speed and thereby
 									// max would be 900 deg/sec
 	private int lowLimit = -highLimit;
-	private int deadband = 0;
+	private int deadband = 3;
 	private long cycleTime = 0; // used to calc the time between each call (dt)
 								// to doPID()
-	private int setpoint = 40; // The setpoint to strive for
+	private int setpoint = 50; // The setpoint to strive for
 	private int error; // proportional term
 	private float power = 0;
 	private int rampThresold = 0;

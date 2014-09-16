@@ -4,15 +4,15 @@ public class ControllerConstants {
 	/**
 	 * Ultrasonic Band Center: {@value}
 	 */
-	public static final int BAND_CENTER = 20;
+	public static final int BAND_CENTER = 30;
 	/**
 	 * Ultrasonic Band Width: {@value}
 	 */
-	public static final int BAND_WIDTH = 5;
+	public static final int BAND_WIDTH = 3;
 	/**
 	 * Filter Threshold: {@value}
 	 */
-	public static final int FILTER_OUT = 30;
+	public static final int FILTER_OUT = 31;
 	/**
 	 * The average between black and white light sensor readings: {@value}
 	 */

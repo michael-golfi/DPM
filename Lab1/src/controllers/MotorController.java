@@ -26,9 +26,9 @@ public class MotorController implements MotorControl {
 	}
 
 	public void inplaceRight() {
-		leftMotor.setSpeed(200);
+		leftMotor.setSpeed(100);
 		leftMotor.forward();
-		rightMotor.setSpeed(200);
+		rightMotor.setSpeed(100);
 		rightMotor.backward();
 	}
 
@@ -86,7 +86,7 @@ public class MotorController implements MotorControl {
 
 	public void turnLeft() {
 		setLeftMotorSpeed(125);
-		setRightMotorSpeed(300);
+		setRightMotorSpeed(250);
 	}
 
 	public void turnRight() {
