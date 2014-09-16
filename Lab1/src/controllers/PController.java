@@ -12,24 +12,25 @@ import constants.ControllerConstants;
  *         .html
  */
 public class PController extends AbstractController {
+	private int filterControl;
 	@Override
 	public void processNewDistance() {
 		int distance = ultrasonicController.getDistance();
+		
 		int correction = doPID(distance);
-		motorController.setLeftMotorSpeed(340 + correction);
-		motorController.setRightMotorSpeed(300 - correction);
-		Delay.msDelay(50);
+		motorController.setLeftMotorSpeed(430 + correction);
+		motorController.setRightMotorSpeed(400 - correction);		
 	}
 
-	private float Kp = 12.0f; // proportional value determines the reaction to
+	private float Kp = 8.0f; // proportional value determines the reaction to
 								// the current error
-	private int highLimit = 100; // assuming control of motor speed and thereby
+	private int highLimit = 150; // assuming control of motor speed and thereby
 									// max would be 900 deg/sec
 	private int lowLimit = -highLimit;
-	private int deadband = 3;
+	private int deadband = 0;
 	private long cycleTime = 0; // used to calc the time between each call (dt)
 								// to doPID()
-	private int setpoint = 50; // The setpoint to strive for
+	private int setpoint = 40; // The setpoint to strive for
 	private int error; // proportional term
 	private float power = 0;
 	private int rampThresold = 0;
