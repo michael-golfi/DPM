@@ -16,15 +16,15 @@ public class MotorConstants {
 	/**
 	 * Left wheel radius: {@value}
 	 */
-	public static final double LEFT_RADIUS = 2.8;
+	public static final double LEFT_RADIUS = 2.10;
 	/**
 	 * Right wheel radius: {@value}
 	 */
-	public static final double RIGHT_RADIUS = 2.8;
+	public static final double RIGHT_RADIUS = 2.10;
 	/**
 	 * Robot width: {@value}
 	 */
-	public static final double WIDTH = 15.24;
+	public static final double WIDTH = 15.2;
 	/**
 	 * 
 	 */

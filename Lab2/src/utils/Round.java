@@ -1,7 +1,5 @@
 package utils;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class Round {
 	/**
@@ -14,9 +12,9 @@ public class Round {
 	public static String round(double value, int places) {
 	    if (places < 0) 
 	    	throw new IllegalArgumentException();
-
-	    return new BigDecimal(value)
+	    return String.valueOf(Math.round(value));
+	    /*return new BigDecimal(value)
 	    	.setScale(places, RoundingMode.HALF_UP)
-	    	.toString();	    
+	    	.toString();*/	    
 	}
 }

@@ -1,78 +1,52 @@
 package controllers;
 
-import lejos.util.Delay;
 import constants.ControllerConstants;
+import constants.MotorConstants;
 
-/**
- * 
- * @author michael
- * 
- *         P Controller adapted from this source:
- *         http://www.inpharmix.com/jps/PID_Controller_For_Lego_Mindstorms_Robots
- *         .html
- */
 public class PController extends AbstractController {
-	private int filterControl;
+	private int error, highLimit = MotorConstants.PTYPE_MOTOR_HIGH,
+			lowLimit = -highLimit;
+	private int filter;
+
 	@Override
 	public void processNewDistance() {
-		int distance = ultrasonicController.getDistance();
-		
-		int correction = doPID(distance);
-		motorController.setLeftMotorSpeed(430 + correction);
-		motorController.setRightMotorSpeed(400 - correction);		
-	}
-
-	private float Kp = 8.0f; // proportional value determines the reaction to
-								// the current error
-	private int highLimit = 150; // assuming control of motor speed and thereby
-									// max would be 900 deg/sec
-	private int lowLimit = -highLimit;
-	private int deadband = 0;
-	private long cycleTime = 0; // used to calc the time between each call (dt)
-								// to doPID()
-	private int setpoint = 40; // The setpoint to strive for
-	private int error; // proportional term
-	private float power = 0;
-	private int rampThresold = 0;
-	private double rampExtent = 1;
-
-	/**
-	 * Do the PID calc for a single iteration. Your implementation must provide
-	 * the delay between calls to this method if you have not set one with
-	 * <code>setDelay()</code> or in the constructor.
-	 * 
-	 * @param processVariable
-	 *            The PV value from the process (sensor reading, etc.).
-	 * @see #setDelay
-	 * @return The Manipulated Variable <code>MV</code> to input into the
-	 *         process (motor speed, etc.)
-	 */
-	public int doPID(int processVariable) {
-		int outputMV;
-		if (this.cycleTime == 0) {
-			this.cycleTime = System.currentTimeMillis();
-			return 0;
+		int distance = ultrasonicSensor.getDistance();		
+		int correction = calculateCorrection(distance);
+		if (error < -ControllerConstants.BAND_WIDTH) {
+			filter++;
+			
+			// Turn left if the robot doesn't see anything for 31 cycles
+			if (filter > ControllerConstants.FILTER_OUT){				
+				motorController.setLeftMotorSpeed(300 + correction);
+				motorController.setRightMotorSpeed(300 - correction);
+			}
+		} else if (error > ControllerConstants.BAND_WIDTH) {
+			filter = 0;
+			motorController.setLeftMotorSpeed(300 + correction);
+			motorController.setRightMotorSpeed(300 - correction);
+		} else {
+			filter = 0;
+			motorController.start();
 		}
-		error = setpoint - processVariable;
-		error = Math.abs(error) <= deadband ? 0 : error;
-		outputMV = (int) (Kp * error);
-
-		if (outputMV > highLimit)
-			outputMV = highLimit;
-		if (outputMV < lowLimit)
-			outputMV = lowLimit;
-		outputMV = rampOut(outputMV);
-		this.cycleTime = System.currentTimeMillis();
-		return outputMV;
 	}
 
-	private int rampOut(int ov) {
-		if (power == 0 || rampThresold == 0)
-			return ov;
-		if (Math.abs(ov) > rampThresold)
-			return ov;
-		int workingOV;
-		workingOV = (int) (Math.pow(Math.abs(ov), power) / rampExtent * rampThresold);
-		return (ov < 0) ? -1 * workingOV : workingOV;
+	
+	/**
+	 * Do the PID calc for a single iteration.
+	 * 
+	 * @param distance
+	 *            The distance value from the ultrasonic sensor
+	 * @return The Correction Variable to input into the motors
+	 */
+	public int calculateCorrection(int distance) {
+		error = ControllerConstants.OFFSET - distance;		
+
+		int correction = (ControllerConstants.SCALING * error);
+
+		// Ensure correction doesn't exceed set motor limits
+		correction = (correction > highLimit) ? highLimit : correction;
+		correction = (correction < lowLimit) ? lowLimit : correction;
+
+		return correction;
 	}
 }

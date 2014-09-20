@@ -69,18 +69,18 @@ public class MotorController implements MotorControl {
 	@Override
 	public void setLeftMotorSpeed(int radians) {
 		leftMotor.setSpeed(radians);
-		if (radians < 0)
+		/*if (radians < 0)
 			leftMotor.backward();
-		else
+		else*/
 			leftMotor.forward();
 	}
 
 	@Override
 	public void setRightMotorSpeed(int radians) {
 		rightMotor.setSpeed(radians);
-		if (radians < 0)
+		/*if (radians < 0)
 			rightMotor.backward();
-		else
+		else*/
 			rightMotor.forward();
 	}
 
@@ -96,9 +96,9 @@ public class MotorController implements MotorControl {
 
 	public void turnLeft(int error) {
 		leftMotor
-				.setSpeed((MotorConstants.MOTOR_SPEED - (ControllerConstants.KP * error)));
+				.setSpeed((MotorConstants.MOTOR_SPEED - (ControllerConstants.SCALING * error)));
 		rightMotor.setSpeed(MotorConstants.MOTOR_SPEED
-				+ (ControllerConstants.KP * error));
+				+ (ControllerConstants.SCALING * error));
 		leftMotor.forward();
 		rightMotor.forward();
 	}

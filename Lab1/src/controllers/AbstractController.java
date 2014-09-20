@@ -1,32 +1,22 @@
 package controllers;
 
 import lejos.nxt.UltrasonicSensor;
+import lejos.util.Delay;
 import constants.SensorConstants;
 
 public abstract class AbstractController extends Thread {
-	protected UltrasonicSensor sensor = new UltrasonicSensor(
-			SensorConstants.ULTRASONIC_PORT);
-	protected UltrasonicController ultrasonicController = new UltrasonicController(
-			sensor);
+	protected UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorConstants.ULTRASONIC);
 	protected MotorController motorController = new MotorController();
 
 	public void run() {
 		while (true) {
-			processNewDistance();			
-			sleep();
+			processNewDistance();
+			Delay.msDelay(10);
 		}
 	}
 
 	/**
-	 * Controls motors based on current ultrasonic distance value
+	 * Correct motors based on current ultrasonic distance
 	 */
 	public abstract void processNewDistance();
-	
-	public void sleep(){
-		try{
-			sleep(10);
-		}catch(InterruptedException e){
-			e.printStackTrace();
-		}
-	}
 }

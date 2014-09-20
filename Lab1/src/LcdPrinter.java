@@ -1,8 +1,12 @@
-
-
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
+import lejos.util.Delay;
 
+/**
+ * An abstraction class to handle writing to the NXT LCD screen 
+ * @author Michael
+ *
+ */
 public class LcdPrinter extends Thread {
 	private final int BUTTON_PRESSED;
 
@@ -16,14 +20,11 @@ public class LcdPrinter extends Thread {
 		BUTTON_PRESSED = buttonPressed;
 	}
 
-	/**
-	 * Start the printer
-	 */
 	public void run() {
 		while (true) {
 			LCD.clear();
 			printType(BUTTON_PRESSED);
-			sleep();
+			Delay.msDelay(200);
 		}
 	}
 
@@ -40,16 +41,8 @@ public class LcdPrinter extends Thread {
 	}
 
 	/**
-	 * Sleeps for 200ms
+	 * Print controller choices
 	 */
-	private void sleep() {
-		try {
-			sleep(200);
-		} catch (InterruptedException ex) {
-			System.out.println("Error: " + ex.getMessage());
-		}
-	}
-
 	public static void printControllerChoices() {
 		LCD.clear();
 		LCD.drawString("Left: BangBang", 0, 0);

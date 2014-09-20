@@ -85,4 +85,8 @@ public class MotorController implements MotorControl{
 		ultrasonicSensorMotor.resetTachoCount();
 		ultrasonicSensorMotor.rotate(angle, true);		
 	}
+	
+	public void rotate(){
+		
+	}
 }

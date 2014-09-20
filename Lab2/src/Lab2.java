@@ -1,13 +1,13 @@
-/*
- * Lab2.java
- */
-import constants.MotorConstants;
+
 import lejos.nxt.Button;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import odometer.Odometer;
+import odometer.OdometryCorrection;
 import odometer.OdometryDisplay;
 import utils.LcdScreen;
+import constants.MotorConstants;
+import constants.OdometerConstants;
 
 public class Lab2 {
 	public static void main(String[] args) {
@@ -21,7 +21,8 @@ public class Lab2 {
 	}
 
 	private static void chooseFunction(int buttonChoice) {
-		Odometer odometer = new Odometer();
+		Odometer odometer = new Odometer(new NXTRegulatedMotor[]{Motor.A, Motor.B});
+		OdometryCorrection odometryCorrection = new OdometryCorrection(odometer);
 		OdometryDisplay odometryDisplay = new OdometryDisplay(odometer);
 		switch (buttonChoice) {
 		case Button.ID_LEFT:
@@ -36,10 +37,9 @@ public class Lab2 {
 
 			break;
 		case Button.ID_RIGHT:
-
 			odometer.start();
 			odometryDisplay.start();
-			// odometryCorrection.start();
+			odometryCorrection.start();
 			startDriver();
 
 			break;

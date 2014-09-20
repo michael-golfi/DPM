@@ -17,4 +17,8 @@ public class MotorConstants {
 	 * Ultrasonic Sensor direction: {@value}
 	 */
 	public static final int ANGLE = 30;
+	/**
+	 * Motor high threshold for PType Controller: {@value}
+	 */
+	public static final int PTYPE_MOTOR_HIGH = 150;
 }

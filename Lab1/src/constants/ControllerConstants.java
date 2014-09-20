@@ -8,22 +8,17 @@ public class ControllerConstants {
 	/**
 	 * Ultrasonic Band Width: {@value}
 	 */
-	public static final int BAND_WIDTH = 3;
+	public static final int BAND_WIDTH = 10;
 	/**
 	 * Filter Threshold: {@value}
 	 */
-	public static final int FILTER_OUT = 31;
+	public static final int FILTER_OUT = 20;
 	/**
-	 * The average between black and white light sensor readings: {@value}
+	 * The Ultrasonic offset distance: {@value}
 	 */
 	public static final int OFFSET = 45;
 	/**
-	 * The speed at which the controller drifts from the line {@value}
+	 * The scale at which the correction changes: {@value}
 	 */
-	public static final int KP = 10;
-	public static final int SCALING = 10;
-	/**
-	 * The speed at which the controller returns to the line: {@value}
-	 */
-	public static final int TP = 50;
+	public static final int SCALING = 13;
 }
