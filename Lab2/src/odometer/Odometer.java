@@ -27,10 +27,9 @@ public class Odometer extends AbstractOdometer {
 		calculateTheta();
 		
 		synchronized (lock) {		
-			theta -= deltaTheta;
-			x += deltaD * Math.cos(theta);
-			y += deltaD * Math.sin(theta);			
-			theta = (theta == -359) ? 0 : theta;
+			theta += deltaTheta;
+			x += deltaD * Math.sin(theta);
+			y += deltaD * Math.cos(theta);
 		}	
 		waitForPeriodEnd();
 	}
