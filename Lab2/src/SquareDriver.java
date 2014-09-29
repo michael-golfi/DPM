@@ -1,6 +1,6 @@
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.util.Delay;
-import utils.UnitConverter;
+import main.UnitConverter;
 import constants.MotorConstants;
 
 public class SquareDriver {
