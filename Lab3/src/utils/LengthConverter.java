@@ -1,8 +1,8 @@
 package utils;
 
-public class UnitConverter {
+public class LengthConverter {
 	/**
-	 * Converts ...
+	 * Converts distance to wheel rotations
 	 * @param radius
 	 * @param distance
 	 * @return
@@ -12,7 +12,7 @@ public class UnitConverter {
 	}
 
 	/**
-	 * Converts ...
+	 * Converts robot rotation to wheel rotation
 	 * @param radius
 	 * @param width
 	 * @param angle

@@ -48,7 +48,7 @@ public class Odometer extends AbstractOdometer {
 	
 	public void calculateTheta(){
 		deltaD = (distanceX + distanceY) / 2;
-		deltaTheta = (distanceX - distanceY) / MotorConstants.WIDTH;
+		deltaTheta = (distanceY - distanceX) / MotorConstants.WIDTH;
 	}
 
 	/**

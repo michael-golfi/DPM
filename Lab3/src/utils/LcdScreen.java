@@ -19,10 +19,13 @@ public class LcdScreen {
 		LCD.drawString("X:              ", 0, 0);
 		LCD.drawString("Y:              ", 0, 1);
 		LCD.drawString("T:              ", 0, 2);
-		
 		for (int i = 0; i < 3; i++) {
 			String rounded = Round.round(position[i], 2);
 			LCD.drawString(rounded, 3, i);
 		}
+	}
+	
+	public static void displayCurrentDirection(double theta){
+		LCD.drawString("Current: " + theta, 0, 3);
 	}
 }
