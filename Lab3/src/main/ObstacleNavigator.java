@@ -1,69 +1,60 @@
 package main;
 
-import lejos.nxt.Motor;
 import lejos.nxt.UltrasonicSensor;
-import utils.Vector;
-import controller.MotorController;
+import lejos.util.Delay;
+import constants.SensorConstants;
 
-public class ObstacleNavigator extends Thread {// implements TimerListener {
+/**
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ */
+public class ObstacleNavigator extends Thread {
 	private Navigator navigator;
-	private MotorController motorController;
 	private UltrasonicSensor ultrasonicSensor;
-	private int counter = 0;
+	private double x, y;
 
-	public ObstacleNavigator(Navigator navigator,
-			UltrasonicSensor ultrasonicSensor, MotorController motorController) {
-		this.navigator = navigator;
-		this.motorController = motorController;
+	/**
+	 * An obstacle navigator that runs the default navigation but guides the
+	 * robot around blocks.
+	 * 
+	 * @param ultrasonicSensor
+	 * @param navigator
+	 */
+	public ObstacleNavigator(UltrasonicSensor ultrasonicSensor,
+			Navigator navigator) {
 		this.ultrasonicSensor = ultrasonicSensor;
-		motorController.setSpeed(200);
+		this.navigator = navigator;
+	}
+
+	/**
+	 * Avoid block by navigating around and re-setting destination.
+	 */
+	public void avoidBlock() {
+		navigator.turnTo(90);
+		navigator.travelDistance(30);
+		navigator.turnTo(-90);
+		navigator.travelDistance(30);
+		navigator.turnTo(-45);
+		navigator.travelTo(x, y);
+	}
+
+	/**
+	 * Query the ultrasonic sensor for obstacles and update the navigators
+	 * current location.
+	 */
+	private void lookForObjects() {
+		x = navigator.currentDestination.getX();
+		y = navigator.currentDestination.getY();
+
+		if (ultrasonicSensor.getDistance() < SensorConstants.SENSOR_DISTANCE)
+			avoidBlock();
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-			if (navigator.isNavigating())
-				checkForBlock();
-			else
-				navigate();
+			lookForObjects();
+			Delay.msDelay(100);
 		}
-	}
-
-	public void checkForBlock() {
-		if (ultrasonicSensor.getDistance() <= 20) {
-			
-			motorController.stop();
-			try{
-			navigator.sleep(5000);
-			}catch(InterruptedException ex){
-				ex.printStackTrace();
-			}
-			
-			motorController.rotate(-75);
-			motorController.travel(43);
-			
-			checkForBlock();
-		}
-	}
-
-	public void navigate() {
-		if (counter == 0) {
-			navigator.travelWithoutWait(new Vector(0, 60));
-			counter++;
-		} else if (counter == 1) {
-			navigator.travelWithoutWait(new Vector(60, 0));
-			counter++;
-		}
-	}
-
-	public void stopNavigation() {
-		Motor.A.setSpeed(0);
-		Motor.B.setSpeed(0);
-		Motor.B.stop(true);
-		Motor.A.stop(true);
-	}
-
-	public void resumeNavigation() {
-
 	}
 }

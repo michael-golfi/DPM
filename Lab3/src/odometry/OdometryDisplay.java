@@ -1,30 +1,33 @@
 package odometry;
 
-import utils.LcdScreen;
 import lejos.nxt.LCD;
 import lejos.util.Delay;
+import utils.LcdScreen;
 
-
+/**
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ */
 public class OdometryDisplay extends AbstractOdometryDisplay {
 	private static final long DISPLAY_PERIOD = 250;
-	private Odometer odometer;
 	long displayStart, displayEnd;
+	private Odometer odometer;
 	double[] position = new double[3];
-	
+
 	public OdometryDisplay(Odometer odometer) {
 		this.odometer = odometer;
-		LCD.clearDisplay();	
+		LCD.clearDisplay();
 	}
 
 	@Override
 	public void updateOdometer() {
 		displayStart = System.currentTimeMillis();
-		
+
 		position = odometer.getPosition(new boolean[] { true, true, true });
 		LcdScreen.displayOdometerInformation(position);
-		
+
 		displayEnd = System.currentTimeMillis();
-		if (displayEnd - displayStart < DISPLAY_PERIOD)			
-			Delay.msDelay(DISPLAY_PERIOD - (displayEnd - displayStart));		
+		if (displayEnd - displayStart < DISPLAY_PERIOD)
+			Delay.msDelay(DISPLAY_PERIOD - (displayEnd - displayStart));
 	}
 }

@@ -2,7 +2,16 @@ package constants;
 
 import lejos.nxt.SensorPort;
 
+/**
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ */
 public class SensorConstants {
+	/**
+	 * Distance to maintain from sensor to block: {@value} cm
+	 */
+	public static final int SENSOR_DISTANCE = 20;
+
 	/**
 	 * SensorPort S1 being used for the ultrasonic sensor
 	 */
