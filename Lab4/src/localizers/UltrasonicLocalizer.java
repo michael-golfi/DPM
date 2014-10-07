@@ -1,69 +1,76 @@
+package localizers;
+
 import lejos.nxt.UltrasonicSensor;
+import navigation.Navigator;
+import odometry.Odometer;
 
-public class USLocalizer {
-	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
-	public static double ROTATION_SPEED = 30;
+public class UltrasonicLocalizer {
+	private static final int DISTANCE = 30;
+	private double distance = 0.0;
 
-	private Odometer odo;
-	private TwoWheeledRobot robot;
-	private UltrasonicSensor us;
-	private LocalizationType locType;
-	
-	public USLocalizer(Odometer odo, UltrasonicSensor us, LocalizationType locType) {
-		this.odo = odo;
-		this.robot = odo.getTwoWheeledRobot();
-		this.us = us;
-		this.locType = locType;
-		
-		// switch off the ultrasonic sensor
-		us.off();
+	private Odometer odometer;
+	private Navigator navigator;
+	private UltrasonicSensor ultrasonicSensor;
+
+	public UltrasonicLocalizer(Odometer odometer,
+			UltrasonicSensor ultrasonicSensor, Navigator navigator) {
+		this.odometer = odometer;
+		this.ultrasonicSensor = ultrasonicSensor;
+		this.navigator = navigator;
 	}
-	
-	public void doLocalization() {
-		double [] pos = new double [3];
-		double angleA, angleB;
-		
-		if (locType == LocalizationType.FALLING_EDGE) {
-			// rotate the robot until it sees no wall
-			
-			// keep rotating until the robot sees a wall, then latch the angle
-			
-			// switch direction and wait until it sees no wall
-			
-			// keep rotating until the robot sees a wall, then latch the angle
-			
-			// angleA is clockwise from angleB, so assume the average of the
-			// angles to the right of angleB is 45 degrees past 'north'
-			
-			// update the odometer position (example to follow:)
-			odo.setPosition(new double [] {0.0, 0.0, 0.0}, new boolean [] {true, true, true});
-		} else {
-			/*
-			 * The robot should turn until it sees the wall, then look for the
-			 * "rising edges:" the points where it no longer sees the wall.
-			 * This is very similar to the FALLING_EDGE routine, but the robot
-			 * will face toward the wall for most of it.
-			 */
-			
-			//
-			// FILL THIS IN
-			//
+
+	public void doLocalization(LocalizationType type) {
+		if (type == LocalizationType.FALLING_EDGE)
+			fallingEdgeLocalization();
+		else
+			risingEdgeLocalization();
+	}
+
+	private double angleA = 0.0, angleB = 0.0;
+
+	public void fallingEdgeLocalization() {
+		angleA = FallingEdge.findAlpha(this, navigator, odometer);
+		angleB = FallingEdge.findBeta(this, navigator, odometer);
+		double theta = FallingEdge.getAngle(angleA, angleB);
+		goToZero(theta + (odometer.getThetaDegrees() % 360));
+	}
+
+	protected void turnToWall(double theta) {
+		navigator.turnWithoutWait(theta);
+		do {
+			distance = getFilteredData();
+		} while (distance > (DISTANCE));
+		navigator.stop();
+	}
+
+	protected void turnFromWall(double theta) {
+		navigator.turnWithoutWait(theta);
+		do {
+			distance = getFilteredData();
+		} while (distance < (DISTANCE));
+		navigator.stop();
+	}
+
+	public void risingEdgeLocalization() {
+		angleA = RisingEdge.findAlpha(this, navigator, odometer);
+		angleB = RisingEdge.findBeta(this, navigator, odometer);
+		double theta = RisingEdge.getAngle(angleA, angleB);
+		goToZero(theta + (odometer.getThetaDegrees() % 360));
+	}
+
+	private void goToZero(double theta) {
+		navigator.turnTo(theta);
+		navigator.travelDistance(12);
+		odometer.setTheta(0);
+	}
+
+	public double getFilteredData() {
+		ultrasonicSensor.ping();
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
 		}
+		distance = ultrasonicSensor.getDistance();
+		return distance > 50 ? 50 : distance;
 	}
-	
-	private int getFilteredData() {
-		int distance;
-		
-		// do a ping
-		us.ping();
-		
-		// wait for the ping to complete
-		try { Thread.sleep(50); } catch (InterruptedException e) {}
-		
-		// there will be a delay here
-		distance = us.getDistance();
-				
-		return distance;
-	}
-
 }
