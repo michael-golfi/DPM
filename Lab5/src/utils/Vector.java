@@ -1,19 +1,24 @@
 package utils;
 
 public class Vector {
-	private double x, y;
+	private int x, y;
 
-	public double getX() {
+	public int getX() {
 		return x;
 	}
 
-	public double getY() {
+	public int getY() {
 		return y;
 	}
 
-	public Vector(double x, double y) {
+	public Vector(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Vector(double x, double y){
+		this.x = (int)x;
+		this.y = (int)y;
 	}
 
 	public double getAngle() {

@@ -1,67 +1,90 @@
 package controller;
 
-import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.util.Delay;
+import constants.Constants;
+import constants.Sensor;
 
+/**
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ */
 public class UltrasonicController {
 	private MotorController motorController;
-	private UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
-	private final int FORWARD = 0, LEFT = -90, RIGHT = 90, BACKWARD = 180;
-	
+	private UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(
+			Sensor.ULTRASONIC);
+
 	public UltrasonicController(MotorController motorController) {
 		this.motorController = motorController;
 	}
-	
+
 	/**
-	 * Read front distance
+	 * Read distance ahead
+	 * 
 	 * @return front distance
 	 */
 	public int getFrontDistance() {
-		motorController.rotate(FORWARD);
 		return ultrasonicSensor.getDistance();
 	}
 
 	/**
-	 * Turn sensor left and read distance
+	 * Turn left and read distance
+	 * 
 	 * @return left distance
 	 */
 	public int getLeftDistance() {
-		motorController.rotate(LEFT);
-		int distance = ultrasonicSensor.getDistance();
-		Delay.msDelay(100);
-		motorController.rotate(RIGHT);
-		return distance;
+		motorController.rotate(Constants.LEFT);
+		int sensorDistance = getFilteredData();
+		motorController.rotate(Constants.RIGHT);
+		return sensorDistance;
 	}
 
 	/**
-	 * Turn sensor right and read distance
+	 * Turn right and read distance
+	 * 
 	 * @return right distance
 	 */
 	public int getRightDistance() {
-		motorController.rotate(RIGHT);
-		int distance = ultrasonicSensor.getDistance();
-		Delay.msDelay(100);
-		motorController.rotate(LEFT);
-		return distance;
+		motorController.rotate(Constants.RIGHT);
+		int sensorDistance = getFilteredData();
+		motorController.rotate(Constants.LEFT);
+		return sensorDistance;
 	}
-	
+
 	/**
 	 * Turn around and get the distance
-	 * @return
+	 * 
+	 * @return distance behind
 	 */
-	public int getBackwardsDistance(){
-		motorController.rotate(BACKWARD);
-		int sensorDistance = ultrasonicSensor.getDistance();
-		Delay.msDelay(100);
-		motorController.rotate(-BACKWARD);
+	public int getBackwardsDistance() {
+		motorController.rotate(Constants.BACKWARD);
+		int sensorDistance = getFilteredData();
+		motorController.rotate(-Constants.BACKWARD);
 		return sensorDistance;
 	}
 	
 	/**
-	 * Rotate sensor to face forward
+	 * Turn and get all distances
+	 * @return
 	 */
-	public void resetSensor(){
-		motorController.rotateSensor(FORWARD);
+	public int[] getAllDistances(){
+		int[] distances = new int[4];
+		for(int rotation = Constants.LEFT; rotation > -360; rotation += Constants.LEFT){
+			distances[rotation % 90] = getFilteredData(); 
+			motorController.rotate(rotation);
+		}
+		return distances;
+	}
+
+	/**
+	 * Gets filtered distance values from the ultrasonic sensor
+	 * 
+	 * @return distance
+	 */
+	public int getFilteredData() {
+		ultrasonicSensor.ping();		
+		Delay.msDelay(50);		
+		int distance = ultrasonicSensor.getDistance();
+		return distance > 50 ? 50 : distance;
 	}
 }

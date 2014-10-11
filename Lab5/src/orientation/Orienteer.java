@@ -1,44 +1,77 @@
 package orientation;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
+
+import utils.Vector;
+
 import lejos.nxt.LCD;
-import lejos.util.Delay;
-import controller.MotorController;
+
+import navigation.Navigator;
+import constants.Constants;
 import controller.UltrasonicController;
 
+/**
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ */
 public class Orienteer extends Thread {
 	private UltrasonicController ultrasonicController;
+	private Navigator navigator;
+	private OrientationType type;
+	private Map map = new Map();
 
 	private int leftDistance, rightDistance, frontDistance, backDistance;
 
-	public Orienteer(UltrasonicController ultrasonicController, MotorController motorController) {
+	public Orienteer(UltrasonicController ultrasonicController,
+			Navigator navigator, OrientationType type) {
 		this.ultrasonicController = ultrasonicController;
+		this.navigator = navigator;
+		this.type = type;
 	}
 
 	public void run() {
-		updateDistances();
-		
-		LCD.drawString("Distances", 0, 0);
-		LCD.drawString("Tiles Front " + getNumberTiles(frontDistance), 0, 1);
-		LCD.drawString("Tiles Left " + getNumberTiles(leftDistance), 0, 2);
-		LCD.drawString("Tiles Right " + getNumberTiles(rightDistance), 0, 3);
-		LCD.drawString("Tiles Back " + getNumberTiles(backDistance), 0, 4);
+		chooseOrientationMethod(type);
 	}
-	
+
 	/**
-	 * Get all the distances around the robot
+	 * Choose the type of orientation technique to use.
+	 * 
+	 * @param type
 	 */
-	private void updateDistances(){
-		frontDistance = ultrasonicController.getFrontDistance();
-		Delay.msDelay(1000);
-		leftDistance = ultrasonicController.getLeftDistance();
-		Delay.msDelay(1000);
-		rightDistance = ultrasonicController.getRightDistance();
-		Delay.msDelay(1000);
-		backDistance = ultrasonicController.getBackwardsDistance();
-		Delay.msDelay(1000);
+	private void chooseOrientationMethod(OrientationType type) {
+		if (type == OrientationType.DETERMINISTIC)
+			deterministicOrientation();
+		else
+			stochasticOrientation();
 	}
-	
-	private int getNumberTiles(int distance){
-		return distance % 30;
+
+	/**
+	 * Use a deterministic orientation approach
+	 */
+	private void deterministicOrientation() {
+		int counter = 0;
+		ArrayList<Vector> positions = map.getPossibleStartingPositions();
+		
+		while (positions.size() > 1) {
+			counter++;
+			if (ultrasonicController.getFrontDistance() < Constants.TILE_LENGTH) {
+				navigator.turnTo(Constants.LEFT);
+			}
+			else{
+				navigator.travelDistance(Constants.TILE_LENGTH);
+			}
+		}
+		
+		LCD.drawString("Counter: " + counter, 0, 4);
+	}
+
+	/**
+	 * Use a stochastic orientation approach
+	 */
+	private void stochasticOrientation() {
+		Random random = new Random();
 	}
 }
