@@ -1,14 +1,17 @@
-import navigation.Navigator;
-import constants.Constants;
-import constants.Sensor;
-import controller.MotorController;
-import odometry.Odometer;
 import lcd.LCDInfo;
-import lejos.nxt.*;
+import lejos.nxt.Button;
+import lejos.nxt.ColorSensor;
+import lejos.nxt.LCD;
+import lejos.nxt.UltrasonicSensor;
 import lejos.util.Timer;
 import localizers.LightLocalizer;
 import localizers.LocalizationType;
 import localizers.UltrasonicLocalizer;
+import navigation.Navigator;
+import odometry.Odometer;
+import constants.Constants;
+import constants.Sensor;
+import controller.MotorController;
 
 public class Lab4 {
 	static MotorController motors = new MotorController();
@@ -21,7 +24,6 @@ public class Lab4 {
 		
 		LCD.drawString("< US Local | Light Local>", 0, 0);
 		int button = Button.waitForAnyPress();
-		
 		Navigator navigator = new Navigator(motors, odometer);
 		startOdometerDisplay(odometer);
 		
@@ -39,7 +41,7 @@ public class Lab4 {
 			Navigator navigator) {
 		UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(
 				odometer, ultrasonic, navigator);
-		ultrasonicLocalizer.doLocalization(LocalizationType.RISING_EDGE);
+		ultrasonicLocalizer.doLocalization(LocalizationType.FALLING_EDGE);
 	}
 
 	private static void lightLocalization(Odometer odometer, Navigator navigator) {
