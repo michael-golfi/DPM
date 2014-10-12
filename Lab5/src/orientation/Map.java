@@ -10,35 +10,22 @@ import utils.Vector;
  * @author Paul Albert-Lebrun #260507074
  */
 public class Map {
-	private final int EMPTY = 0, BLOCKED = -1, VISITED = 2;
-
+	public static final int EMPTY = 0, BLOCKED = -1, VISITED = 2;
+	
+	/**
+	 * Angle
+	 */
+	private static int up = 0, left = 90, down = 180, right = 270;
 	int[][] map = new int[][] { { EMPTY, BLOCKED, EMPTY, EMPTY },
 			{ EMPTY, EMPTY, EMPTY, EMPTY }, { EMPTY, EMPTY, BLOCKED, BLOCKED },
 			{ BLOCKED, EMPTY, EMPTY, EMPTY } };
 
 	int[][] temp;
 
-	/**
-	 * 
-	 * @param left
-	 * @param right
-	 * @param back
-	 * @return
-	 */
-	public ArrayList<Vector> getCoordinates(int tilesLeft, int tilesRight,
-			int tilesBehind) {
-		ArrayList<Vector> possiblePositions = new ArrayList<>();
-
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; i < map.length; j++) {
-				if (map[i][j] == BLOCKED)
-					continue;
-
-			}
-		}
-
-		return possiblePositions;
-	}
+	ArrayList<Vector> north = new ArrayList<>();
+	ArrayList<Vector> east = new ArrayList<>();
+	ArrayList<Vector> south = new ArrayList<>();
+	ArrayList<Vector> west = new ArrayList<>();
 
 	/**
 	 * Build a tree of possible paths from the array, avoiding obstacles
@@ -107,6 +94,7 @@ public class Map {
 	 */
 	public ArrayList<Vector> getPossibleStartingPositions() {
 		ArrayList<Vector> positions = new ArrayList<Vector>();
+
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				if (map[i][j] == BLOCKED)
@@ -115,6 +103,12 @@ public class Map {
 				positions.add(new Vector(j, i));
 			}
 		}
+
+		north = new ArrayList<>(positions);
+		east = new ArrayList<>(positions);
+		south = new ArrayList<>(positions);
+		west = new ArrayList<>(positions);
+
 		return positions;
 	}
 
@@ -124,25 +118,24 @@ public class Map {
 	 * @param positions
 	 * @param tilesAhead
 	 */
-	public ArrayList<Vector> filterValidStartingPositions(
-			ArrayList<Vector> positions, int tilesAhead) {
-
+	public void filterValidStartingPositions(int tilesAhead) {
+		filter(north, tilesAhead, Orientation.NORTH);
+		filter(east, tilesAhead, Orientation.EAST);
+		filter(south, tilesAhead, Orientation.SOUTH);
+		filter(west, tilesAhead, Orientation.WEST);
+		System.out.println();
+	}
+	
+	public void filter(ArrayList<Vector> positions, int tilesAhead, Orientation orientation) {
 		ArrayList<Vector> difference = new ArrayList<>();
+		for (Vector position : positions) {
+			int x = position.getX();
+			int y = position.getY();
 
-		for (Orientation orientation : Orientation.values()) {
-
-			for (Vector position : positions) {
-				int x = position.getX();
-				int y = position.getY();
-
-				if (isBlocked(x, y, tilesAhead, Orientation.NORTH))
-					difference.add(position);
-			}
+			if (isBlocked(x, y, tilesAhead, orientation))
+				difference.add(position);
 		}
-
 		positions.removeAll(difference);
-
-		return positions;
 	}
 
 	public boolean isBlocked(int x, int y, int tilesAhead,
@@ -151,6 +144,7 @@ public class Map {
 		case NORTH:
 			if (y + tilesAhead >= map.length)
 				return true;
+			
 			for (int i = y; i <= y + tilesAhead; i++)
 				if (map[i][x] == BLOCKED)
 					return true;
@@ -167,7 +161,7 @@ public class Map {
 			if (y - tilesAhead < 0)
 				return true;
 
-			for (int i = y; i > y - tilesAhead; i--)
+			for (int i = y; i >= y - tilesAhead; i--)
 				if (map[i][x] == BLOCKED)
 					return true;
 			return false;
@@ -182,5 +176,9 @@ public class Map {
 		default:
 			return false;
 		}
+	}
+	
+	public void changeOrientations(int theta){
+		
 	}
 }
