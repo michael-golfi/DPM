@@ -23,7 +23,7 @@ public class UltrasonicController {
 	 * 
 	 * @return front distance
 	 */
-	public int getFrontDistance() {
+	public int getDistance() {
 		return ultrasonicSensor.getDistance();
 	}
 
@@ -62,15 +62,16 @@ public class UltrasonicController {
 		motorController.rotate(-Constants.BACKWARD);
 		return sensorDistance;
 	}
-	
+
 	/**
 	 * Turn and get all distances
+	 * 
 	 * @return
 	 */
-	public int[] getAllDistances(){
+	public int[] getAllDistances() {
 		int[] distances = new int[4];
-		for(int rotation = Constants.LEFT; rotation > -360; rotation += Constants.LEFT){
-			distances[rotation % 90] = getFilteredData(); 
+		for (int rotation = Constants.LEFT; rotation > -360; rotation += Constants.LEFT) {
+			distances[rotation % 90] = getFilteredData();
 			motorController.rotate(rotation);
 		}
 		return distances;
@@ -82,9 +83,9 @@ public class UltrasonicController {
 	 * @return distance
 	 */
 	public int getFilteredData() {
-		ultrasonicSensor.ping();		
-		Delay.msDelay(50);		
+		ultrasonicSensor.ping();
+		Delay.msDelay(50);
 		int distance = ultrasonicSensor.getDistance();
-		return distance > 50 ? 50 : distance;
+		return distance > 60 ? 60 : distance;
 	}
 }
