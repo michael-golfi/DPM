@@ -70,10 +70,15 @@ public class UltrasonicController {
 	 */
 	public int[] getAllDistances() {
 		int[] distances = new int[4];
-		for (int rotation = Constants.LEFT; rotation > -360; rotation += Constants.LEFT) {
-			distances[rotation % 90] = getFilteredData();
-			motorController.rotate(rotation);
-		}
+		
+		distances[0] = getFilteredData();
+		motorController.rotate(-90);
+		distances[1] = getFilteredData();
+		motorController.rotate(-90);
+		distances[2] = getFilteredData();
+		motorController.rotate(-90);
+		distances[3] = getFilteredData();
+		
 		return distances;
 	}
 
@@ -84,8 +89,8 @@ public class UltrasonicController {
 	 */
 	public int getFilteredData() {
 		ultrasonicSensor.ping();
-		Delay.msDelay(50);
+		Delay.msDelay(100);
 		int distance = ultrasonicSensor.getDistance();
-		return distance > 60 ? 60 : distance;
+		return distance > 90 ? 90 : distance;
 	}
 }

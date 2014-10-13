@@ -2,6 +2,7 @@ package orientation;
 
 import java.util.ArrayList;
 
+import constants.Lab5Map;
 import utils.Array;
 import utils.Vector;
 
@@ -10,22 +11,12 @@ import utils.Vector;
  * @author Paul Albert-Lebrun #260507074
  */
 public class Map {
-	public static final int EMPTY = 0, BLOCKED = -1, VISITED = 2;
+	public enum TileStatus { EMPTY, BLOCKED, VISITED }
 
-	// private static int up = 0, left = 90, down = 180, right = 270;
-	int[][] map = new int[][] { { EMPTY, BLOCKED, EMPTY, EMPTY },
-			{ EMPTY, EMPTY, EMPTY, EMPTY }, { EMPTY, EMPTY, BLOCKED, BLOCKED },
-			{ BLOCKED, EMPTY, EMPTY, EMPTY } };
-
-	int[][] temp;
+	TileStatus[][] map = Lab5Map.map;
+	TileStatus[][] temp;
 
 	ArrayList<Vector> positions = new ArrayList<Vector>();
-
-	/*
-	 * ArrayList<Vector> north = new ArrayList<>(); ArrayList<Vector> east = new
-	 * ArrayList<>(); ArrayList<Vector> south = new ArrayList<>();
-	 * ArrayList<Vector> west = new ArrayList<>();
-	 */
 
 	/**
 	 * Build a tree of possible paths from the array, avoiding obstacles
@@ -37,10 +28,10 @@ public class Map {
 	 * @return a tree of moves
 	 */
 	private Tree buildTree(int x, int y) {
-		if (temp[y][x] != BLOCKED && temp[y][x] != VISITED) {
+		if (temp[y][x] != TileStatus.BLOCKED && temp[y][x] != TileStatus.VISITED) {
 			Tree tree = new Tree(x, y);
 
-			temp[y][x] = VISITED;
+			temp[y][x] = TileStatus.VISITED;
 
 			if (y < temp.length - 1) {
 				Tree upTile = buildTree(x, y + 1);
@@ -96,7 +87,7 @@ public class Map {
 		positions = new ArrayList<Vector>();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				if (map[i][j] == BLOCKED)
+				if (map[i][j] == TileStatus.BLOCKED)
 					continue;
 				for (Orientation orientation : Orientation.values())
 					positions.add(new Vector(j, i, orientation));
@@ -168,33 +159,106 @@ public class Map {
 			y = possible.getY() - position.getY();
 		}
 
-		if (x < 0 || x > 3 || y < 0 || y > 3 || map[x][y] == BLOCKED)
+		if (x < 0 || x > 3 || y < 0 || y > 3 || map[x][y] == TileStatus.BLOCKED)
 			return false;
 
 		switch (realDir) {
 		case NORTH:
 			if (isBlocked)
-				return (y == 3 || map[x][y + 1] == BLOCKED);
+				return (y == 3 || map[x][y + 1] == TileStatus.BLOCKED);
 			else
-				return (y < 3 && !(map[x][y + 1] == BLOCKED));
+				return (y < 3 && !(map[x][y + 1] == TileStatus.BLOCKED));
 		case SOUTH:
 			if (isBlocked)
-				return (y == 0 || map[x][y - 1] == BLOCKED);
+				return (y == 0 || map[x][y - 1] == TileStatus.BLOCKED);
 			else
-				return (y > 0 && !(map[x][y - 1] == BLOCKED));
+				return (y > 0 && !(map[x][y - 1] == TileStatus.BLOCKED));
 		case WEST:
 			if (isBlocked)
-				return (x == 0 || map[x - 1][y] == BLOCKED);
+				return (x == 0 || map[x - 1][y] == TileStatus.BLOCKED);
 			else
-				return (x > 0 && !(map[x - 1][y] == BLOCKED));
+				return (x > 0 && !(map[x - 1][y] == TileStatus.BLOCKED));
 		case EAST:
 			if (isBlocked)
-				return (x == 3 || map[x + 1][y] == BLOCKED);
+				return (x == 3 || map[x + 1][y] == TileStatus.BLOCKED);
 			else
-				return (x < 3 && !(map[x + 1][y] == BLOCKED));
+				return (x < 3 && !(map[x + 1][y] == TileStatus.BLOCKED));
 		}
 		return true;
 	}
+	
+	public static ArrayList<Position> Orient(TileStatus[][] map, int[] tileDistances) {
+		ArrayList<Position> potentialStartingPositions = new ArrayList<>();
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[0].length; j++) {
+				// iterating over tiles of the map
+
+				if (map[i][j] == TileStatus.EMPTY) {
+					for (Orientation startingOrientation : Orientation.values()) {
+						// iterating over potential starting orientations given
+						// a specific tile
+						Position potentialStartingPosition = new Position(
+								startingOrientation, i, j);
+						boolean valid = true;
+
+						for (int d = 0; d < Orientation.values().length
+								&& valid == true; d++) {
+							// iterating over lines of sight given a starting
+							// tile and orientation
+
+							// Which line of sight we're looking at
+							Orientation crt = startingOrientation;
+							for (int it = 0; it < d; it++) {
+								crt = crt.getNextOrientation();
+							}
+
+							// look in that direction, see if line of sight
+							// works
+							Position blockedLineOfSight = potentialStartingPosition
+									.getTile(crt, tileDistances[d] + 1);
+
+							// Check if line of sight ends within map
+							if ((blockedLineOfSight.xTile > map.length)
+									|| (blockedLineOfSight.yTile > map[0].length)
+									|| (blockedLineOfSight.xTile < -1)
+									|| (blockedLineOfSight.yTile < -1)) {
+								valid = false;
+								break;
+							}
+
+							// Check that the line of sight is properly blocked
+							if (blockedLineOfSight.xTile != -1
+									&& blockedLineOfSight.xTile != map.length
+									&& blockedLineOfSight.yTile != -1
+									&& blockedLineOfSight.yTile != map[0].length
+									&& map[blockedLineOfSight.xTile][blockedLineOfSight.yTile] == TileStatus.EMPTY) {
+								valid = false;
+								break;
+							}
+
+							// Check if line of sight is clear until blocked
+							// tile
+							for (int td = 1; td <= tileDistances[d]; td++) {
+								Position p = potentialStartingPosition.getTile(
+										crt, td);
+								if (map[p.xTile][p.yTile] != TileStatus.EMPTY) {
+									valid = false;
+									break;
+								}
+							}
+						}
+
+						if (valid) {
+							potentialStartingPositions
+									.add(potentialStartingPosition);
+						}
+					}
+				}
+			}
+		}
+		return potentialStartingPositions;
+	}
+
 
 	/**
 	 * Check if a position is valid based on the number of tiles in front
@@ -213,7 +277,7 @@ public class Map {
 				return true;
 
 			for (int i = y; i <= y + tilesAhead; i++)
-				if (map[i][x] == BLOCKED)
+				if (map[i][x] == TileStatus.BLOCKED)
 					return true;
 			return false;
 		case EAST:
@@ -221,7 +285,7 @@ public class Map {
 				return true;
 
 			for (int i = x; i <= x + tilesAhead; i++)
-				if (map[y][i] == BLOCKED)
+				if (map[y][i] == TileStatus.BLOCKED)
 					return true;
 			return false;
 		case SOUTH:
@@ -229,7 +293,7 @@ public class Map {
 				return true;
 
 			for (int i = y; i >= y - tilesAhead; i--)
-				if (map[i][x] == BLOCKED)
+				if (map[i][x] == TileStatus.BLOCKED)
 					return true;
 			return false;
 		case WEST:
@@ -237,7 +301,7 @@ public class Map {
 				return true;
 
 			for (int i = x; i >= x - tilesAhead; i--)
-				if (map[y][i] == BLOCKED)
+				if (map[y][i] == TileStatus.BLOCKED)
 					return true;
 			return false;
 		default:

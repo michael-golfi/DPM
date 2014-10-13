@@ -3,12 +3,14 @@ import navigation.Navigator;
 import lcd.LCDInfo;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
+import lejos.nxt.comm.RConsole;
 import lejos.util.Timer;
 import constants.Constants;
 import controller.MotorController;
 import controller.UltrasonicController;
 import orientation.OrientationType;
 import orientation.Orienteer;
+import orientation.Orienteer2;
 import utils.ThreadStart;
 
 /**
@@ -27,16 +29,18 @@ public class Lab5 {
 	 * 
 	 * @param motorController
 	 */
-	private static void initializeComponents(MotorController motorController) {
+	private static void initializeComponents(MotorController motorController) {		
 		UltrasonicController ultrasonicController = new UltrasonicController(
 				motorController);
-
+		Button.waitForAnyPress();
 		Odometer odometer = new Odometer(motorController);
 		Navigator navigator = new Navigator(motorController, odometer);
-		Orienteer orienteer = chooseOrientation(ultrasonicController, navigator);
+		//Orienteer orienteer = chooseOrientation(ultrasonicController, navigator);
+		Orienteer2 orienteer2 = new Orienteer2(ultrasonicController, navigator);
+		orienteer2.deterministic();
 
-		startOdometerDisplay(odometer);
-		ThreadStart.startAll(new Thread[] { odometer, orienteer });
+		//startOdometerDisplay(odometer);
+		ThreadStart.startAll(new Thread[] { odometer });
 	}
 
 	/**
