@@ -51,11 +51,13 @@ public class Orienteer extends Thread {
 
 		ArrayList<Vector> positions = map.getPossibleStartingPositions();
 		Orientation orientation = Orientation.NORTH;
+		
 		while (positions.size() > 1) {
 			counter++;
 
 			int tilesAhead = ultrasonicController.getFilteredData() / 30;
-			map.filter(tilesAhead);
+			
+			// Do some filtering logic
 
 			if (ultrasonicController.getDistance() < Constants.TILE_LENGTH) {
 				navigator.turnTo(Constants.LEFT);
@@ -66,6 +68,7 @@ public class Orienteer extends Thread {
 			}
 		}
 
+		// Knows its position
 		LCD.drawString("Counter: " + counter, 0, 4);
 	}
 
