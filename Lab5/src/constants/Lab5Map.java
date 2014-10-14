@@ -1,13 +1,18 @@
 package constants;
 
-import orientation.Map;
-import orientation.Map.TileStatus;
+import orientation.Tile;
 
+/**
+ * Placeholder for the map being used
+ * 
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ * 
+ */
 public class Lab5Map {
-	public static final TileStatus[][] map = new Map.TileStatus[][] { 
-			{ TileStatus.EMPTY,		TileStatus.BLOCKED, TileStatus.EMPTY, 	TileStatus.EMPTY   },
-			{ TileStatus.EMPTY, 	TileStatus.EMPTY, 	TileStatus.EMPTY, 	TileStatus.EMPTY   }, 
-			{ TileStatus.EMPTY, 	TileStatus.EMPTY,	TileStatus.BLOCKED,	TileStatus.BLOCKED },
-			{ TileStatus.BLOCKED,	TileStatus.EMPTY, 	TileStatus.EMPTY, 	TileStatus.EMPTY   } 
-	};
+	public static final Tile[][] map = new Tile[][] {
+			{ Tile.EMPTY, Tile.BLOCKED, Tile.EMPTY, Tile.EMPTY },
+			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+			{ Tile.EMPTY, Tile.EMPTY, Tile.BLOCKED, Tile.BLOCKED },
+			{ Tile.BLOCKED, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
 }

@@ -1,10 +1,25 @@
 package utils;
 
+/**
+ * Provide a simple implementation to perform common vector operations.
+ * 
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074 
+ *         
+ */
 public class VectorOperations {
+	/**
+	 * Radian to Degree conversion factor: 180 degrees / Pi radians
+	 */
 	private static final double CONVERT_TO_DEGREES = 180 / Math.PI;
-	
-	public static Vector add(Vector v1, Vector v2) {
-		return new Vector(v1.getX() + v2.getX(), v1.getY() + v2.getY());
+
+	/**
+	 * Adds the two vectors by vector addition.
+	 * 
+	 * @return the resultant of the addition
+	 */
+	public static Vector add(Vector one, Vector two) {
+		return new Vector(one.getX() + two.getX(), one.getY() + two.getY());
 	}
 
 	/**
@@ -28,15 +43,15 @@ public class VectorOperations {
 	public static double angle(double x, double y) {
 		return Math.atan2(y, x) * CONVERT_TO_DEGREES;
 	}
-	
+
 	/**
 	 * Subtract v1 by v2
 	 * 
-	 * @param v1
-	 * @param v2
+	 * @param one
+	 * @param two
 	 * @return
 	 */
-	public static Vector subtract(Vector v1, Vector v2) {
-		return new Vector(v1.getX() - v2.getX(), v1.getY() - v2.getY());
+	public static Vector subtract(Vector one, Vector two) {
+		return new Vector(one.getX() - two.getX(), one.getY() - two.getY());
 	}
 }

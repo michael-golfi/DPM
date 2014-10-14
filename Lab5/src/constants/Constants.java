@@ -1,8 +1,11 @@
 package constants;
 
 /**
+ * Placeholder for global constants
+ * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
+ * 
  */
 public class Constants {
 	/**
@@ -24,7 +27,7 @@ public class Constants {
 	 * Backwards degree: {@value}
 	 */
 	public static final int BACKWARD = 180;
-	
+
 	/**
 	 * Length of one tile: {@value} cm
 	 */

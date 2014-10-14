@@ -1,23 +1,39 @@
 package orientation;
 
-public class Position {
-	public Orientation orientation;
-	public int xTile;
-	public int yTile;
+public class Position implements Cloneable {
+	public int xTile, yTile;
+	public Direction direction;
 	
-	public Position(Orientation o, int xTile, int yTile) {
-		this.orientation = o;
+	public Position(int xTile, int yTile, Direction direction) {
 		this.xTile = xTile;
 		this.yTile = yTile;
+		this.direction = direction;
 	}
 	
-	public Position getTile(Orientation o, int n) {
-		switch(o) {
-		case NORTH: return new Position(this.orientation, this.xTile,     this.yTile + n);
-		case EAST:  return new Position(this.orientation, this.xTile + n, this.yTile    );
-		case SOUTH: return new Position(this.orientation, this.xTile,     this.yTile - n);
-		case WEST:  return new Position(this.orientation, this.xTile - n, this.yTile    );
-		default: throw new IllegalArgumentException("Non-standard orientation");
+	public void advance() {
+		switch(this.direction) {
+		case SOUTH: this.yTile--; break;
+		case NORTH: this.yTile++; break;
+		case WEST : this.xTile--; break;
+		case EAST : this.xTile++; break;
 		}
+	}
+	
+	public void turnRight() {
+		this.direction = this.direction.clockwise();
+	}
+	
+	public void turnLeft() {
+		this.direction = this.direction.counterclockwise();
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + this.xTile + ", " + this.yTile + ", " + this.direction + ")";
+	}
+	
+	@Override
+	public Position clone() {
+		return new Position(this.xTile, this.yTile, this.direction);
 	}
 }

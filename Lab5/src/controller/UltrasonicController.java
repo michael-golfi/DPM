@@ -6,8 +6,12 @@ import constants.Constants;
 import constants.Sensor;
 
 /**
+ * Provide an abstraction layer for ultrasonic controller to read distances
+ * around the robot, in 90 degree segments.
+ * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
+ * 
  */
 public class UltrasonicController {
 	private MotorController motorController;
@@ -28,49 +32,14 @@ public class UltrasonicController {
 	}
 
 	/**
-	 * Turn left and read distance
+	 * Gets the distances in front, to the left, behind, and to the right of the
+	 * robot.
 	 * 
-	 * @return left distance
-	 */
-	public int getLeftDistance() {
-		motorController.rotate(Constants.LEFT);
-		int sensorDistance = getFilteredData();
-		motorController.rotate(Constants.RIGHT);
-		return sensorDistance;
-	}
-
-	/**
-	 * Turn right and read distance
-	 * 
-	 * @return right distance
-	 */
-	public int getRightDistance() {
-		motorController.rotate(Constants.RIGHT);
-		int sensorDistance = getFilteredData();
-		motorController.rotate(Constants.LEFT);
-		return sensorDistance;
-	}
-
-	/**
-	 * Turn around and get the distance
-	 * 
-	 * @return distance behind
-	 */
-	public int getBackwardsDistance() {
-		motorController.rotate(Constants.BACKWARD);
-		int sensorDistance = getFilteredData();
-		motorController.rotate(-Constants.BACKWARD);
-		return sensorDistance;
-	}
-
-	/**
-	 * Turn and get all distances
-	 * 
-	 * @return
+	 * @return int[4] of distances read in clockwise order
 	 */
 	public int[] getAllDistances() {
 		int[] distances = new int[4];
-		
+
 		distances[0] = getFilteredData();
 		motorController.rotate(-90);
 		distances[1] = getFilteredData();
@@ -78,7 +47,7 @@ public class UltrasonicController {
 		distances[2] = getFilteredData();
 		motorController.rotate(-90);
 		distances[3] = getFilteredData();
-		
+
 		return distances;
 	}
 
@@ -92,5 +61,23 @@ public class UltrasonicController {
 		Delay.msDelay(100);
 		int distance = ultrasonicSensor.getDistance();
 		return distance > 90 ? 90 : distance;
+	}
+
+	/**
+	 * Get number of tiles ahead of robot
+	 * 
+	 * @return tiles ahead
+	 */
+	public int getTilesAhead() {
+		return getFilteredData() / 30;
+	}
+
+	/**
+	 * Check if the next tile is blocked
+	 * 
+	 * @return true if it is blocked
+	 */
+	public boolean isBlocked() {
+		return getTilesAhead() < Constants.TILE_LENGTH;
 	}
 }

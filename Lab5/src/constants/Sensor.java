@@ -3,8 +3,11 @@ package constants;
 import lejos.nxt.SensorPort;
 
 /**
+ * Place holder for sensor constants
+ * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
+ * 
  */
 public class Sensor {
 	/**

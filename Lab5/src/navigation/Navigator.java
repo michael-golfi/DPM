@@ -6,8 +6,13 @@ import utils.VectorOperations;
 import controller.MotorController;
 
 /**
+ * 
+ * A navigator that travels to specific points in the grid according to its
+ * starting location.
+ * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
+ * 
  */
 public class Navigator extends Thread implements Navigation {
 	public Vector currentDestination;
@@ -29,6 +34,8 @@ public class Navigator extends Thread implements Navigation {
 	}
 
 	/**
+	 * Gets the last odometer angle reading.
+	 * 
 	 * @return the last angle measured by the odometer
 	 */
 	private double getOldTheta() {
@@ -55,7 +62,7 @@ public class Navigator extends Thread implements Navigation {
 		currentPosition = new Vector(odometer.getY(), odometer.getX());
 		travelTo(currentDestination);
 	}
-	
+
 	/**
 	 * Travel to a location and block the calling thread
 	 * 
@@ -67,32 +74,10 @@ public class Navigator extends Thread implements Navigation {
 		motorController.travel(difference.getLength());
 		currentPosition = new Vector(odometer.getY(), odometer.getX());
 	}
-	
-	/**
-	 * Travel to a location without blocking the calling thread
-	 * 
-	 * @param vector
-	 */
-	public void travelWithoutWait(Vector vector) {
-		Vector difference = VectorOperations.subtract(vector, currentPosition);
-		motorController.rotate(difference.getAngle() - getOldTheta(), true,
-				false);
-		motorController.travel(difference.getLength(), true, true);
-		currentPosition = new Vector(odometer.getY(), odometer.getX());
-	}
 
 	@Override
 	public void turnTo(double theta) {
 		motorController.rotate(theta);
-	}
-
-	/**
-	 * Rotate without blocking calling thread
-	 * 
-	 * @param theta
-	 */
-	public void turnWithoutWait(double theta) {
-		motorController.rotate(theta, true, true);
 	}
 
 	/**

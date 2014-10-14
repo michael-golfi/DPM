@@ -1,8 +1,12 @@
 package navigation;
 
 /**
+ * 
+ * Provides an interface to implement navigator actions
+ * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
+ * 
  */
 public interface Navigation {
 	/**

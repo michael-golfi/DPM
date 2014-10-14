@@ -1,8 +1,14 @@
 package odometry;
 
 /**
+ * 
+ * An abstraction layer of an odometer. Provides common functionality to be used
+ * by an odometer: including holding position values (x, y, theta) and a
+ * threaded updating loop
+ * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
+ * 
  */
 public abstract class AbstractOdometer extends Thread {
 	protected Object lock = new Object();
@@ -120,15 +126,15 @@ public abstract class AbstractOdometer extends Thread {
 			this.y = y;
 		}
 	}
-	
-	public double getThetaDegrees(){
+
+	public double getThetaDegrees() {
 		double angle;
 		synchronized (lock) {
 			angle = Math.toDegrees(theta);
 		}
 		return angle % 360.0;
 	}
-	
+
 	/**
 	 * Updates the odometer with current values
 	 */
