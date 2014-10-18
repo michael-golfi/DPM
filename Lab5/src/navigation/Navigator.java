@@ -6,17 +6,12 @@ import utils.VectorOperations;
 import controller.MotorController;
 
 /**
- * 
- * A navigator that travels to specific points in the grid according to its
- * starting location.
- * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
- * 
  */
 public class Navigator extends Thread implements Navigation {
 	public Vector currentDestination;
-	public Vector currentPosition = new Vector(0, 0);
+	private Vector currentPosition = new Vector(0, 0);
 
 	private MotorController motorController;
 	private Odometer odometer;
@@ -34,12 +29,10 @@ public class Navigator extends Thread implements Navigation {
 	}
 
 	/**
-	 * Gets the last odometer angle reading.
-	 * 
 	 * @return the last angle measured by the odometer
 	 */
 	private double getOldTheta() {
-		return odometer.getThetaDegrees();
+		return odometer.getTheta();
 	}
 
 	@Override
@@ -47,6 +40,18 @@ public class Navigator extends Thread implements Navigation {
 		return motorController.isNavigating();
 	}
 
+	@Override
+	public void run() {
+		travelTo(new Vector(60, 30));
+		travelTo(new Vector(30, 30));
+		travelTo(new Vector(30, 60));
+		travelTo(new Vector(60, 0));
+	}
+
+	public void setLocation(Vector v){
+		currentDestination = v;
+	}
+	
 	/**
 	 * Travel by given distance
 	 * 
@@ -59,7 +64,6 @@ public class Navigator extends Thread implements Navigation {
 	@Override
 	public void travelTo(double x, double y) {
 		currentDestination = new Vector(x, y);
-		currentPosition = new Vector(odometer.getY(), odometer.getX());
 		travelTo(currentDestination);
 	}
 
@@ -75,15 +79,21 @@ public class Navigator extends Thread implements Navigation {
 		currentPosition = new Vector(odometer.getY(), odometer.getX());
 	}
 
+	/**
+	 * Travel to a location without blocking the calling thread
+	 * 
+	 * @param vector
+	 */
+	public void travelWithoutWait(Vector vector) {
+		Vector difference = VectorOperations.subtract(vector, currentPosition);
+		motorController.rotate(difference.getAngle() - getOldTheta(), true,
+				false);
+		motorController.travel(difference.getLength(), true, true);
+		currentPosition = new Vector(odometer.getY(), odometer.getX());
+	}
+
 	@Override
 	public void turnTo(double theta) {
 		motorController.rotate(theta);
-	}
-
-	/**
-	 * Stops the robot
-	 */
-	public void stop() {
-		motorController.stop();
 	}
 }

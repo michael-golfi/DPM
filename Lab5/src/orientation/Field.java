@@ -1,13 +1,11 @@
 package orientation;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
-@SuppressWarnings("deprecation")
 public class Field {
 	public Tile[][] map;
 	public int[][][] linesOfSight;
-	private Set<Position> potentialPositions;
+	private ArrayList<Position> potentialPositions;
 	
 	public Field(Tile[][] map) {
 		this.map = map;
@@ -53,7 +51,7 @@ public class Field {
 			}
 		}
 		
-		this.potentialPositions = new HashSet<>();
+		this.potentialPositions = new ArrayList<>();
 		for(int x = 0; x < map.length; x++) {
 			for(int y = 0; y < map[0].length; y++) {
 				if(map[x][y] == Tile.EMPTY) {
@@ -65,8 +63,8 @@ public class Field {
 		}
 	}
 	
-	public Set<Position> getPotentialPositions() { 
-		Set<Position> result = new HashSet<>();
+	public ArrayList<Position> getPotentialPositions() { 
+		ArrayList<Position> result = new ArrayList<>();
 		for(Position p : potentialPositions) {
 			result.add(p.clone());
 		}

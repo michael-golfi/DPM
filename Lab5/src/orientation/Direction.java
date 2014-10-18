@@ -29,4 +29,22 @@ public enum Direction {
 		int v = this.ordinal() - 1;
 		return Direction.values()[v >= 0 ? v : v + 4];
 	}
+
+	/**
+	 * Get the angle represented by the direction
+	 * @return angle in degrees
+	 */
+	public int getAngle() {
+		switch (values()[ordinal()]) {
+		case NORTH:
+			return 90;
+		case WEST:
+			return 180;
+		case SOUTH:
+			return 270;
+		case EAST:
+			return 0;
+		}
+		return 0;
+	}
 }

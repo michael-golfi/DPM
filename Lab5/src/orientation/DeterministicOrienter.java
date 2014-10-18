@@ -1,34 +1,60 @@
 package orientation;
 
+import java.util.ArrayList;
+
 import lejos.nxt.LCD;
 import navigation.Navigator;
+import odometry.Odometer;
+import utils.Vector;
 import constants.Constants;
 import constants.Lab5Map;
 import controller.UltrasonicController;
 
+/**
+ * 
+ * An orienter that finds its location using the deterministic method
+ * 
+ * @author Michael Golfi #260552298
+ * @author Paul Albert-Lebrun #260507074
+ *
+ */
 public class DeterministicOrienter extends Thread {
-	private static DefaultOrienteer defaultOrienteer;
-	private static Field field;
-	private static UltrasonicController ultrasonicController;
-	private static Navigator navigator;
+	private DefaultOrienteer defaultOrienteer;
+	private Field field;
+	private UltrasonicController ultrasonicController;
+	private Odometer odometer;
+	private Navigator navigator;
 
 	public DeterministicOrienter(UltrasonicController ultrasonicController,
-			Navigator navigator) {
+			Navigator navigator, Odometer odometer) {
 		field = new Field(Lab5Map.map);
 		defaultOrienteer = new DefaultOrienteer(field);
+		this.ultrasonicController = ultrasonicController;
+		this.navigator = navigator;
+		this.odometer = odometer;
 	}
 
 	public void run() {
 		orient();
 	}
 
+	/**
+	 * Start discovering starting and current position using deterministic
+	 * method
+	 */
 	public void orient() {
 		int counter = 0;
-		int tilesAhead = ultrasonicController.getFilteredData() / 30;
+		int tilesAhead = ultrasonicController.getTilesAhead();
 		defaultOrienteer.observeLineOfSight(tilesAhead);
 
 		while (defaultOrienteer.isPositionAmbiguous()) {
 			counter++;
+
+			tilesAhead = ultrasonicController.getTilesAhead();
+			defaultOrienteer.observeLineOfSight(tilesAhead);
+
+			LCD.drawString("Counter: " + counter, 0, 0);
+			LCD.drawString("Tiles " + tilesAhead, 0, 1);
 
 			if (ultrasonicController.isBlocked())
 				turnLeft();
@@ -36,11 +62,45 @@ public class DeterministicOrienter extends Thread {
 				goForward();
 		}
 
-		LCD.drawString("Counter: " + counter, 0, 4);
-		
 		Position startingPosition = defaultOrienteer.getStartingPosition();
 		Position currentPosition = defaultOrienteer.getCurrentPosition();
-		drawPosition(startingPosition, currentPosition);
+		drawPositionToScreen(startingPosition, currentPosition);
+
+		setOdometer(currentPosition);
+
+		// Should navigate here, but it doesn't navigate due to an error with
+		// the navigator
+		navigate(currentPosition);
+	}
+
+	/**
+	 * Set Odometer to current position
+	 * 
+	 * @param currentPosition
+	 */
+	private void setOdometer(Position currentPosition) {
+		odometer.setX(currentPosition.xTile * 30 - 15);
+		odometer.setY(currentPosition.yTile * 30 - 15);
+
+		int direction = currentPosition.direction.getAngle();
+		navigator.turnTo(-direction);
+		odometer.setTheta(0);
+	}
+
+	/**
+	 * Navigate to final location
+	 * 
+	 * @param currentPosition
+	 */
+	private void navigate(Position currentPosition) {
+		ArrayList<Vector> path = PathFinder.getPath(Lab5Map.mapTranspose,
+				currentPosition.xTile, currentPosition.yTile);
+
+		navigator.setLocation(path.remove(0));
+
+		for (Vector position : path)
+			navigator.travelTo(position.getX() * Constants.TILE_LENGTH - 15,
+					position.getY() * Constants.TILE_LENGTH - 15);
 	}
 
 	/**
@@ -48,7 +108,15 @@ public class DeterministicOrienter extends Thread {
 	 */
 	public void turnLeft() {
 		defaultOrienteer.turnLeft();
-		navigator.turnTo(Constants.LEFT);
+		navigator.turnTo(90);
+	}
+
+	/**
+	 * Turn left 90 degrees
+	 */
+	public void turnRight() {
+		defaultOrienteer.turnRight();
+		navigator.turnTo(-90);
 	}
 
 	/**
@@ -65,9 +133,10 @@ public class DeterministicOrienter extends Thread {
 	 * @param startingPosition
 	 * @param currentPosition
 	 */
-	public void drawPosition(Position startingPosition, Position currentPosition) {
-		LCD.drawString("Starting Position" + startingPosition, 0, 1);
-		LCD.drawString("Current Position" + currentPosition, 0, 2);
+	public void drawPositionToScreen(Position startingPosition,
+			Position currentPosition) {
+		LCD.drawString("Star " + startingPosition, 0, 1);
+		LCD.drawString("Curr " + currentPosition, 0, 2);
 	}
 
 }

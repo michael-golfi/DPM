@@ -1,6 +1,8 @@
 package orientation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author Michael Golfi #260552298
@@ -8,6 +10,8 @@ import java.util.*;
  * 
  *         Provides abstraction layer for orientation algorithm.
  * 
+ *         Carl Patenaude Poulin was consulted for suggestions of a valid approach
+ *         to this problem.
  */
 public class DefaultOrienteer implements Orienteer {
 
@@ -17,8 +21,8 @@ public class DefaultOrienteer implements Orienteer {
 
 	Stack<Action> actions = new Stack<>();
 	Field field;
-	Set<Position> potentialPositions;
-	Set<Position> validPositions;
+	ArrayList<Position> potentialPositions;
+	ArrayList<Position> validPositions;
 	private Position startingPosition;
 
 	public DefaultOrienteer(Field field) {

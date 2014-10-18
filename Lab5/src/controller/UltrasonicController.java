@@ -78,6 +78,6 @@ public class UltrasonicController {
 	 * @return true if it is blocked
 	 */
 	public boolean isBlocked() {
-		return getTilesAhead() < Constants.TILE_LENGTH;
+		return getTilesAhead() < 1;
 	}
 }

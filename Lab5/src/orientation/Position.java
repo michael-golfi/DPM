@@ -29,7 +29,7 @@ public class Position implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return "(" + this.xTile + ", " + this.yTile + ", " + this.direction + ")";
+		return "(" + (this.xTile*30-15) + ", " + (this.yTile*30-15) + ", " + this.direction + ")";
 	}
 	
 	@Override
