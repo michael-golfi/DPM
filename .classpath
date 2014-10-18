@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Lab1/src"/>
+	<classpathentry kind="src" path="Lab2/src"/>
+	<classpathentry kind="src" path="Lab3/src"/>
+	<classpathentry kind="src" path="Lab4/src"/>
+	<classpathentry kind="src" path="Lab5/src"/>
+	<classpathentry kind="src" path="Lab5/test"/>
+	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/nxt"/>
+	<classpathentry kind="lib" path="Lab5/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="Lab5/junit-4.11.jar"/>
+	<classpathentry kind="output" path="Lab5/bin"/>
+</classpath>
