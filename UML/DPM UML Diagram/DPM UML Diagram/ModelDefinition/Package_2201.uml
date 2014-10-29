@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="5cee344d-18f8-4d8a-b748-c130ed63894b"
+  name="orientation" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="cddf91e0-0eca-430c-989c-45c191a9e970"
+        name="Orienter"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="d11a5fb9-2dba-47cd-9e9a-cf6d23324fba"
+            name="Navigator navigator"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="83164e34-e5a5-4e5e-b023-e369da33ef95"
+            name="Map fieldMap"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="d8a92352-9bae-45dd-a7fc-f82fb805e94d"
+            name="orient"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="01ce1c81-e50c-4be5-9b89-ff027e5b1e16"
+            name="navigateToLocation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="29734351-ed5e-44a4-bb2a-4c78f0f70d2c"
+        name="Orientation"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="7dcc6cc0-e570-4a41-a30f-00ca1782d7c3"
+            name="NORTH" />
+          <enumerationLiteral
+            Id="b71aed21-9005-4501-9782-d2acb91a823d"
+            name="SOUTH" />
+          <enumerationLiteral
+            Id="ee553b5a-7e6c-4959-b8a7-2c920664024b"
+            name="EAST" />
+          <enumerationLiteral
+            Id="fe777c9a-d199-4ac3-b25e-de05c36f53b7"
+            name="WEST" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="3ac1f606-d914-454c-a1a1-3fc335297e7c" name="Model" linkedPackageId="6a106337-fac7-4b39-bf1f-b7ca0826b959" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="de86a42e-d365-4877-8126-2272825638f9">
+      <profileInstance Id="87d98ddf-79b6-4ec9-a623-9222d4ef29bd" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="15ef6679-8f34-4600-956d-87c3faec9dd5">
+      <profileInstance Id="8ff36f71-c23b-4426-93ac-5e30b6d40a2d" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="45843f3a-1251-4f9c-8ec3-f763932d151b" name="orientation">
+        <elementDefinition Id="5cee344d-18f8-4d8a-b748-c130ed63894b" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="d933e804-cd33-4c5d-b8dd-79f855ae4601" name="Orienter" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="cddf91e0-0eca-430c-989c-45c191a9e970" />
+              <ownedAttributesInternal>
+                <property Id="471bb086-d8db-48cb-806e-b562248c840d" name="Navigator navigator" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="d11a5fb9-2dba-47cd-9e9a-cf6d23324fba" />
+                </property>
+                <property Id="1d26392f-ddf3-4617-8db1-b5f0edf7c386" name="Map fieldMap" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="83164e34-e5a5-4e5e-b023-e369da33ef95" />
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="47fd7032-dca8-46c5-9187-a1e83d27bca5" name="orient" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="d8a92352-9bae-45dd-a7fc-f82fb805e94d" />
+                </operation>
+                <operation Id="d5aa7295-5631-4723-8a02-2201bc637f3e" name="navigateToLocation" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="01ce1c81-e50c-4be5-9b89-ff027e5b1e16" />
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <enumeration Id="ebc6f215-b371-4a93-ac9a-a315ae03b963" name="Orientation" isAbstract="false" isLeaf="false">
+              <elementDefinition Id="29734351-ed5e-44a4-bb2a-4c78f0f70d2c" />
+              <ownedLiterals>
+                <enumerationLiteral Id="a205adf4-b400-43bd-a3d6-cfb32ddbb36a" name="NORTH">
+                  <elementDefinition Id="7dcc6cc0-e570-4a41-a30f-00ca1782d7c3" />
+                </enumerationLiteral>
+                <enumerationLiteral Id="04a4abba-fb86-456f-bd56-710e7daed215" name="SOUTH">
+                  <elementDefinition Id="b71aed21-9005-4501-9782-d2acb91a823d" />
+                </enumerationLiteral>
+                <enumerationLiteral Id="95d15488-2f4b-4161-bd12-d5b091d0b79e" name="EAST">
+                  <elementDefinition Id="ee553b5a-7e6c-4959-b8a7-2c920664024b" />
+                </enumerationLiteral>
+                <enumerationLiteral Id="c9e349f4-f79d-4cdf-801b-05c52eb8283b" name="WEST">
+                  <elementDefinition Id="fe777c9a-d199-4ac3-b25e-de05c36f53b7" />
+                </enumerationLiteral>
+              </ownedLiterals>
+            </enumeration>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="13b793ce-762a-4d6a-b553-ff7584fa5197" name="navigation">
+        <elementDefinition Id="842ad84f-29ec-4d26-b699-52f3f5d9b7a5" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <Interface Id="07ad3d24-0d23-4f57-89af-7372385ac08f" name="Navigation" isAbstract="false" isLeaf="false">
+              <elementDefinition Id="129c0a68-deac-4e20-8677-47651da75908" />
+              <ownedOperations>
+                <operation Id="bcf43e94-bbe6-4f9a-ab36-34f50f1f1fb2" name="isNavigating" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="b42febad-a0b8-42d9-8c58-06bd7442ef4d" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="f4f3c2a4-898d-4bff-9583-39f368483643" direction="Return" isUnique="false">
+                        <elementDefinition Id="86078dea-ee22-4ccb-8876-e0162078121c" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="efe0f672-f3ff-48e9-95d8-a17e00e9523f" name="travelTo" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="57338e45-074a-4da9-a80f-f38af359c5c3" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="a77f765e-eb7b-43c0-b8ff-41dd6bf4889f" name="double x" direction="In" isUnique="false">
+                        <elementDefinition Id="c6653c92-ee9c-4f27-aa07-ff740e6d9a20" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="51bf08d0-9e74-452f-bb52-eeaee029a77a" name="double y" direction="In" isUnique="false">
+                        <elementDefinition Id="d945986e-17bc-49ba-817b-3d1cc2ca7f09" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="836ba7d0-8940-4e3d-8dc9-d4ffda61a01f" name="turnTo" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="5cf92c67-aae6-4267-a95a-f88b85ffa2cd" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="a70b5897-2ac8-44c0-b47c-9544d1db4729" name="double theta" direction="In" isUnique="false">
+                        <elementDefinition Id="260caa0c-2dba-4fbc-b886-3b3e30abb821" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperations>
+            </Interface>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="1191c812-0e6a-4f55-8b4d-e37d6b18e8ab" name="Navigator" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="41ce57df-fe28-44af-99cd-a769feb3a1f9" />
+              <suppliersInternal>
+                <interfaceRealization Id="f433bdbf-ba74-4195-846a-d1e3e1a07171">
+                  <interfaceMoniker Id="07ad3d24-0d23-4f57-89af-7372385ac08f" LastKnownName="Navigation" />
+                  <elementDefinition Id="48cf8918-b413-45ba-bb67-fe6e0368eeec" />
+                </interfaceRealization>
+              </suppliersInternal>
+              <ownedAttributesInternal>
+                <property Id="7d9cd532-51da-478e-90bf-6ade6475cf29" name="MotorController motorController" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="23489f0f-d411-43c0-a162-f9dc7c50dbce" />
+                </property>
+                <property Id="0564edd2-08a5-42a4-ba58-cf26ba9a4ad3" name="Odometer odometer" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="12ee5999-0830-4b07-8123-5dd46c45ac28" />
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="8b491735-7948-4410-a2b2-2c3a31694c4e" name="isNavigating" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="6ff9dfeb-e9a8-4c0c-851c-f5ae654de08e" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="b3bf45a0-0dda-4ac5-853f-17c90a965b6d" direction="Return" isUnique="false">
+                        <elementDefinition Id="9a457afc-f23c-4e5c-a5c8-6ca359b573af" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="22b73bbd-53d0-4c66-895a-44dbaf010dda" name="travelTo" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="8bc6e507-ed3d-4af1-855c-56a452878ba1" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="2abf6fe5-a9d5-4170-b189-7756e95dd955" name="double x" direction="In" isUnique="false">
+                        <elementDefinition Id="70017889-bea8-4ca0-9899-7529b2f2e58d" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="8adefcff-cae9-4e0e-beb6-370c0c2ed076" name="double y" direction="In" isUnique="false">
+                        <elementDefinition Id="cf9b68fb-1c20-4721-a16d-e87a7b728610" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="e5745833-e424-47a2-8eaf-211332ed7c6f" name="turnTo" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="e7f97e91-8d90-49d7-a4a3-4e4ad6a62960" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="96583c6b-c6c2-443f-9b4e-974001220a8c" name="double theta" direction="In" isUnique="false">
+                        <elementDefinition Id="e22fb7cd-4688-4c24-8b9e-63268deb5c44" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="90ee9971-73b0-49f9-89e6-167b70051cee" name="odometry">
+        <elementDefinition Id="36955065-1407-45cc-bcef-aee83a7bf1e1" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="5a1f89cb-18fd-4e8b-a9e2-c8fbab5c666c" name="AbstractOdometer" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="349a988e-4637-49d1-b7ee-ed31395cb169" />
+              <ownedOperationsInternal>
+                <operation Id="9bb65d70-3e49-4e3e-a937-6e99b7220e79" name="getX" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="5bf4ddaa-92a1-49a4-a888-645019befeeb" />
+                </operation>
+                <operation Id="7866a669-f98e-4fa0-be10-f35134a9af61" name="getY" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="285463d2-19cd-4662-aa13-6dddb9cffcc6" />
+                </operation>
+                <operation Id="581980b1-a492-4f3a-9c53-15d87d797814" name="getTheta" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="e2d803e2-9e70-4e06-9d80-f16995991f0a" />
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="8c68c8a2-d225-416d-a443-0ee207209c06" name="Odometer" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="1e35a4f0-02dc-4221-a267-c052e1c53f4f" />
+              <generalsInternal>
+                <generalization Id="d8720a4b-063a-4140-8ad2-c85d0d635b8f" isSubstitutable="false">
+                  <classMoniker Id="5a1f89cb-18fd-4e8b-a9e2-c8fbab5c666c" LastKnownName="AbstractOdometer" />
+                  <elementDefinition Id="00ee8cb4-5d13-4a89-a232-9ed87513af08" />
+                </generalization>
+              </generalsInternal>
+              <ownedAttributesInternal>
+                <property Id="55bd18c5-1d37-4f12-bb8b-92440f4658d0" name="MotorController motorController" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="531bebff-a52b-4c01-8eb6-b63cfeacaba4" />
+                </property>
+                <property Id="cd27abe8-ae6f-4bb7-8b52-740c29bab7fc" name="int x,y,theta" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="32af016f-3369-41d7-b8a5-6335a00106d6" />
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="2823495d-ea90-4986-b1d2-935f4332e0f5" name="start" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="ba93bbaa-4948-4605-9099-5502c387f27e" />
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
+    <packageHasNamedElement>
+      <referencedType Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" name="boolean" isAbstract="false" isLeaf="false" cachedFullName="boolean">
+        <elementDefinition Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasPackages>
+      <package Id="2875dc31-f163-49a4-b7ab-bf377413ab92" name="controllers">
+        <elementDefinition Id="33e101ca-eae3-4c9d-a917-7bc98585905d" />
+        <packagedElements>
+          <packageHasNamedElement>
+            <class Id="e6261810-fe5c-477e-939f-d6a7ca313eeb" name="MotorController" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="81ba74d8-fb3b-4446-aa15-f921dc344fb1" />
+              <ownedOperationsInternal>
+                <operation Id="cf6b2c30-c952-4acd-9ef1-6e03644d4976" name="getXTachometer" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="0db20929-dfb1-4f29-bfac-6fa657b80745" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="9549dbd2-f666-4499-84ce-620391c0af4c" direction="Return" isUnique="false">
+                        <elementDefinition Id="fa629ad8-699a-4b5d-996a-1c041216ac69" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="0938a6cc-010a-4eb0-94cf-ed96b7811018" LastKnownName="int" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="afe475cc-87c3-4a8f-860a-59a5ac7afca8" name="getYTachometer" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="0b6af146-6459-455b-abe8-f5364a8e3ec9" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="d7670f42-6f6e-4ff2-9559-bdf22d61584c" direction="Return" isUnique="false">
+                        <elementDefinition Id="a0a682f6-076c-4f30-bd34-5b19ca879260" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="0938a6cc-010a-4eb0-94cf-ed96b7811018" LastKnownName="int" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="34938eb1-dd5d-4742-b386-782e82cf500b" name="isNavigating" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="88ff1fe1-7147-418f-b3e1-208fa160d58e" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="93369bf2-1a29-4c92-b960-778a1f3fb23d" direction="Return" isUnique="false">
+                        <elementDefinition Id="fa3d7fc3-bd99-4b54-96e2-0ae30d867e83" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="a6a4afd8-349e-4f4e-bc69-abf009f33f1b" name="resetTachometers" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="aef45f58-1e1a-4171-8568-57d846fe7813" />
+                </operation>
+                <operation Id="76ccd99e-da61-42cd-9685-1de53542ad11" name="rotate" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="d64ee8a7-3bbe-4cba-a15e-bcc16bc16676" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="bf98dbd0-85d5-4052-9990-df87e7bce3e0" name="double degrees" direction="In" isUnique="false">
+                        <elementDefinition Id="06566da0-499a-49e0-a778-932da28a251e" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="fc4bf647-25a6-4e60-98f3-c032bcd6ff62" name="setAcceleration" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="dc3df719-afc6-4501-8acf-f61cc137b64c" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="9cca72af-9b0f-4b90-b6e0-e2073d32e23f" name="int acceleration" direction="In" isUnique="false">
+                        <elementDefinition Id="9ec17fa8-819d-44f1-bb1c-9cec53b801da" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="1d707f65-a05c-4647-ab9d-9a87a5001df9" name="setSpeed" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="d3d3c4cd-d045-46ed-8b2e-0e97c01b0eef" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="116236cc-4ef8-463a-bbfc-fea9f6554edf" name="int speed" direction="In" isUnique="false">
+                        <elementDefinition Id="2770aa3b-db6e-4f84-942c-39ca725014de" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="abd9b0d6-356c-4112-bbed-14ecc3aeee98" name="travel" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="0cdd3593-18bd-46e4-824a-bd1c6f876e5e" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="9dfd4677-812d-4d6b-a8ca-d81f2661b08a" name="double distance" direction="In" isUnique="false">
+                        <elementDefinition Id="bedb90f3-b06a-4f69-b467-1498144c2c69" />
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="2f4e9017-7a62-422b-bc34-24cd7a98127f" name="UltrasonicController" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="b6251034-6861-4f9f-a9ee-5526cfdfaa54" />
+              <ownedAttributesInternal>
+                <property Id="46cd2ea6-8f1a-4674-aee3-d80b1b39f991" name="UltrasonicSensor ultrasonicSensor" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="b23b80bd-afb3-4ee4-9aa4-4077ce7fdfeb" />
+                </property>
+              </ownedAttributesInternal>
+              <ownedOperationsInternal>
+                <operation Id="694584fd-6070-463c-b59d-5fb001a49541" name="getDistance" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="537501db-6b2b-4115-b596-71f3155d13ef" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="f3e8a258-ec23-4294-927b-d0f67ff0ca4d" direction="Return" isUnique="false">
+                        <elementDefinition Id="70a4c698-a311-46a3-b82b-ff4d85fd6445" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="0938a6cc-010a-4eb0-94cf-ed96b7811018" LastKnownName="int" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="9ea1ecc8-0d2f-4dc7-a6ad-9c1f0dff20d1" name="getTilesAhead" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="6a1c1530-6a32-411f-a48b-cf4946f21e70" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="f59bead2-0eb2-40f7-acd8-39d67f6ab800" direction="Return" isUnique="false">
+                        <elementDefinition Id="af54793a-2481-4a3b-8781-5c608fc8c012" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="0938a6cc-010a-4eb0-94cf-ed96b7811018" LastKnownName="int" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="ff59739f-5bba-486e-82ac-e02ef0fb1034" name="isBlocked" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="94bcd7fb-222e-4287-afba-76b4030b3856" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="d3b95ebf-1d39-4804-a5b2-17dac0f6ec6f" direction="Return" isUnique="false">
+                        <elementDefinition Id="0adaf597-f1a3-41a4-a157-750f22de852a" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+        </packagedElements>
+      </package>
+    </logicalClassDesignerModelHasPackages>
+    <packageHasNamedElement>
+      <referencedType Id="0938a6cc-010a-4eb0-94cf-ed96b7811018" name="int" isAbstract="false" isLeaf="false" cachedFullName="int">
+        <elementDefinition Id="487835ae-fc36-45a3-8563-019f42a728bd" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="6a106337-fac7-4b39-bf1f-b7ca0826b959" name="DPM UML Diagram">
+    <elementDefinition Id="45b8207b-7e82-4f1e-8391-3c03f41a342a" />
+  </package>
+</logicalClassDesignerModel>
