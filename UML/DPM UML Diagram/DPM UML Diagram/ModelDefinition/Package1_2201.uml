@@ -123,10 +123,116 @@
               LastKnownLocation="Package1_2201.uml" />
           </interfaceRealization>
         </suppliersInternal>
+        <targetEnds>
+          <association
+            Id="07e47434-1206-4e2b-873b-216d2b3f2d07"
+            isDerived="false"
+            sourceEndRoleName="Navigator"
+            targetEndRoleName="Odometer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="1e35a4f0-02dc-4221-a267-c052e1c53f4f"
+              LastKnownName="Odometer"
+              LastKnownLocation="Package2_2201.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a79f4a5c-c2ca-4949-b3df-14f660c442ac"
+                  name="Navigator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="4b3c8c6d-6a34-45d5-b45e-ebc56bb5f698"
+                      name="Lower"
+                      value="0" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="def5a459-b76b-4bba-a3ad-6fb159a90860"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="09fc0aa6-a2f5-4903-922d-ab855a5ffaee"
+                  name="Odometer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="9b27482b-6f7c-45ab-b7c5-d90c1299de45"
+            isDerived="false"
+            sourceEndRoleName="Navigator"
+            targetEndRoleName="MotorController"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="81ba74d8-fb3b-4446-aa15-f921dc344fb1"
+              LastKnownName="MotorController"
+              LastKnownLocation="Package_2217.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4872c586-89d7-417a-b9b6-f6434dbda15e"
+                  name="Navigator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6052d195-351c-47b3-9694-b81d69334046"
+                  name="MotorController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="e20bd99e-26ea-4a6c-abef-459de8bd5963"
+                      name="Lower"
+                      value="2" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="474610ee-6eb2-48b7-8d66-550b3425c8ce"
+                      name="Upper"
+                      value="2" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="23489f0f-d411-43c0-a162-f9dc7c50dbce"
-            name="MotorController motorController"
+            name="motorController"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -134,10 +240,17 @@
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="f04b6d3d-02bb-4774-aea8-d69a0dc8469c"
+                LastKnownName="MotorController"
+                LastKnownLocation="Package2_2201.uml" />
+            </type_NamedElement>
+          </property>
           <property
             Id="12ee5999-0830-4b07-8123-5dd46c45ac28"
-            name="Odometer odometer"
+            name="odometer"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -145,7 +258,14 @@
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="bd6d26f2-8d84-474d-a04d-f1e2e925c6b7"
+                LastKnownName="Odometer"
+                LastKnownLocation="Package1_2201.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -215,8 +335,300 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation
+            Id="c11bb04a-660e-4810-a627-e093c5ba20e6"
+            name="getOldTheta"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ebb57662-2724-4dfe-a0cc-9e89e570f431"
+            name="run"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="4e69fa1c-7ef7-4c7f-b905-68c6dc916115"
+            name="setLocation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e71bb9d3-8361-4164-bb64-09b7282d0064"
+                  name="Vector v"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ca3fd139-f95f-428d-a3f5-784fc75d4d3a"
+            name="travelDistance"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3e009e65-b392-472a-a86a-ba4dd934bf3c"
+                  name="double distance"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bd9fd7c8-c0d2-43d9-82d8-83642cf8d5b6"
+            name="travelWithoutWait"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="02b0e6f3-1000-4bf1-a4db-ca99040f4dcb"
+                  name="Vector vector"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="bd6d26f2-8d84-474d-a04d-f1e2e925c6b7"
+        name="Odometer" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6393f17c-a7f6-4f51-9509-21a4ee3bf62a"
+        name="BangBangController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="92874d24-60e0-4f32-9563-05aa800c461e">
+            <interfaceMoniker
+              Id="5a106fc0-afd9-4f75-a72b-7b5f05c709ff"
+              LastKnownName="NavigationController"
+              LastKnownLocation="Package1_2201.uml" />
+          </interfaceRealization>
+          <dependency
+            Id="2925124b-4486-4ce6-9fc6-dffa69731542">
+            <classMoniker
+              Id="6a2ace57-64ac-4056-8842-4714756edd8f"
+              LastKnownName="Constants"
+              LastKnownLocation="Package_1316.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="7eb045af-86b9-4bf8-98e2-9c1739991edd"
+            name="processUSData"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3c1e758b-3abb-4967-880d-e6e6ec5ffe20"
+                  name="int distance"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="88e26e0c-2a90-42db-9e4f-bcb081776d94"
+            name="readUSDistance"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d2bd41b8-321a-422c-a048-3032d7732bd4"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                      LastKnownName="int"
+                      LastKnownLocation="Package_2217.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bd4df1b6-162d-49de-b252-32aa780340a0"
+            name="readUSError"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="90fdecbc-9ee9-48fd-ad9a-2748a537d64a"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                      LastKnownName="int"
+                      LastKnownLocation="Package_2217.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b51e6f08-0b53-4245-9c1d-aff2eab8b527"
+            name="readUSSpeed"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="db4dd8e7-3f3f-4e9b-b5f9-2bc270beb4d5"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                      LastKnownName="int"
+                      LastKnownLocation="Package_2217.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="5a106fc0-afd9-4f75-a72b-7b5f05c709ff"
+        name="NavigationController"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedOperations>
+          <operation
+            Id="18c11af6-667c-41b8-9be0-5fedeb8fff8c"
+            name="processUSData"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="df71eee8-59d3-4077-8616-20630479b5b8"
+                  name="int distance"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="297d13cf-2e4e-4aa2-b561-09bc58053e86"
+            name="readUSDistance"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b340aacb-203f-41f0-9fca-df8f0dd86c1c"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                      LastKnownName="int"
+                      LastKnownLocation="Package_2217.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="9ae9d34d-a6ef-430b-ad48-9387f4c12d9b"
+            name="readUSError"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5a515986-e388-4b6e-9efe-fdbefa9444a4"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                      LastKnownName="int"
+                      LastKnownLocation="Package_2217.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ab661a40-e7ff-4aba-a228-707d4b369fc2"
+            name="readUSSpeed"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d416e99c-ed04-40c4-876e-c80944df1114"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                      LastKnownName="int"
+                      LastKnownLocation="Package_2217.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
     </packageHasNamedElement>
   </packagedElements>
 </package>

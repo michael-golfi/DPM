@@ -187,8 +187,7 @@
         <ownedAttributesInternal>
           <property
             Id="b23b80bd-afb3-4ee4-9aa4-4077ce7fdfeb"
-            name="UltrasonicSensor ultrasonicSensor"
-            visibility="Private"
+            name="ultrasonicSensor"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -196,7 +195,14 @@
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="85c50e8c-1f51-4dc7-99a5-56e351f55889"
+                LastKnownName="UltrasonicSensor"
+                LastKnownLocation="Package_2217.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -273,6 +279,110 @@
           </operation>
         </ownedOperationsInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f0f0553b-0605-433f-8a00-3c3d11b23632"
+        name="ClawController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="f09cb9be-9eb2-44bd-9f32-0b4e69c436ff"
+            name="clawMotor"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="2c9c456f-69c4-44fd-9f78-1919d734ffc4"
+                LastKnownName="Motor"
+                LastKnownLocation="Package_2217.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="762039fc-16e1-46d4-94cd-bfc0e57620c8"
+            name="pickUpBlock"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ce7b68de-763d-4623-a0c1-12a4151f1cf5"
+            name="dropBlock"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="862ef6c2-eec8-4a21-aa7c-3e9f243129b0"
+        name="ColourController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="c6a282cb-c459-4812-876d-1eb56a306cee"
+            name="colourSensor"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="38c34a3d-99a7-439f-9e68-b1af197d9ae3"
+                LastKnownName="ColorSensor"
+                LastKnownLocation="Package_1309.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="7072e4af-d246-4f21-af7f-2d7e29a147da"
+            name="isBlockDetected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="9eaac7c7-bba6-4134-9f59-d69daa6fa07f"
+            name="getBlockColor"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="85c50e8c-1f51-4dc7-99a5-56e351f55889"
+        name="UltrasonicSensor" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="2c9c456f-69c4-44fd-9f78-1919d734ffc4"
+        name="Motor" />
     </packageHasNamedElement>
   </packagedElements>
 </package>

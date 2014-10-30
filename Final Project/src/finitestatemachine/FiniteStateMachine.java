@@ -682,6 +682,7 @@ public class FiniteStateMachine extends Thread
 	public void run() {
 		switch (currentState) {
 			case Orienting:
+				//TODO: handle state				
 				break;
 			case NavigatingToBlocks:
 				break;

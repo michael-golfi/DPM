@@ -19,7 +19,23 @@
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="735436de-1b10-432e-b00f-6b20384bee18"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="2c383ce9-78b1-4b15-9e40-8f7157eab786"
+                      LastKnownName="double"
+                      LastKnownLocation="Package2_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="285463d2-19cd-4662-aa13-6dddb9cffcc6"
             name="getY"
@@ -27,10 +43,112 @@
             isStatic="false"
             isAbstract="false"
             concurrency="Sequential"
-            isQuery="false" />
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ed98810a-7af6-49cf-a4cb-ef5d8d24caa7"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="2c383ce9-78b1-4b15-9e40-8f7157eab786"
+                      LastKnownName="double"
+                      LastKnownLocation="Package2_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
           <operation
             Id="e2d803e2-9e70-4e06-9d80-f16995991f0a"
             name="getTheta"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b57ccaa8-754a-4d76-8be4-4cc99b4507ae"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="2c383ce9-78b1-4b15-9e40-8f7157eab786"
+                      LastKnownName="double"
+                      LastKnownLocation="Package2_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="508210d5-26fb-4774-82e2-e37bfdca5fa2"
+            name="setY"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1b25f75f-81c7-4437-9812-52cf3361a776"
+                  name="double y"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="251ef4f6-45ca-4e7d-a058-d666b4aa02c7"
+            name="setX"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7d1bc0f7-5fe9-4ced-bdeb-2f43ac975318"
+                  name="double x"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8d7c2353-b518-4719-a26d-d852890c5925"
+            name="setTheta"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5f37fc2c-d397-4e75-813b-7ffa4be5bcb7"
+                  name="double theta"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="a8719645-748c-49f1-990a-a157343f54bc"
+            name="updateOdometer"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3977a6a2-a7e1-4cc1-93a2-4ea0bcd4cc92"
+            name="run"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -46,9 +164,18 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="2d41ec74-0399-4c5a-ab5d-1bb83c33d435">
+            <classMoniker
+              Id="6a2ace57-64ac-4056-8842-4714756edd8f"
+              LastKnownName="Constants"
+              LastKnownLocation="Package_1316.uml" />
+          </dependency>
+        </suppliersInternal>
         <generalsInternal>
           <generalization
-            Id="00ee8cb4-5d13-4a89-a232-9ed87513af08"
+            Id="8d2a121b-c6f3-41f2-8c23-78c47a083fa2"
             isSubstitutable="false">
             <classMoniker
               Id="349a988e-4637-49d1-b7ee-ed31395cb169"
@@ -59,7 +186,7 @@
         <ownedAttributesInternal>
           <property
             Id="531bebff-a52b-4c01-8eb6-b63cfeacaba4"
-            name="MotorController motorController"
+            name="motorController"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -67,10 +194,17 @@
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="f04b6d3d-02bb-4774-aea8-d69a0dc8469c"
+                LastKnownName="MotorController"
+                LastKnownLocation="Package2_2201.uml" />
+            </type_NamedElement>
+          </property>
           <property
             Id="32af016f-3369-41d7-b8a5-6335a00106d6"
-            name="int x,y,theta"
+            name="y"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -78,7 +212,50 @@
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                LastKnownName="int"
+                LastKnownLocation="Package_2217.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="418f50f6-3b75-4133-b3ad-00c9a4843215"
+            name="x"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                LastKnownName="int"
+                LastKnownLocation="Package_2217.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="f0a7fc61-b298-468f-ae2d-8aac7d3caa4f"
+            name="theta"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="487835ae-fc36-45a3-8563-019f42a728bd"
+                LastKnownName="int"
+                LastKnownLocation="Package_2217.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -89,8 +266,288 @@
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="b3848d6f-c222-478c-9fee-6ac5e2d3e4ba"
+            name="calculateX"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d7513a9a-6976-4fbb-81c1-7155ab07629c"
+            name="calculateY"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="bbb99058-ec3d-491b-a539-29c55d11c6d5"
+            name="calculateTheta"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="bd30c78c-3cee-465d-ad27-42f3afc42ce5"
+            name="waitForPeriodEnd"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="faf1341e-a030-4dbe-b106-ad43098a2ddc"
+        name="iny" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="f04b6d3d-02bb-4774-aea8-d69a0dc8469c"
+        name="MotorController" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="2c383ce9-78b1-4b15-9e40-8f7157eab786"
+        name="double" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="9a0051ae-d8e1-4b36-a917-a5777ea9e9c5"
+        name="OdometerCorrection"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="30dfd9d0-902e-4ffb-95f0-79b08b916cbe"
+            isDerived="false"
+            sourceEndRoleName="OdometerCorrection"
+            targetEndRoleName="Odometer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="1e35a4f0-02dc-4221-a267-c052e1c53f4f"
+              LastKnownName="Odometer"
+              LastKnownLocation="Package2_2201.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c00cf190-34f7-4ef5-b2af-6594b5c4fb61"
+                  name="OdometerCorrection"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="80def638-3ac7-4bf1-b59e-c5c08b065fcb"
+                  name="Odometer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b8364be8-b202-484d-b130-ca586e854ff6"
+            isDerived="false"
+            sourceEndRoleName="OdometerCorrection"
+            targetEndRoleName="ColourController"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="862ef6c2-eec8-4a21-aa7c-3e9f243129b0"
+              LastKnownName="ColourController"
+              LastKnownLocation="Package_2217.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a46b55e7-2022-4b01-95ce-3d2ef1b8cbdd"
+                  name="OdometerCorrection"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="055cd76a-7ce9-4ae2-877b-0ac706183327"
+                      name="Lower"
+                      value="0" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="038c4ad7-0695-4476-9e1b-9621a26a97b5"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="991305e4-0cfb-4eaf-801a-bb788d6d2449"
+                  name="ColourController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="e846c0c7-7163-4b08-afed-3681eff003da"
+            name="colourSensor"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="38c34a3d-99a7-439f-9e68-b1af197d9ae3"
+                LastKnownName="ColorSensor"
+                LastKnownLocation="Package_1309.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="a38ba7eb-9141-4d1f-a850-61c8f0afe2d6"
+            name="odometer"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <classMoniker
+                Id="1e35a4f0-02dc-4221-a267-c052e1c53f4f"
+                LastKnownName="Odometer"
+                LastKnownLocation="Package2_2201.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="dd474d05-056f-48dd-b9f4-7b0decc6449b"
+            name="lightSensorValue"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="2c383ce9-78b1-4b15-9e40-8f7157eab786"
+                LastKnownName="double"
+                LastKnownLocation="Package2_2201.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="a0aa83e0-6494-4fb4-bb20-7cbb33b84d5e"
+            name="gridLines"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="f308e461-a59d-479c-af00-76d94e413241"
+                LastKnownName="double[]"
+                LastKnownLocation="Package2_2201.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="232dad06-757a-4433-aa04-7be8c4482765"
+            name="getClosestGirdLine"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c10ff81a-1064-49b9-bf5f-4c60f97f7a81"
+                  name="double x"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6bf028ed-b976-45a1-adf9-6d26eccc9b03"
+            name="run"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="72fe7c5f-142a-4fef-8254-980b607774f3"
+            name="getLightSensorValue"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ab14bb0e-186f-4ed4-98d0-3b5e1ab401c7"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="2c383ce9-78b1-4b15-9e40-8f7157eab786"
+                      LastKnownName="double"
+                      LastKnownLocation="Package2_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="f308e461-a59d-479c-af00-76d94e413241"
+        name="double[]" />
     </packageHasNamedElement>
   </packagedElements>
 </package>

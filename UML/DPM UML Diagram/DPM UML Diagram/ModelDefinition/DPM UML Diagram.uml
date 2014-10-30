@@ -42,6 +42,36 @@
         LastKnownName="controllers"
         LastKnownLocation="Package_2217.uml" />
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="bb7f5cc9-8aed-4df0-9243-0d223933526a"
+        LastKnownName="finiteStateMachine"
+        LastKnownLocation="Package_1821.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="d0056366-d579-446f-a977-ee312ba36ede"
+        LastKnownName="default"
+        LastKnownLocation="Package_1836.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="0758065f-c915-436a-8e82-ca1cfc52691e"
+        LastKnownName="blockHandling"
+        LastKnownLocation="Package_1309.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="39799069-ba04-4119-97de-1c8e87d207b6"
+        LastKnownName="constants"
+        LastKnownLocation="Package_1316.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="da3254f7-81e5-453c-bf69-29fe4163a52b"
+        LastKnownName="utils"
+        LastKnownLocation="Package_1324.uml" />
+    </packageHasNamedElement>
   </packagedElements>
   <primitiveType
     Id="220a3521-e091-4221-bae9-3ef9018e845c"

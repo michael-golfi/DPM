@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="bb7f5cc9-8aed-4df0-9243-0d223933526a"
+  name="finiteStateMachine" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="457971f7-a743-44b3-9561-5a77f5de7c50"
+        name="State"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="3ef2258d-1f14-4b87-9fa4-08a3ac5e193d"
+            name="Orienting" />
+          <enumerationLiteral
+            Id="3a9bfa5a-f4d2-4aa0-910c-e931b1999d43"
+            name="NavigatingToBlocks" />
+          <enumerationLiteral
+            Id="31374642-3a2e-4f72-97cd-6ca263b44c41"
+            name="FindingBlocks" />
+          <enumerationLiteral
+            Id="37f2a1a1-ba4b-45f4-b9f5-128565de0603"
+            name="PickingUpBlock" />
+          <enumerationLiteral
+            Id="f6633098-cf07-4379-86d2-386b684ff93d"
+            name="NavigatingToDropOff" />
+          <enumerationLiteral
+            Id="34247a6c-b45f-4ba5-962b-ac9feabc87e8"
+            name="DroppingOffBlock" />
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4530ecb5-2416-4ea5-8041-c0a1c46d14dc"
+        name="FiniteStateMachine"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="60da30ee-cd4b-49d7-97d2-d4d6495dc251"
+            isDerived="false"
+            sourceEndRoleName="FiniteStateMachine"
+            targetEndRoleName="State"
+            isLeaf="false"
+            isAbstract="false">
+            <enumerationMoniker
+              Id="457971f7-a743-44b3-9561-5a77f5de7c50"
+              LastKnownName="State"
+              LastKnownLocation="Package_1821.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1410f3c0-091b-46b8-a46b-5d668dd22f33"
+                  name="FiniteStateMachine"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="54098bb9-e62b-400b-a20a-d065ff3bde61"
+                  name="State"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="cb9ec05c-1bb5-4d5c-ad39-0521c75b4d27"
+            isDerived="false"
+            sourceEndRoleName="FiniteStateMachine"
+            targetEndRoleName="Orient"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7a7ce8a4-d984-45b6-b14a-474de4e00ec6"
+              LastKnownName="Orient"
+              LastKnownLocation="Package_2201.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="db372bcf-4f48-4ec6-9874-32cba32cc729"
+                  name="FiniteStateMachine"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="926ca0a0-bfbc-4d7e-9b3a-53a13879d67c"
+                  name="Orient"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="c56a70c8-3bba-4763-bd43-5eada305bf9a"
+            isDerived="false"
+            sourceEndRoleName="FiniteStateMachine"
+            targetEndRoleName="PathFinder"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="2c56ef8c-582f-4813-9749-51f17132f195"
+              LastKnownName="PathFinder"
+              LastKnownLocation="Package_2201.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6189790a-7f35-4379-aa3a-6c9d57763e2e"
+                  name="FiniteStateMachine"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5c921652-fb27-461e-8511-d2a1b0391158"
+                  name="PathFinder"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="b717795c-3052-442a-a9f9-f8e2a9cdba13"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="0a25fbbd-180a-49a3-9757-d7e6ab29fc7f"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b3adbda1-f74e-4fbe-8a44-2f8b2e61fd26"
+            isDerived="false"
+            sourceEndRoleName="FiniteStateMachine"
+            targetEndRoleName="BlockDetector"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="822d185c-882f-4d0d-9124-c1621f06d0cf"
+              LastKnownName="BlockDetector"
+              LastKnownLocation="Package_1309.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="993316ad-f44e-4a1d-a3d9-3c45320c6b7f"
+                  name="FiniteStateMachine"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bf0697c5-dd56-49c9-a5fd-0f8b33b9d749"
+                  name="BlockDetector"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="2912d0a6-d846-4905-b6fc-eaa4747cce71"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="785cab43-440b-4a25-8aa4-04beaa481a46"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="bae40c2f-0bda-4bf7-abb5-474f87ec7ad7"
+            isDerived="false"
+            sourceEndRoleName="FiniteStateMachine"
+            targetEndRoleName="FindingBlock"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="e4cb95c1-0d1d-43b4-83f6-733db3b53c57"
+              LastKnownName="FindingBlock"
+              LastKnownLocation="Package_1309.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="450cfa1b-47ed-4f11-927f-e81850180963"
+                  name="FiniteStateMachine"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="501a9734-04bc-4285-92b6-26ccbfd8c9a5"
+                  name="FindingBlock"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ca103468-c8b4-4581-8b54-87374b00680a"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="ef548ec1-a02a-418a-a0f2-8920eb7c557e"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="c70313b0-b1a1-41b7-b5f2-d9d1435ef63c"
+            name="CurrentState"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <enumerationMoniker
+                Id="457971f7-a743-44b3-9561-5a77f5de7c50"
+                LastKnownName="State"
+                LastKnownLocation="Package_1821.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6b2bfb9e-2e13-45c3-90e2-cb11fbb1f2af"
+            name="run"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="96e43e09-8b8e-41f3-bee1-37ecb2c275f5"
+                  direction="Return" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="04ff42f6-93e4-403c-8d8c-1c0a27da1257"
+            name="changeState"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="12dfcce3-d415-4b03-a756-fc73f1b84608"
+                  name="State newState"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="05b8d0c4-d868-484b-9913-baf8dd997303"
+            name="initiateOrienting"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d0b3d755-34e1-47f6-bebe-4b51207ff08f"
+            name="initiateNavigatingToBlocks"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="01fca734-29e8-4826-8bc4-53c3d9b10cc9"
+            name="initiateFindingBlocks"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="db937fd7-c469-4b68-87de-fa99c2621f03"
+            name="initiatePickingUpBlock"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="bf3f048f-1443-478c-ab1a-d77f32a37b8d"
+            name="initiateNavigatingToDropOff"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3860f17d-3321-439b-9282-92a304260069"
+            name="initiateDroppingOffBlock"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
