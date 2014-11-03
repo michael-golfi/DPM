@@ -1,5 +1,11 @@
 package main;
 
+import navigation.Navigator;
+import controller.MotorController;
+import odometry.Odometer;
+import lejos.nxt.Button;
+import lejos.nxt.comm.RConsole;
+
 /**
  * 
  * DPM Final Project Group 15
@@ -17,7 +23,23 @@ public class Main
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
+		RConsole.open();
+		
+		RConsole.println("Bluetooth working!");
+		
+		
+		MotorController motorController = new MotorController();
+		Odometer odometer = new Odometer(motorController);
+		Navigator navigator = new Navigator(motorController, odometer);
+		odometer.start();
+		
+		navigator.travelTo(60,30);
+		navigator.travelTo(30,30);
+		
+		Button.waitForAnyPress();
+		
+		RConsole.close();
+		
 	}
 
 }

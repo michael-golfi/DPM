@@ -678,26 +678,39 @@ package finitestatemachine;
 public class FiniteStateMachine extends Thread
 {
 	private State currentState;
+	
+	private EventHandler eventHandler = new EventHandler();
 
 	public void run() {
 		switch (currentState) {
 			case Orienting:
-				//TODO: handle state				
+				if(eventHandler.handleOrienteering())
+					changeState(State.NavigatingToBlocks);
 				break;
 			case NavigatingToBlocks:
+				if(eventHandler.handleNavigatingToBlocks())
+					changeState(State.FindingBlocks);
 				break;
 			case FindingBlocks:
+				if(eventHandler.handleFindingBlocks())
+					changeState(State.PickingUpBlock);
 				break;
 			case PickingUpBlock:
+				if(eventHandler.handlePickingUpBlock())
+					changeState(State.NavigatingToDropoff);
 				break;
 			case NavigatingToDropoff:
+				if(eventHandler.handleNavigatingToDropOff())
+					changeState(State.DroppingOffBlock);
 				break;
 			case DroppingOffBlock:
+				if(eventHandler.handleDroppingOffBlock())
+					changeState(State.NavigatingToBlocks);
 				break;
 		}
 	}
 
-	public void changeState(State newState) {
+	private void changeState(State newState) {
 		synchronized (currentState)
 		{
 			currentState = newState;

@@ -11,21 +11,23 @@ import constants.Constants;
  * 
  * Main - Oct 18, 2014
  * 
- * <p> <b>Description:</b> </p> <ul> Provides abstraction layer for motors. A
- * common interface to perform simple tasks on each motor. Simplifies left,
- * right turns and travelling distances. </ul>
+ * <p>
+ * <b>Description:</b>
+ * </p>
+ * <ul>
+ * Provides abstraction layer for motors. A common interface to perform simple
+ * tasks on each motor. Simplifies left, right turns and travelling distances.
+ * </ul>
  * 
  */
-public class MotorController
-{
-	private NXTRegulatedMotor	leftMotor	= Motor.A, rightMotor = Motor.B,
+public class MotorController {
+	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B,
 			sensorMotor = Motor.C;
 
 	/**
 	 * A controller to provide common motor functionality
 	 */
-	public MotorController()
-	{
+	public MotorController() {
 		resetTachometers();
 	}
 
@@ -35,8 +37,7 @@ public class MotorController
 	 * @return NXTRegulatedMotor[] for both wheel motors
 	 */
 	public NXTRegulatedMotor[] getMotors() {
-		return new NXTRegulatedMotor[]
-		{ leftMotor, rightMotor };
+		return new NXTRegulatedMotor[] { leftMotor, rightMotor };
 	}
 
 	/**
@@ -93,7 +94,8 @@ public class MotorController
 	 * @param waitRight
 	 */
 	public void rotate(double theta, boolean waitLeft, boolean waitRight) {
-		int angle = LengthConverter.convertAngle(Constants.WIDTH, theta);
+		int angle = LengthConverter.convertAngle(Constants.WHEEL_RADIUS,
+				Constants.WIDTH, theta);
 		leftMotor.rotate(-angle, waitLeft);
 		rightMotor.rotate(angle, waitRight);
 	}
@@ -132,7 +134,7 @@ public class MotorController
 	 * Rotate sensor
 	 * 
 	 * @param angle
-	 *        to rotate to
+	 *            to rotate to
 	 */
 	public void rotateSensor(int angle) {
 		sensorMotor.rotateTo(angle);
@@ -156,7 +158,8 @@ public class MotorController
 	 * @param waitRight
 	 */
 	public void travel(double distance, boolean waitLeft, boolean waitRight) {
-		int converted = LengthConverter.convertDistance(distance);
+		int converted = LengthConverter.convertDistance(Constants.WHEEL_RADIUS,
+				distance);
 		leftMotor.rotate(converted, waitLeft);
 		rightMotor.rotate(converted, waitRight);
 	}

@@ -1,30 +1,25 @@
 package odometry;
 
 /**
- * 
- * An abstraction layer of an odometer. Provides common functionality to be used
- * by an odometer: including holding position values (x, y, theta) and a
- * threaded updating loop
- * 
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
- * 
  */
-public abstract class AbstractOdometer extends Thread
-{
-	protected Object	lock	= new Object();
-	protected double	x		= 0.0, y = 0.0, theta = 0.0;
+public abstract class AbstractOdometer extends Thread {
+	protected Object lock = new Object();
+	protected double x = 0.0, y = 0.0, theta = 0.0;
 
 	/**
 	 * Gets the position of x, y, and theta
 	 */
-	public double[] getPosition() {
+	public double[] getPosition(boolean[] update) {
 		double[] position = new double[3];
-		synchronized (lock)
-		{
-			position[0] = x;
-			position[1] = y;
-			position[2] = theta;
+		synchronized (lock) {
+			if (update[0])
+				position[0] = x;
+			if (update[1])
+				position[1] = y;
+			if (update[2])
+				position[2] = theta / (2 * 3.141592) * 360;
 		}
 		return position;
 	}
@@ -32,7 +27,7 @@ public abstract class AbstractOdometer extends Thread
 	/**
 	 * Gets the rotation
 	 * 
-	 * @return theta
+	 * @return
 	 */
 	public double getTheta() {
 		return theta;
@@ -41,12 +36,11 @@ public abstract class AbstractOdometer extends Thread
 	/**
 	 * Gets the X position
 	 * 
-	 * @return x
+	 * @return
 	 */
 	public double getX() {
 		double result;
-		synchronized (lock)
-		{
+		synchronized (lock) {
 			result = x;
 		}
 		return result;
@@ -55,12 +49,11 @@ public abstract class AbstractOdometer extends Thread
 	/**
 	 * Gets the Y position
 	 * 
-	 * @return y
+	 * @return
 	 */
 	public double getY() {
 		double result;
-		synchronized (lock)
-		{
+		synchronized (lock) {
 			result = y;
 		}
 		return result;
@@ -70,8 +63,7 @@ public abstract class AbstractOdometer extends Thread
 	 * Updates the odometer in a separate thread
 	 */
 	public void run() {
-		while (true)
-		{
+		while (true) {
 			updateOdometer();
 		}
 	}
@@ -80,23 +72,13 @@ public abstract class AbstractOdometer extends Thread
 	 * Sets the position of x, y, and theta
 	 * 
 	 * @param position
+	 * @param update
 	 */
-	public void setPosition(double[] position) {
-		synchronized (lock)
-		{
-			x = position[0];
-			y = position[1];
-			theta = position[2];
-		}
-	}
-
-	/**
-	 * Reset the odometer position to 0
-	 */
-	public void resetPosition() {
-		synchronized (lock)
-		{
-			x = y = theta = 0.0;
+	public void setPosition(double[] position, boolean[] update) {
+		synchronized (lock) {
+			x = (update[0]) ? position[0] : x;
+			y = (update[1]) ? position[1] : y;
+			theta = (update[2]) ? position[2] : theta;
 		}
 	}
 
@@ -106,8 +88,7 @@ public abstract class AbstractOdometer extends Thread
 	 * @param theta
 	 */
 	public void setTheta(double theta) {
-		synchronized (lock)
-		{
+		synchronized (lock) {
 			this.theta = theta;
 		}
 	}
@@ -118,8 +99,7 @@ public abstract class AbstractOdometer extends Thread
 	 * @param x
 	 */
 	public void setX(double x) {
-		synchronized (lock)
-		{
+		synchronized (lock) {
 			this.x = x;
 		}
 	}
@@ -130,19 +110,9 @@ public abstract class AbstractOdometer extends Thread
 	 * @param y
 	 */
 	public void setY(double y) {
-		synchronized (lock)
-		{
+		synchronized (lock) {
 			this.y = y;
 		}
-	}
-
-	public double getThetaDegrees() {
-		double angle;
-		synchronized (lock)
-		{
-			angle = Math.toDegrees(theta);
-		}
-		return angle % 360.0;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package navigation;
 
+import lejos.nxt.comm.RConsole;
 import odometry.Odometer;
 import utils.Vector;
 import utils.VectorOperations;
@@ -20,6 +21,7 @@ public class Navigator extends Thread implements Navigation {
 	 * A navigator that goes to specific points in the x,y plane
 	 * 
 	 * @param motorController
+	 * @param ultrasonicSensor
 	 * @param odometer
 	 */
 	public Navigator(MotorController motorController, Odometer odometer) {
@@ -31,7 +33,7 @@ public class Navigator extends Thread implements Navigation {
 	 * @return the last angle measured by the odometer
 	 */
 	private double getOldTheta() {
-		return odometer.getTheta();
+		return odometer.getPosition(new boolean[] { true, true, true })[2];
 	}
 
 	@Override
@@ -47,10 +49,6 @@ public class Navigator extends Thread implements Navigation {
 		travelTo(new Vector(60, 0));
 	}
 
-	public void setLocation(Vector v){
-		currentDestination = v;
-	}
-	
 	/**
 	 * Travel by given distance
 	 * 
@@ -72,10 +70,22 @@ public class Navigator extends Thread implements Navigation {
 	 * @param vector
 	 */
 	private void travelTo(Vector vector) {
+		RConsole.println("Current Destination: " + vector);
+		RConsole.println("Current Position: " + currentPosition);
+		
 		Vector difference = VectorOperations.subtract(vector, currentPosition);
+		
+		RConsole.println("Difference Angle: " + difference.getAngle());
+		RConsole.println("Old Angle: " + getOldTheta());
+		
 		turnTo(difference.getAngle() - getOldTheta());
 		motorController.travel(difference.getLength());
-		currentPosition = new Vector(odometer.getY(), odometer.getX());
+		
+		double x = odometer.getX();
+		double y = odometer.getY();
+		
+		RConsole.println("Odometer x,y" + x +", " + y);
+		currentPosition = new Vector(y, x);
 	}
 
 	/**

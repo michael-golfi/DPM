@@ -85,8 +85,6 @@ public class StochasticOrienter extends Thread
 		ArrayList<Vector> path = PathFinder.getPath(Map.mapTranspose,
 				currentPosition.xTile, currentPosition.yTile);
 
-		navigator.setLocation(path.remove(0));
-
 		for (Vector position : path)
 			navigator.travelTo(position.getX() * Constants.TILE_LENGTH - 15,
 					position.getY() * Constants.TILE_LENGTH - 15);

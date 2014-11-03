@@ -37,12 +37,12 @@ public class Constants
 	/**
 	 * Wheel radius: {@value} cm
 	 */
-	public static final double WHEEL_RADIUS = 2.10;
+	public static final double WHEEL_RADIUS = 1.68;
 
 	/**
 	 * Robot tire-to-tire width: {@value} cm
 	 */
-	public static final double WIDTH = 15.19;
+	public static final double WIDTH = 19;//18.1
 
 	/**
 	 * The period of Correction for the Odometer: {@value}
