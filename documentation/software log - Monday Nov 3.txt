@@ -1,0 +1,4 @@
+Software team meeting - Nov 3. 4pm-5pm
+
+-The software team discussed the addition of the EventHandler class that will handle the calls based on the state of the finite state machine. The event handler will return boolean values depending on if the event was successful. This ensures that the previous event was completed before calling the next. In the case where an event is unsuccessful, a unique error suite can be implemented for each event to backtrack through the event sequence. 
+-The software team also split up the coding work load for the week. Yarden will work on the Orientation package and build all appropriate objects and methods, while Michael will work on the overall operation and communication between states.
