@@ -1641,99 +1641,21 @@
                   </relationshipOwnedElementsInternal>
                   <elementDefinition Id="60da30ee-cd4b-49d7-97d2-d4d6495dc251" />
                 </association>
-                <association Id="223184da-89c7-4841-b94b-f62cbe43c2d5" isDerived="false" sourceEndRoleName="FiniteStateMachine" targetEndRoleName="Orient" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="13c576d1-a906-402e-b357-560d027e7d5d" LastKnownName="Orient" />
+                <association Id="994f28fa-2ac3-47b5-84f7-0ab40c874528" isDerived="false" sourceEndRoleName="FiniteStateMachine" targetEndRoleName="EventHandler" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="319d109c-f5a4-422f-beaa-4d51ba239780" LastKnownName="EventHandler" />
                   <relationshipOwnedElementsInternal>
                     <associationHasOwnedEnds>
-                      <memberEnd Id="9311feb2-42df-4f39-8791-ee677f65ba26" name="FiniteStateMachine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="db372bcf-4f48-4ec6-9874-32cba32cc729" />
+                      <memberEnd Id="56e275d7-c685-4024-bc45-b7ac10b12265" name="FiniteStateMachine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="6b56840d-ca43-4dc8-a5f3-372f959416a5" />
                       </memberEnd>
                     </associationHasOwnedEnds>
                     <associationHasOwnedEnds>
-                      <memberEnd Id="660846a7-f852-4aca-a56d-b31449cf26ec" name="Orient" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <elementDefinition Id="926ca0a0-bfbc-4d7e-9b3a-53a13879d67c" />
+                      <memberEnd Id="ab93ee01-053a-4819-8c2c-79903868a09f" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                        <elementDefinition Id="b9b0c9d9-c310-41a2-be92-3eef2a792cfd" />
                       </memberEnd>
                     </associationHasOwnedEnds>
                   </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="cb9ec05c-1bb5-4d5c-ad39-0521c75b4d27" />
-                </association>
-                <association Id="3997b9ab-e227-4696-bb12-17bfa289b4de" isDerived="false" sourceEndRoleName="FiniteStateMachine" targetEndRoleName="PathFinder" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="3e9df7a6-e5b9-4962-bd12-2263170350df" LastKnownName="PathFinder" />
-                  <relationshipOwnedElementsInternal>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="0c517ba0-79d5-4df4-ab8f-31f805762768" name="FiniteStateMachine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="6189790a-7f35-4379-aa3a-6c9d57763e2e" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="0dbdb40f-406b-4b37-a50a-d2606b5be158" name="PathFinder" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <lowerValueInternal>
-                          <literalString Id="4899d0cb-3065-4cde-8664-8688979d672e" name="Lower" value="1">
-                            <elementDefinition Id="b717795c-3052-442a-a9f9-f8e2a9cdba13" />
-                          </literalString>
-                        </lowerValueInternal>
-                        <upperValueInternal>
-                          <literalString Id="aad1ca71-2af5-4ae8-adb1-efa7cb1302cf" name="Upper" value="*">
-                            <elementDefinition Id="0a25fbbd-180a-49a3-9757-d7e6ab29fc7f" />
-                          </literalString>
-                        </upperValueInternal>
-                        <elementDefinition Id="5c921652-fb27-461e-8511-d2a1b0391158" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                  </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="c56a70c8-3bba-4763-bd43-5eada305bf9a" />
-                </association>
-                <association Id="e223cc42-e406-4790-a2c1-44c26bcd2640" isDerived="false" sourceEndRoleName="FiniteStateMachine" targetEndRoleName="BlockDetector" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="5e9fda16-4a62-4bae-a0a3-7ddfb4494634" LastKnownName="BlockDetector" />
-                  <relationshipOwnedElementsInternal>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="6bc1abdb-e1c1-4880-9c47-34412b03a5d4" name="FiniteStateMachine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="993316ad-f44e-4a1d-a3d9-3c45320c6b7f" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="22ada013-23cd-450e-a3c8-caaf572ebcf5" name="BlockDetector" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <lowerValueInternal>
-                          <literalString Id="ad396310-aa12-43c3-a221-a58f16762182" name="Lower" value="1">
-                            <elementDefinition Id="2912d0a6-d846-4905-b6fc-eaa4747cce71" />
-                          </literalString>
-                        </lowerValueInternal>
-                        <upperValueInternal>
-                          <literalString Id="ce48ce10-42cf-4e1b-aeb5-5ed8b487fc2c" name="Upper" value="*">
-                            <elementDefinition Id="785cab43-440b-4a25-8aa4-04beaa481a46" />
-                          </literalString>
-                        </upperValueInternal>
-                        <elementDefinition Id="bf0697c5-dd56-49c9-a5fd-0f8b33b9d749" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                  </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="b3adbda1-f74e-4fbe-8a44-2f8b2e61fd26" />
-                </association>
-                <association Id="f59c33f6-22d0-4241-bd3d-8430e767d333" isDerived="false" sourceEndRoleName="FiniteStateMachine" targetEndRoleName="FindingBlock" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="007ff695-61c7-4ba5-9ea7-476f810519e0" LastKnownName="FindingBlock" />
-                  <relationshipOwnedElementsInternal>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="658905bb-32a3-4ce2-8f30-119fe3ea8abd" name="FiniteStateMachine" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="450cfa1b-47ed-4f11-927f-e81850180963" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="db0c6e31-b56b-494b-9445-bb5a522dbcba" name="FindingBlock" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <lowerValueInternal>
-                          <literalString Id="a1cabd5e-2f18-4c16-a7a9-ff2b98e47a4a" name="Lower" value="1">
-                            <elementDefinition Id="ca103468-c8b4-4581-8b54-87374b00680a" />
-                          </literalString>
-                        </lowerValueInternal>
-                        <upperValueInternal>
-                          <literalString Id="e506345e-8a13-4e7d-9f26-4755ddb54952" name="Upper" value="*">
-                            <elementDefinition Id="ef548ec1-a02a-418a-a0f2-8920eb7c557e" />
-                          </literalString>
-                        </upperValueInternal>
-                        <elementDefinition Id="501a9734-04bc-4285-92b6-26ccbfd8c9a5" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                  </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="bae40c2f-0bda-4bf7-abb5-474f87ec7ad7" />
+                  <elementDefinition Id="5fef627d-ff2d-4731-87c2-974f9c77b00c" />
                 </association>
               </targetEnds>
               <ownedAttributesInternal>
@@ -1782,6 +1704,187 @@
                 </operation>
                 <operation Id="f91f49d1-3c91-4c4d-9fc9-a24421856e83" name="initiateDroppingOffBlock" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="3860f17d-3321-439b-9282-92a304260069" />
+                </operation>
+              </ownedOperationsInternal>
+            </class>
+          </packageHasNamedElement>
+          <packageHasNamedElement>
+            <class Id="319d109c-f5a4-422f-beaa-4d51ba239780" name="EventHandler" isAbstract="false" isLeaf="false" isActiveClass="false">
+              <elementDefinition Id="00d1a391-f0e1-4d33-8812-4ff9d86abe25" />
+              <targetEnds>
+                <association Id="f59c33f6-22d0-4241-bd3d-8430e767d333" isDerived="false" sourceEndRoleName="EventHandler" targetEndRoleName="FindingBlock" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="007ff695-61c7-4ba5-9ea7-476f810519e0" LastKnownName="FindingBlock" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="658905bb-32a3-4ce2-8f30-119fe3ea8abd" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="450cfa1b-47ed-4f11-927f-e81850180963" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="db0c6e31-b56b-494b-9445-bb5a522dbcba" name="FindingBlock" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <lowerValueInternal>
+                          <literalString Id="a1cabd5e-2f18-4c16-a7a9-ff2b98e47a4a" name="Lower" value="1">
+                            <elementDefinition Id="ca103468-c8b4-4581-8b54-87374b00680a" />
+                          </literalString>
+                        </lowerValueInternal>
+                        <upperValueInternal>
+                          <literalString Id="e506345e-8a13-4e7d-9f26-4755ddb54952" name="Upper" value="*">
+                            <elementDefinition Id="ef548ec1-a02a-418a-a0f2-8920eb7c557e" />
+                          </literalString>
+                        </upperValueInternal>
+                        <elementDefinition Id="501a9734-04bc-4285-92b6-26ccbfd8c9a5" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="bae40c2f-0bda-4bf7-abb5-474f87ec7ad7" />
+                </association>
+                <association Id="e223cc42-e406-4790-a2c1-44c26bcd2640" isDerived="false" sourceEndRoleName="EventHandler" targetEndRoleName="BlockDetector" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="5e9fda16-4a62-4bae-a0a3-7ddfb4494634" LastKnownName="BlockDetector" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="6bc1abdb-e1c1-4880-9c47-34412b03a5d4" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="993316ad-f44e-4a1d-a3d9-3c45320c6b7f" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="22ada013-23cd-450e-a3c8-caaf572ebcf5" name="BlockDetector" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <lowerValueInternal>
+                          <literalString Id="ad396310-aa12-43c3-a221-a58f16762182" name="Lower" value="1">
+                            <elementDefinition Id="2912d0a6-d846-4905-b6fc-eaa4747cce71" />
+                          </literalString>
+                        </lowerValueInternal>
+                        <upperValueInternal>
+                          <literalString Id="ce48ce10-42cf-4e1b-aeb5-5ed8b487fc2c" name="Upper" value="*">
+                            <elementDefinition Id="785cab43-440b-4a25-8aa4-04beaa481a46" />
+                          </literalString>
+                        </upperValueInternal>
+                        <elementDefinition Id="bf0697c5-dd56-49c9-a5fd-0f8b33b9d749" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="b3adbda1-f74e-4fbe-8a44-2f8b2e61fd26" />
+                </association>
+                <association Id="223184da-89c7-4841-b94b-f62cbe43c2d5" isDerived="false" sourceEndRoleName="EventHandler" targetEndRoleName="Orient" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="13c576d1-a906-402e-b357-560d027e7d5d" LastKnownName="Orient" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="9311feb2-42df-4f39-8791-ee677f65ba26" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="db372bcf-4f48-4ec6-9874-32cba32cc729" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="660846a7-f852-4aca-a56d-b31449cf26ec" name="Orient" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <elementDefinition Id="926ca0a0-bfbc-4d7e-9b3a-53a13879d67c" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="cb9ec05c-1bb5-4d5c-ad39-0521c75b4d27" />
+                </association>
+                <association Id="3997b9ab-e227-4696-bb12-17bfa289b4de" isDerived="false" sourceEndRoleName="EventHandler" targetEndRoleName="PathFinder" isLeaf="false" isAbstract="false">
+                  <classMoniker Id="3e9df7a6-e5b9-4962-bd12-2263170350df" LastKnownName="PathFinder" />
+                  <relationshipOwnedElementsInternal>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="0c517ba0-79d5-4df4-ab8f-31f805762768" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                        <elementDefinition Id="6189790a-7f35-4379-aa3a-6c9d57763e2e" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                    <associationHasOwnedEnds>
+                      <memberEnd Id="0dbdb40f-406b-4b37-a50a-d2606b5be158" name="PathFinder" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                        <lowerValueInternal>
+                          <literalString Id="4899d0cb-3065-4cde-8664-8688979d672e" name="Lower" value="1">
+                            <elementDefinition Id="b717795c-3052-442a-a9f9-f8e2a9cdba13" />
+                          </literalString>
+                        </lowerValueInternal>
+                        <upperValueInternal>
+                          <literalString Id="aad1ca71-2af5-4ae8-adb1-efa7cb1302cf" name="Upper" value="*">
+                            <elementDefinition Id="0a25fbbd-180a-49a3-9757-d7e6ab29fc7f" />
+                          </literalString>
+                        </upperValueInternal>
+                        <elementDefinition Id="5c921652-fb27-461e-8511-d2a1b0391158" />
+                      </memberEnd>
+                    </associationHasOwnedEnds>
+                  </relationshipOwnedElementsInternal>
+                  <elementDefinition Id="c56a70c8-3bba-4763-bd43-5eada305bf9a" />
+                </association>
+              </targetEnds>
+              <ownedOperationsInternal>
+                <operation Id="d6950079-112c-43d6-a362-ba02a87f4342" name="handleOrienteering" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="cfd5290d-8041-4f07-b3f8-e0c311c2b4c0" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="2738e5b5-8f48-45e1-bb3a-fa4288f19a55" direction="Return" isUnique="false">
+                        <elementDefinition Id="dabbe600-7562-43f7-8944-ae71fd353800" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="a534b2d8-d707-47ba-aab9-681f8c7e9bc3" name="handleNavigatingToBlocks" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="92b563b2-6c26-4545-9334-166d5219df33" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="6e55196d-6df0-4b54-8c23-75bfc81a4f59" direction="Return" isUnique="false">
+                        <elementDefinition Id="3606baea-dece-4d2b-8a94-3d30d50c7cb0" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="21318cb9-d368-4bcb-922a-c31365c20380" name="handleFindingBlocks" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="1b83a18b-f84a-4d6b-88a6-08dd18399ba5" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="cd2d67aa-0d4d-447c-9db9-cefb9c5cda31" direction="Return" isUnique="false">
+                        <elementDefinition Id="ce11503c-258b-436c-a335-ef0ac33c2b87" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="bd09e395-993d-4b2c-83b5-87ffd358c2e6" name="handlePickingUpBlock" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="ef4db763-4067-4662-ba64-6069b06c94aa" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="d34926ad-f676-496e-8dfa-134db36faf0c" direction="Return" isUnique="false">
+                        <elementDefinition Id="93748060-8f09-464f-bf13-531b2a4930b0" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="68fcf9e6-00c6-42fd-a8dc-d121ec1bc907" name="handleNavigatingToDropOff" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="73e27597-4a0b-4bb9-8668-11fd6a3f0c5c" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="b4a26f18-b620-4252-940f-10b100cbc154" direction="Return" isUnique="false">
+                        <elementDefinition Id="e1f7fb75-b11a-4407-a81c-5841e74fd4b3" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
+                </operation>
+                <operation Id="5e9435b1-026e-4afd-af19-bce74c4bdad0" name="handleDroppingOffBlock" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+                  <elementDefinition Id="0cef3054-5fb8-44eb-9414-d57b17167ef9" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="225e2a28-cfe8-415c-b43a-7c5dbbf9dd98" direction="Return" isUnique="false">
+                        <elementDefinition Id="d190ca75-43be-4c5e-879d-876d3ccd2eef" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="daf81a33-8819-49b6-a0d9-1684b3cfc836" LastKnownName="boolean" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
               </ownedOperationsInternal>
             </class>

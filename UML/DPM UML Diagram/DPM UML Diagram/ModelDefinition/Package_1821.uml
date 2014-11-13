@@ -80,197 +80,41 @@
             </relationshipOwnedElementsInternal>
           </association>
           <association
-            Id="cb9ec05c-1bb5-4d5c-ad39-0521c75b4d27"
+            Id="5fef627d-ff2d-4731-87c2-974f9c77b00c"
             isDerived="false"
             sourceEndRoleName="FiniteStateMachine"
-            targetEndRoleName="Orient"
+            targetEndRoleName="EventHandler"
             isLeaf="false"
             isAbstract="false">
             <classMoniker
-              Id="7a7ce8a4-d984-45b6-b14a-474de4e00ec6"
-              LastKnownName="Orient"
-              LastKnownLocation="Package_2201.uml" />
+              Id="00d1a391-f0e1-4d33-8812-4ff9d86abe25"
+              LastKnownName="EventHandler"
+              LastKnownLocation="Package_1821.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="db372bcf-4f48-4ec6-9874-32cba32cc729"
+                  Id="6b56840d-ca43-4dc8-a5f3-372f959416a5"
                   name="FiniteStateMachine"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
-                  aggregation="None"
+                  aggregation="Composite"
                   isComposite="false"
                   isNavigableOwned="false" />
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
                 <memberEnd
-                  Id="926ca0a0-bfbc-4d7e-9b3a-53a13879d67c"
-                  name="Orient"
+                  Id="b9b0c9d9-c310-41a2-be92-3eef2a792cfd"
+                  name="EventHandler"
                   isLeaf="false"
                   isStatic="false"
                   isReadOnly="false"
                   isDerived="false"
                   isDerivedUnion="false"
                   aggregation="None"
-                  isComposite="false" />
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="c56a70c8-3bba-4763-bd43-5eada305bf9a"
-            isDerived="false"
-            sourceEndRoleName="FiniteStateMachine"
-            targetEndRoleName="PathFinder"
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="2c56ef8c-582f-4813-9749-51f17132f195"
-              LastKnownName="PathFinder"
-              LastKnownLocation="Package_2201.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="6189790a-7f35-4379-aa3a-6c9d57763e2e"
-                  name="FiniteStateMachine"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="5c921652-fb27-461e-8511-d2a1b0391158"
-                  name="PathFinder"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="b717795c-3052-442a-a9f9-f8e2a9cdba13"
-                      name="Lower"
-                      value="1" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="0a25fbbd-180a-49a3-9757-d7e6ab29fc7f"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="b3adbda1-f74e-4fbe-8a44-2f8b2e61fd26"
-            isDerived="false"
-            sourceEndRoleName="FiniteStateMachine"
-            targetEndRoleName="BlockDetector"
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="822d185c-882f-4d0d-9124-c1621f06d0cf"
-              LastKnownName="BlockDetector"
-              LastKnownLocation="Package_1309.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="993316ad-f44e-4a1d-a3d9-3c45320c6b7f"
-                  name="FiniteStateMachine"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="bf0697c5-dd56-49c9-a5fd-0f8b33b9d749"
-                  name="BlockDetector"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="2912d0a6-d846-4905-b6fc-eaa4747cce71"
-                      name="Lower"
-                      value="1" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="785cab43-440b-4a25-8aa4-04beaa481a46"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="bae40c2f-0bda-4bf7-abb5-474f87ec7ad7"
-            isDerived="false"
-            sourceEndRoleName="FiniteStateMachine"
-            targetEndRoleName="FindingBlock"
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="e4cb95c1-0d1d-43b4-83f6-733db3b53c57"
-              LastKnownName="FindingBlock"
-              LastKnownLocation="Package_1309.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="450cfa1b-47ed-4f11-927f-e81850180963"
-                  name="FiniteStateMachine"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false" />
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="501a9734-04bc-4285-92b6-26ccbfd8c9a5"
-                  name="FindingBlock"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="ca103468-c8b4-4581-8b54-87374b00680a"
-                      name="Lower"
-                      value="1" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="ef548ec1-a02a-418a-a0f2-8920eb7c557e"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
+                  isComposite="true" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -378,6 +222,358 @@
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="00d1a391-f0e1-4d33-8812-4ff9d86abe25"
+        name="EventHandler"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="bae40c2f-0bda-4bf7-abb5-474f87ec7ad7"
+            isDerived="false"
+            sourceEndRoleName="EventHandler"
+            targetEndRoleName="FindingBlock"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="e4cb95c1-0d1d-43b4-83f6-733db3b53c57"
+              LastKnownName="FindingBlock"
+              LastKnownLocation="Package_1309.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="450cfa1b-47ed-4f11-927f-e81850180963"
+                  name="EventHandler"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="501a9734-04bc-4285-92b6-26ccbfd8c9a5"
+                  name="FindingBlock"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ca103468-c8b4-4581-8b54-87374b00680a"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="ef548ec1-a02a-418a-a0f2-8920eb7c557e"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b3adbda1-f74e-4fbe-8a44-2f8b2e61fd26"
+            isDerived="false"
+            sourceEndRoleName="EventHandler"
+            targetEndRoleName="BlockDetector"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="822d185c-882f-4d0d-9124-c1621f06d0cf"
+              LastKnownName="BlockDetector"
+              LastKnownLocation="Package_1309.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="993316ad-f44e-4a1d-a3d9-3c45320c6b7f"
+                  name="EventHandler"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bf0697c5-dd56-49c9-a5fd-0f8b33b9d749"
+                  name="BlockDetector"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="2912d0a6-d846-4905-b6fc-eaa4747cce71"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="785cab43-440b-4a25-8aa4-04beaa481a46"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="cb9ec05c-1bb5-4d5c-ad39-0521c75b4d27"
+            isDerived="false"
+            sourceEndRoleName="EventHandler"
+            targetEndRoleName="Orient"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7a7ce8a4-d984-45b6-b14a-474de4e00ec6"
+              LastKnownName="Orient"
+              LastKnownLocation="Package_2201.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="db372bcf-4f48-4ec6-9874-32cba32cc729"
+                  name="EventHandler"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="926ca0a0-bfbc-4d7e-9b3a-53a13879d67c"
+                  name="Orient"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="c56a70c8-3bba-4763-bd43-5eada305bf9a"
+            isDerived="false"
+            sourceEndRoleName="EventHandler"
+            targetEndRoleName="PathFinder"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="2c56ef8c-582f-4813-9749-51f17132f195"
+              LastKnownName="PathFinder"
+              LastKnownLocation="Package_2201.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6189790a-7f35-4379-aa3a-6c9d57763e2e"
+                  name="EventHandler"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5c921652-fb27-461e-8511-d2a1b0391158"
+                  name="PathFinder"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="b717795c-3052-442a-a9f9-f8e2a9cdba13"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="0a25fbbd-180a-49a3-9757-d7e6ab29fc7f"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="cfd5290d-8041-4f07-b3f8-e0c311c2b4c0"
+            name="handleOrienteering"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dabbe600-7562-43f7-8944-ae71fd353800"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51"
+                      LastKnownName="boolean"
+                      LastKnownLocation="Package1_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="92b563b2-6c26-4545-9334-166d5219df33"
+            name="handleNavigatingToBlocks"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3606baea-dece-4d2b-8a94-3d30d50c7cb0"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51"
+                      LastKnownName="boolean"
+                      LastKnownLocation="Package1_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1b83a18b-f84a-4d6b-88a6-08dd18399ba5"
+            name="handleFindingBlocks"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ce11503c-258b-436c-a335-ef0ac33c2b87"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51"
+                      LastKnownName="boolean"
+                      LastKnownLocation="Package1_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ef4db763-4067-4662-ba64-6069b06c94aa"
+            name="handlePickingUpBlock"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="93748060-8f09-464f-bf13-531b2a4930b0"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51"
+                      LastKnownName="boolean"
+                      LastKnownLocation="Package1_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="73e27597-4a0b-4bb9-8668-11fd6a3f0c5c"
+            name="handleNavigatingToDropOff"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e1f7fb75-b11a-4407-a81c-5841e74fd4b3"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51"
+                      LastKnownName="boolean"
+                      LastKnownLocation="Package1_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="0cef3054-5fb8-44eb-9414-d57b17167ef9"
+            name="handleDroppingOffBlock"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d190ca75-43be-4c5e-879d-876d3ccd2eef"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="d9da9ca6-cb87-4920-a1fa-0ca567000c51"
+                      LastKnownName="boolean"
+                      LastKnownLocation="Package1_2201.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>

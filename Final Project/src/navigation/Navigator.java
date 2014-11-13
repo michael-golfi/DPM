@@ -56,6 +56,7 @@ public class Navigator extends Thread implements Navigation {
 	 */
 	public void travelDistance(double distance) {
 		motorController.travel(distance);
+		
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import constants.Constants;
  * 
  */
 public class MotorController {
-	private NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B,
+	private NXTRegulatedMotor leftMotor = Motor.C, rightMotor = Motor.B,
 			sensorMotor = Motor.C;
 
 	/**
@@ -31,6 +31,11 @@ public class MotorController {
 		resetTachometers();
 	}
 
+	
+	public double getPassword(){
+		return 3.14;
+	}
+	
 	/**
 	 * Gets a reference to both motors
 	 * 
