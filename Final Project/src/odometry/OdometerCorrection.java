@@ -673,66 +673,44 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package finitestatemachine;
+package odometry;
 
-import navigation.Navigator;
-import odometry.Odometer;
-import orientation.DeterministicOrienter;
-import controller.MotorController;
-import controller.UltrasonicController;
+import lejos.nxt.ColorSensor;
 
-public class FiniteStateMachine extends Thread {
-	private State currentState;
-
-	private EventHandler eventHandler = new EventHandler();
-
-	private UltrasonicController ultrasonicController;
-	private Navigator navigator;
-	private MotorController motorController;
+/**
+ * 
+ * DPM Final Project Group 15
+ * 
+ * Main - Oct 18, 2014
+ * 
+ * <p>
+ * <b>Description:</b>
+ * </p>
+ * <ul>
+ * </ul>
+ * 
+ */
+public class OdometerCorrection extends Thread{
+	
 	private Odometer odometer;
-
-	public FiniteStateMachine() {
-		motorController = new MotorController();
-		ultrasonicController = new UltrasonicController(motorController);
-		odometer = new Odometer(motorController);
-		navigator = new Navigator(motorController, odometer);
+	private ColorSensor leftColorSensor;
+	private ColorSensor rightColorSensor;
+	
+	public OdometerCorrection(Odometer odometer){
+		this.odometer = odometer;
 	}
-
-	public void run() {
-		switch (currentState) {
-		case Orienting:
-			DeterministicOrienter orienter = new DeterministicOrienter(
-					ultrasonicController, navigator, odometer);
-			orienter.start();
-			//if (eventHandler.handleOrienteering())
-				//changeState(State.NavigatingToBlocks);
-			break;
-		case NavigatingToBlocks:
-			//if (eventHandler.handleNavigatingToBlocks())
-				//changeState(State.FindingBlocks);
-			break;
-		case FindingBlocks:
-			//if (eventHandler.handleFindingBlocks())
-				//changeState(State.PickingUpBlock);
-			break;
-		case PickingUpBlock:
-			//if (eventHandler.handlePickingUpBlock())
-				//changeState(State.NavigatingToDropoff);
-			break;
-		case NavigatingToDropoff:
-			//if (eventHandler.handleNavigatingToDropOff())
-				//changeState(State.DroppingOffBlock);
-			break;
-		case DroppingOffBlock:
-			//if (eventHandler.handleDroppingOffBlock())
-				//changeState(State.NavigatingToBlocks);
-			break;
+	
+	public void run(){
+		while(true){
+			
 		}
 	}
-
-	private void changeState(State newState) {
-		synchronized (currentState) {
-			currentState = newState;
-		}
+	
+	/**
+	 * Implementation of a filtering algorithm to do line detection.
+	 * @return true for a line
+	 */
+	public boolean detectLine(){
+		leftColorSensor.
 	}
 }

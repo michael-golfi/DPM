@@ -21,9 +21,6 @@ public class EventHandler extends Thread{
 	 * @return
 	 */
 	public boolean handleOrienteering() {
-		// TODO Auto-generated method stub
-		
-		
 		
 		return false;
 	}

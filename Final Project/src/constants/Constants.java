@@ -42,7 +42,7 @@ public class Constants
 	/**
 	 * Robot tire-to-tire width: {@value} cm
 	 */
-	public static final double WIDTH = 19;//18.1
+	public static final double WIDTH = 19;
 
 	/**
 	 * The period of Correction for the Odometer: {@value}
@@ -58,4 +58,9 @@ public class Constants
 	 * The period of the Odometer: {@value}
 	 */
 	public static final long ODOMETER_PERIOD = 25;
+	
+	/**
+	 * The y-distance from the center of the robot to the color sensors: {@value} cm.
+	 */
+	public static final double DISTANCE_TO_CENTER = 5;
 }

@@ -55,8 +55,15 @@ public class Navigator extends Thread implements Navigation {
 	 * @param distance
 	 */
 	public void travelDistance(double distance) {
-		motorController.travel(distance);
-		
+		motorController.travel(distance);		
+	}
+	
+	/**
+	 * Travel backwards by given distance
+	 * @param distance
+	 */
+	public void travelBackwards(double distance){
+		motorController.travel(-distance);
 	}
 
 	@Override

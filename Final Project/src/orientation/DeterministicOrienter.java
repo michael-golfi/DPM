@@ -3,6 +3,7 @@ package orientation;
 import java.util.ArrayList;
 
 import lejos.nxt.LCD;
+import lejos.nxt.comm.RConsole;
 import navigation.Navigator;
 import odometry.Odometer;
 import utils.Vector;
@@ -59,7 +60,7 @@ public class DeterministicOrienter extends Thread {
 			if (ultrasonicController.isBlocked())
 				turnLeft();
 			else
-				goForward();
+				advance();
 		}
 
 		Position startingPosition = defaultOrienteer.getStartingPosition();
@@ -67,10 +68,7 @@ public class DeterministicOrienter extends Thread {
 		drawPositionToScreen(startingPosition, currentPosition);
 
 		setOdometer(currentPosition);
-
-		// Should navigate here, but it doesn't navigate due to an error with
-		// the navigator
-		navigate(currentPosition);
+		navigate(currentPosition); // Test if this part works
 	}
 
 	/**
@@ -79,6 +77,7 @@ public class DeterministicOrienter extends Thread {
 	 * @param currentPosition
 	 */
 	private void setOdometer(Position currentPosition) {
+		RConsole.println(""+currentPosition);
 		odometer.setX(currentPosition.xTile * 30 - 15);
 		odometer.setY(currentPosition.yTile * 30 - 15);
 
@@ -121,8 +120,8 @@ public class DeterministicOrienter extends Thread {
 	/**
 	 * Go forward one tile
 	 */
-	public void goForward() {
-		navigator.travelDistance(Constants.TILE_LENGTH);
+	public void advance() {
+		navigator.travelBackwards(Constants.TILE_LENGTH);
 		defaultOrienteer.advance();
 	}
 
