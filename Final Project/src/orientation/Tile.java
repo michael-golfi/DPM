@@ -1,21 +1,31 @@
 package orientation;
 
-public enum Tile
-{
-	EMPTY, BLOCKED;
+public class Tile {
 	
-	/**
-	 * Creates a copy of a map
-	 * 
-	 * @param map
-	 * @return copy
-	 */
-	public static Tile[][] copy(Tile[][] map) {
-		Tile[][] copy = new Tile[map.length][map.length];
-		for (int i = 0; i < map.length; i++)
-			for (int j = 0; j < map[i].length; j++)
-				copy[i][j] = map[i][j];
-
-		return copy;
+	private Block block;
+	private Arrow[] arrow;
+	
+	public int tileIndex;
+	
+	public Tile(Block block, int index){
+		this.block = block;
+		this.tileIndex = index;
+		
+		initializeArrows();
 	}
+		
+	private void initializeArrows(){
+		arrow = new Arrow[4];	
+		for(int i=0;i<arrow.length;i++)
+			arrow[i] = new Arrow(this, this.tileIndex*4+i);
+	}
+	
+	public Arrow[] getArrows(){
+		return arrow;
+	}
+	
+	public Block getBlock(){
+		return block;
+	}
+	
 }

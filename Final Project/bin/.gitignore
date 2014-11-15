@@ -1,5 +1,10 @@
-/odometry/
 /constants/
 /finitestatemachine/
-/navigation/
 /orientation/
+/odometry/
+/Action.class
+/Arrow.class
+/Block.class
+/Field.class
+/Orienteering.class
+/Tile.class

@@ -1,73 +1,88 @@
 package orientation;
 
-import java.util.ArrayList;
-
 public class Field {
-	public Tile[][] map;
-	public int[][][] linesOfSight;
-	private ArrayList<Position> potentialPositions;
 	
-	public Field(Tile[][] map) {
-		this.map = map;
-		this.linesOfSight = new int[map.length][map[0].length][4];
-		for(int x = 0; x < map.length; x++) {
-			for(int y = 0; y < map[0].length; y++) {
-				
-				//north LOS
-				int n = Direction.NORTH.ordinal();
-				for(int a = 1; y + a <= map[0].length; a++) {
-					if(y + a == map[0].length || map[x][y + a] == Tile.BLOCKED) {
-						linesOfSight[x][y][n] = a - 1;
-						break;
+	private Tile[][] tileMap = 
+			   {{new Tile(Block.OBSTRUCTED, 0),  new Tile(Block.UNOBSTRUCTED, 1), new Tile(Block.UNOBSTRUCTED, 2), new Tile(Block.UNOBSTRUCTED, 3)},
+			   {new Tile(Block.UNOBSTRUCTED, 4), new Tile(Block.UNOBSTRUCTED, 5), new Tile(Block.OBSTRUCTED, 6), new Tile(Block.OBSTRUCTED, 7)},
+			   {new Tile(Block.UNOBSTRUCTED, 8), new Tile(Block.UNOBSTRUCTED, 9), new Tile(Block.UNOBSTRUCTED, 10), new Tile(Block.UNOBSTRUCTED, 11)},
+			   {new Tile(Block.UNOBSTRUCTED, 12), new Tile(Block.OBSTRUCTED, 13), new Tile(Block.UNOBSTRUCTED, 14), new Tile(Block.UNOBSTRUCTED, 15)}};
+	
+	public Field(String fileName){		
+		createTileMap();
+			
+	}
+	
+	//returns true if the starting location is found, false otherwise
+	public boolean foundStartingLocation(){
+		return getNumberOfPossibleStartingLocations() == 1;
+	}
+	
+	//TODO: change to private after debugging is complete
+	public int getNumberOfPossibleStartingLocations(){
+		int possibleStartingLocations = 0;
+		
+		for(Tile[] row : tileMap){
+			for(Tile tile : row){
+				Arrow[] arrow = tile.getArrows();
+				for(Arrow a : arrow){
+					if(a.isPossibleStartingLocation()){
+						possibleStartingLocations++;
+						//System.out.println(a.getTile().tileIndex + ": " + a.arrowDirection);
 					}
 				}
 				
-				//south LOS
-				int s = Direction.SOUTH.ordinal();
-				for(int a = 1; y - a >= -1; a++) {
-					if(y - a == -1 || map[x][y - a] == Tile.BLOCKED) {
-						linesOfSight[x][y][s] = a - 1;
-						break;
-					}
-				}
-
-				//east LOS
-				int e = Direction.EAST.ordinal();
-				for(int a = 1; x + a <= map.length; a++) {
-					if(x + a == map.length || map[x + a][y] == Tile.BLOCKED) {
-						linesOfSight[x][y][e] = a - 1;
-						break;
-					}
-				}
-				
-				//west LOS
-				int w = Direction.WEST.ordinal();
-				for(int a = 1; x - a >= -1; a++) {
-					if(x - a == -1 || map[x - a][y] == Tile.BLOCKED) {
-						linesOfSight[x][y][w] = a - 1;
-						break;
-					}
-				}
 			}
 		}
 		
-		this.potentialPositions = new ArrayList<>();
-		for(int x = 0; x < map.length; x++) {
-			for(int y = 0; y < map[0].length; y++) {
-				if(map[x][y] == Tile.EMPTY) {
-					for(Direction d : Direction.values()) {
-						this.potentialPositions.add(new Position(x, y, d));
-					}
-				}
+		return possibleStartingLocations;
+	}
+	
+	private void createTileMap(){
+		assignNeighbouringArrows();
+	}
+	
+	//assign edges between all arrows on the field
+	private void assignNeighbouringArrows(){
+		
+	
+		for(int i=0;i<tileMap.length;i++){
+			for(int j=0;j<tileMap[0].length;j++){
+				
+				Arrow[] arrow = tileMap[i][j].getArrows();
+				
+				arrow[0].setForwardArrow(retrieveArrow(i-1, j, 0));
+				arrow[0].setClockwiseArrow(retrieveArrow(i, j, 1));
+				arrow[0].setCounterClockwiseArrow(retrieveArrow(i, j, 3));
+				
+				arrow[1].setForwardArrow(retrieveArrow(i, j+1, 1));
+				arrow[1].setClockwiseArrow(retrieveArrow(i, j, 2));
+				arrow[1].setCounterClockwiseArrow(retrieveArrow(i, j, 0));
+				
+				arrow[2].setForwardArrow(retrieveArrow(i+1, j, 2));
+				arrow[2].setClockwiseArrow(retrieveArrow(i, j, 3));
+				arrow[2].setCounterClockwiseArrow(retrieveArrow(i, j, 1));
+				
+				arrow[3].setForwardArrow(retrieveArrow(i, j-1, 3));
+				arrow[3].setClockwiseArrow(retrieveArrow(i, j, 0));
+				arrow[3].setCounterClockwiseArrow(retrieveArrow(i, j, 2));
+				
 			}
+		}
+		
+	}
+	
+	//returns the arrow at the specified tile if it exsist, otherwise return null
+	private Arrow retrieveArrow(int i, int j, int a){
+		try{
+			return tileMap[i][j].getArrows()[a];
+		}catch(Exception e){
+			return null;
 		}
 	}
 	
-	public ArrayList<Position> getPotentialPositions() { 
-		ArrayList<Position> result = new ArrayList<>();
-		for(Position p : potentialPositions) {
-			result.add(p.clone());
-		}
-		return result;
+	public Tile[][] getTileMap(){
+		return tileMap;
 	}
+
 }
