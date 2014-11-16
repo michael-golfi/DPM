@@ -1,15 +1,22 @@
 package orientation;
 
+import java.util.ArrayList;
+
 public class Tile {
 	
 	private Block block;
 	private Arrow[] arrow;
 	
+	//used for building TreeMap
+	private boolean seen;
+	
 	public int tileIndex;
+	
 	
 	public Tile(Block block, int index){
 		this.block = block;
 		this.tileIndex = index;
+		this.seen = false;
 		
 		initializeArrows();
 	}
@@ -28,4 +35,26 @@ public class Tile {
 		return block;
 	}
 	
+	public void setSeen(){
+		this.seen = true;
+	}
+	
+	public boolean isSeen(){
+		return this.seen;
+	}
+	
+	//returns a list of all unobstructed neighbouring tiles
+	public ArrayList<Tile> getUnobstructedNeighbours(){
+		
+		ArrayList<Tile> neighbours = new ArrayList<Tile>();
+		
+		for(Arrow a : arrow){
+			try{
+				if(a.getForwardArrow().getTile().getBlock() == Block.UNOBSTRUCTED)
+					neighbours.add(a.getForwardArrow().getTile());
+			}catch(Exception e){}
+		}
+		
+		return neighbours;
+	}
 }

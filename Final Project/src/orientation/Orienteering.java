@@ -22,21 +22,15 @@ public class Orienteering {
 		
 		while(field.foundStartingLocation() == false){
 			
-			
 			Block observation = observe(observationCounter);
 			observationCounter++;
 			
 			updatePossibleStartingLocations(observation);
-			
-			System.out.println(field.getNumberOfPossibleStartingLocations());
-					
+								
 			performAction(observation);
-			
-						
+							
 		
 		}
-		System.out.println(actionList);
-		System.out.println(determineStartingTile());
 		 
 	}
 	

@@ -8,6 +8,8 @@ public class Field {
 			   {new Tile(Block.UNOBSTRUCTED, 8), new Tile(Block.UNOBSTRUCTED, 9), new Tile(Block.UNOBSTRUCTED, 10), new Tile(Block.UNOBSTRUCTED, 11)},
 			   {new Tile(Block.UNOBSTRUCTED, 12), new Tile(Block.OBSTRUCTED, 13), new Tile(Block.UNOBSTRUCTED, 14), new Tile(Block.UNOBSTRUCTED, 15)}};
 	
+	private int size = 4;
+	
 	public Field(String fileName){		
 		createTileMap();
 			
@@ -83,6 +85,21 @@ public class Field {
 	
 	public Tile[][] getTileMap(){
 		return tileMap;
+	}
+	
+	public int getSize(){
+		return size;
+	}
+	
+	public boolean eachTileSeen(){
+		for(Tile[] row : tileMap){
+			for(Tile tile : row){
+				if(tile.getBlock() == Block.UNOBSTRUCTED && tile.isSeen() == false){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 }
