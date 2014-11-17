@@ -677,7 +677,6 @@ package finitestatemachine;
 
 import navigation.Navigator;
 import odometry.Odometer;
-import orientation.DeterministicOrienter;
 import controller.MotorController;
 import controller.UltrasonicController;
 
@@ -701,9 +700,7 @@ public class FiniteStateMachine extends Thread {
 	public void run() {
 		switch (currentState) {
 		case Orienting:
-			DeterministicOrienter orienter = new DeterministicOrienter(
-					ultrasonicController, navigator, odometer);
-			orienter.start();
+			
 			//if (eventHandler.handleOrienteering())
 				//changeState(State.NavigatingToBlocks);
 			break;
@@ -735,4 +732,6 @@ public class FiniteStateMachine extends Thread {
 			currentState = newState;
 		}
 	}
+	
+	
 }

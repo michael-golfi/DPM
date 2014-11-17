@@ -711,6 +711,6 @@ public class OdometerCorrection extends Thread{
 	 * @return true for a line
 	 */
 	public boolean detectLine(){
-		leftColorSensor.
+		return true;
 	}
 }

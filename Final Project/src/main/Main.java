@@ -1,14 +1,12 @@
 package main;
 
-import navigation.Navigator;
-import controller.ColourSensorController;
-import controller.MotorController;
-import odometry.Odometer;
 import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
-import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.comm.RConsole;
+import blockdetection.BlockDetector;
+import blockdetection.BlockListener;
+import controller.MotorController;
 
 /**
  * 
@@ -28,54 +26,31 @@ public class Main
 	 */
 	public static void main(String[] args) {		
 		RConsole.open();
-		
-		RConsole.println("Bluetooth working!");
-		
-		
+		RConsole.println("Start");
+		ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
+		RConsole.println("Started ColorSensor");
+		BlockDetector blockDetector = new BlockDetector(colorSensor);
 		MotorController motorController = new MotorController();
 		
-		System.out.println(motorController.getPassword());
+		blockDetector.setBlockListener(new BlockListener() {
+			
+			@Override
+			public void onBlockDetected(int color) {
+				motorController.stop();
+				motorController.openClaw();
+				motorController.travel(20);
+				motorController.grabBlock();
+				
+				blockDetector.setListenForBlock(false);
+			}
+		});
 		
+		RConsole.println("Started BlockDetector");
+		blockDetector.start();
 		
-		Odometer odometer = new Odometer(motorController);
-		Navigator navigator = new Navigator(motorController, odometer);
-		odometer.start();
-		
-		
-		ColourSensorController colourSensorController = new ColourSensorController(SensorPort.S1);
-		colourSensorController.start();
-		
-		Motor.A.rotate(100);
-		
-		Motor.A.setAcceleration(500);
-		
-		while(colourSensorController.getLightValue() < 500){
-			RConsole.println("" + colourSensorController.getLightValue());
-			navigator.travelDistance(1);
-		}	
-		
-		Motor.A.rotate(-250);
-		
-		navigator.turnTo(180);
-		
-		//navigator.travelTo(45, 30);
-		
-		Motor.A.rotate(250);
-		
-		navigator.travelDistance(-20);
-		
-		
-		navigator.turnTo(360);
-		
-		
-		
-		//navigator.travelTo(60,30);
-		//navigator.travelTo(30,30);
+		motorController.travel(70);
 		
 		Button.waitForAnyPress();
-		
 		RConsole.close();
-		
 	}
-
 }

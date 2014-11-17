@@ -1,10 +1,7 @@
+/blockdetection/
+/main/
 /constants/
-/finitestatemachine/
 /orientation/
+/finitestatemachine/
+/controller/
 /odometry/
-/Action.class
-/Arrow.class
-/Block.class
-/Field.class
-/Orienteering.class
-/Tile.class

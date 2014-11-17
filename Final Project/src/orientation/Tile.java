@@ -11,8 +11,7 @@ public class Tile {
 	private boolean seen;
 	
 	public int tileIndex;
-	
-	
+		
 	public Tile(Block block, int index){
 		this.block = block;
 		this.tileIndex = index;

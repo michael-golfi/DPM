@@ -11,6 +11,8 @@ import orientation.Tile;
  * 
  */
 public class Map {
+	public enum Tile{EMPTY,BLOCKED};
+	
 	public static final Tile[][] map = new Tile[][] {
 			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.BLOCKED },
 			{ Tile.BLOCKED, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
