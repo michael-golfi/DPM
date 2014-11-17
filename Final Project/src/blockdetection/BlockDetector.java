@@ -676,47 +676,80 @@ Public License instead of this License.  But first, please read
 package blockdetection;
 
 import lejos.nxt.ColorSensor;
+import lejos.nxt.comm.RConsole;
 import lejos.robotics.Color;
+import lejos.util.Delay;
 
-public class BlockDetector extends Thread
-{
+public class BlockDetector extends Thread {
 	private BlockListener blockListener;
 	private ColorSensor colorSensor;
-	
-	public BlockDetector(ColorSensor colorSensor){
+	private int calibratedLightValue = 0;
+	private boolean listenForBlock = true;
+
+	public BlockDetector(ColorSensor colorSensor) {
 		this.colorSensor = colorSensor;
 	}
-	
+
 	/**
 	 * Register block listener event handler
+	 * 
 	 * @param blockListener
 	 */
-	public void setBlockListener(BlockListener blockListener){
+	public void setBlockListener(BlockListener blockListener) {
 		this.blockListener = blockListener;
 	}
-	
-	public void run(){
-		while (true){
-			if (isBlockDetected()){
-				int color = determineBlockColor();
-				blockListener.onBlockDetected(color);
+
+	public void run() {
+		calibrate();
+		RConsole.println("Calibrated");
+		while (true) {
+			if (isBlockDetected() && listenForBlock){
+				RConsole.println("Block Detected");
+				blockListener.onBlockDetected(Color.BLUE); // neglect color
 			}
+			else{
+				RConsole.println("No Block");
+			}
+			
+			Delay.msDelay(1000);
 		}
+	}
+
+	public void setListenForBlock(boolean listen){
+		listenForBlock = listen;
 	}
 	
 	/**
 	 * Determine whether the color sensor sees a block
+	 * 
 	 * @return true if there's a block
 	 */
-	public boolean isBlockDetected(){
-		return false;
+	public boolean isBlockDetected() {
+		RConsole.println("IsBlockDetected");
+		int currentLightValue = colorSensor.getRawLightValue();
+		return error(calibratedLightValue, currentLightValue);
 	}
-	
+
 	/**
-	 * Gets the color of the block seen
-	 * @return color
+	 * Determine if the current light value is more than 5% off the base
+	 * calibrated value
+	 * 
+	 * @param baselineValue
+	 * @param current
+	 * @return true if difference > 5% of base
 	 */
-	public int determineBlockColor(){
-		return Color.BLUE;
+	private boolean error(float baselineValue, float current) {
+		RConsole.print("Base Line: " + baselineValue + " ");
+		RConsole.print("Current: " + current);
+		return (Math.abs(baselineValue - current) > (baselineValue * 0.35));
+	}
+
+	/**
+	 * Calibrate the base color sensor value
+	 */
+	private void calibrate() {
+		for (int i = 0; i < 3; i++)
+			calibratedLightValue += colorSensor.getRawLightValue();
+		calibratedLightValue /= 3;
 	}
 }

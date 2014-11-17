@@ -22,7 +22,7 @@ import constants.Constants;
  */
 public class MotorController {
 	private NXTRegulatedMotor leftMotor = Motor.C, rightMotor = Motor.B,
-			sensorMotor = Motor.C;
+			sensorMotor = Motor.A;
 
 	/**
 	 * A controller to provide common motor functionality
@@ -167,5 +167,13 @@ public class MotorController {
 				distance);
 		leftMotor.rotate(converted, waitLeft);
 		rightMotor.rotate(converted, waitRight);
+	}
+	
+	public void openClaw(){
+		sensorMotor.rotateTo(100);
+	}
+		
+	public void grabBlock(){
+		sensorMotor.rotateTo(-150);
 	}
 }
