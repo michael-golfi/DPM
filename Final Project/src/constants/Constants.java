@@ -32,17 +32,17 @@ public class Constants
 	/**
 	 * Length of one tile: {@value} cm
 	 */
-	public static final int TILE_LENGTH = 30;
+	public static final double TILE_LENGTH = 30.48;
 
 	/**
 	 * Wheel radius: {@value} cm
 	 */
-	public static final double WHEEL_RADIUS = 1.68;
+	public static final double WHEEL_RADIUS = 1.710000000;
 
 	/**
 	 * Robot tire-to-tire width: {@value} cm
 	 */
-	public static final double WIDTH = 19;
+	public static double WIDTH = 19.5;
 
 	/**
 	 * The period of Correction for the Odometer: {@value}

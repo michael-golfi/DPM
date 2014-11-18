@@ -1,12 +1,21 @@
 package main;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+
 import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.comm.Bluetooth;
+import lejos.nxt.comm.NXTConnection;
 import lejos.nxt.comm.RConsole;
 import blockdetection.BlockDetector;
 import blockdetection.BlockListener;
+import constants.Constants;
 import controller.MotorController;
+import controller.UltrasonicController;
+import finitestatemachine.FiniteStateMachine;
 
 /**
  * 
@@ -27,7 +36,19 @@ public class Main
 	public static void main(String[] args) {		
 		RConsole.open();
 		RConsole.println("Start");
-		ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
+		
+		FiniteStateMachine fsm = new FiniteStateMachine();
+		fsm.start();
+		
+		/*UltrasonicSensor sensor = new UltrasonicSensor(SensorPort.S1);
+		while(true){
+			RConsole.println("" + sensor.getDistance());
+			try{
+				Thread.sleep(500);
+			}catch(Exception e){}
+		}*/
+		
+		/*ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
 		RConsole.println("Started ColorSensor");
 		BlockDetector blockDetector = new BlockDetector(colorSensor);
 		MotorController motorController = new MotorController();
@@ -49,8 +70,22 @@ public class Main
 		blockDetector.start();
 		
 		motorController.travel(70);
-		
+		*/
 		Button.waitForAnyPress();
 		RConsole.close();
+	}
+	
+	public static void testWidth(){
+		MotorController motorController = new MotorController();
+		NXTConnection nxtConnection = Bluetooth.waitForConnection();
+		DataInputStream dataInputStream = nxtConnection.openDataInputStream();
+		while(true){
+			motorController.rotate(90);
+			try {
+				Constants.WIDTH = dataInputStream.readDouble();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

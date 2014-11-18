@@ -1,5 +1,6 @@
 package controller;
 
+import constants.Constants;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.util.Delay;
@@ -16,7 +17,7 @@ public class UltrasonicController
 {
 	private MotorController motorController;
 	private UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(
-			SensorPort.S1);
+			SensorPort.S4);
 
 	public UltrasonicController(MotorController motorController)
 	{
@@ -61,7 +62,8 @@ public class UltrasonicController
 		ultrasonicSensor.ping();
 		Delay.msDelay(100);
 		int distance = ultrasonicSensor.getDistance();
-		return distance > 90 ? 90 : distance;
+		//return distance > 90 ? 90 : distance;
+		return distance;
 	}
 
 	/**
@@ -70,7 +72,7 @@ public class UltrasonicController
 	 * @return tiles ahead
 	 */
 	public int getTilesAhead() {
-		return getFilteredData() / 30;
+		return (int)((double)getFilteredData() / Constants.TILE_LENGTH);
 	}
 
 	/**

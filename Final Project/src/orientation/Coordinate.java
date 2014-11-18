@@ -675,6 +675,9 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package orientation;
 
+import constants.Constants;
+import constants.Map;
+
 /**
  * 
  * DPM Final Project Group 15
@@ -690,21 +693,45 @@ package orientation;
  */
 public class Coordinate {
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
-	public Coordinate(int x, int y){
+	public Coordinate(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
 	
-	public int getX(){
+	public double getX(){
 		return x;
 	}
 	
-	public int getY(){
+	public double getY(){
 		return y;
 	}
-		
 	
+	public static double calcX(int i, int j){
+				
+		return (j-1)*Constants.TILE_LENGTH;
+		
+	}
+	
+	public String toString(){
+		return "(" + (x+15.0) + ", " + (y+15.0) + ")";
+	}
+	
+	public static double calcY(int i, int j){
+		int y = 0;
+		switch(i){
+		case 0 : y = 6; break;
+		case 1 : y = 5; break;
+		case 2 : y = 4; break;
+		case 3 : y = 3; break;
+		case 4 : y = 2; break;
+		case 5 : y = 1; break;
+		case 6 : y = 0; break;
+		case 7 : y = -1; break;
+		}
+		
+		return y *= Constants.TILE_LENGTH;		
+	}	
 }

@@ -33,6 +33,14 @@ public class Odometer extends AbstractOdometer {
 		waitForPeriodEnd();
 	}
 	
+	public void setPosition(double x, double y, double theta){
+		synchronized (lock) {
+			this.x = x;
+			this.y = y;
+			this.theta = Math.toDegrees(theta);
+		}
+	}
+	
 	public void calculateX(){
 		x2 = motors[0].getTachoCount();
 		distanceX = Math.PI * Constants.WHEEL_RADIUS * (x2 - x1) / 180.0;

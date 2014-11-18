@@ -2,6 +2,9 @@ package orientation;
 
 import java.util.ArrayList;
 
+import lejos.nxt.comm.RConsole;
+import navigation.Navigator;
+
 /**
  * 
  * DPM Final Project Group 15
@@ -21,16 +24,28 @@ public class PathFinder {
 	
 	private TileNode originNode;
 	
-	public PathFinder(Field field){
+	private Navigator navigator;
+	
+	public PathFinder(Field field, Navigator navigator){
 		this.field = field;
+		this.navigator = navigator;
 	}
 	
-	public ArrayList<Tile> findPath(Tile origin, Tile destination){
+	public void findPath(Tile origin, Tile destination){
 		
 		TreeMap treeMap = buildTreeMap(origin, destination); 
 		
-		return traverseTree(destination);
+		navigatePath(traverseTree(destination));
 	
+	}
+	
+	public void navigatePath(ArrayList<Tile> path){
+		RConsole.println("path: " + path);
+		for(Tile tile : path){
+			navigator.travelTo((tile.getCoordinate().getX()+15), (tile.getCoordinate().getY()+15));
+		}
+		
+		navigator.turnTo(180);		
 	}
 	
 	//returns the path list (of tiles) 
@@ -45,6 +60,7 @@ public class PathFinder {
 			
 			tilePath.add(crt.getTile());
 		}
+		
 		
 		return tilePath;
 		

@@ -2,17 +2,19 @@ package orientation;
 
 public class Field {
 	
-	private Tile[][] tileMap = 
-			   {{new Tile(Block.OBSTRUCTED, 0),  new Tile(Block.UNOBSTRUCTED, 1), new Tile(Block.UNOBSTRUCTED, 2), new Tile(Block.UNOBSTRUCTED, 3)},
+	private Tile[][] tileMap;
+			   /*{{new Tile(Block.OBSTRUCTED, 0),  new Tile(Block.UNOBSTRUCTED, 1), new Tile(Block.UNOBSTRUCTED, 2), new Tile(Block.UNOBSTRUCTED, 3)},
 			   {new Tile(Block.UNOBSTRUCTED, 4), new Tile(Block.UNOBSTRUCTED, 5), new Tile(Block.OBSTRUCTED, 6), new Tile(Block.OBSTRUCTED, 7)},
 			   {new Tile(Block.UNOBSTRUCTED, 8), new Tile(Block.UNOBSTRUCTED, 9), new Tile(Block.UNOBSTRUCTED, 10), new Tile(Block.UNOBSTRUCTED, 11)},
-			   {new Tile(Block.UNOBSTRUCTED, 12), new Tile(Block.OBSTRUCTED, 13), new Tile(Block.UNOBSTRUCTED, 14), new Tile(Block.UNOBSTRUCTED, 15)}};
+			   {new Tile(Block.UNOBSTRUCTED, 12), new Tile(Block.OBSTRUCTED, 13), new Tile(Block.UNOBSTRUCTED, 14), new Tile(Block.UNOBSTRUCTED, 15)}};*/
 	
-	private int size = 4;
+	private Coordinate coordinate;
 	
-	public Field(String fileName){		
-		createTileMap();
-			
+	
+	
+	public Field(Tile[][] tileMap){
+		this.tileMap = tileMap;
+		createTileMap();			
 	}
 	
 	//returns true if the starting location is found, false otherwise
@@ -42,8 +44,8 @@ public class Field {
 	
 	private void createTileMap(){
 		assignNeighbouringArrows();
+		assignCoordinates();
 	}
-	
 	//assign edges between all arrows on the field
 	private void assignNeighbouringArrows(){
 		
@@ -71,7 +73,17 @@ public class Field {
 				
 			}
 		}
+	}
+	
+	private void assignCoordinates(){
 		
+		for(int i=0;i<tileMap.length;i++){
+			for(int j=0;j<tileMap[0].length;j++){
+				
+				tileMap[i][j].setCoordinate(new Coordinate(Coordinate.calcX(i, j), Coordinate.calcY(i, j)));
+				
+			}
+		}
 	}
 	
 	//returns the arrow at the specified tile if it exsist, otherwise return null
@@ -87,9 +99,9 @@ public class Field {
 		return tileMap;
 	}
 	
-	public int getSize(){
-		return size;
-	}
+	//public int getSize(){
+	//	return size;
+	//}
 	
 	public boolean eachTileSeen(){
 		for(Tile[] row : tileMap){

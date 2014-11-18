@@ -1,5 +1,15 @@
 package finitestatemachine;
 
+import orientation.Field;
+import orientation.Orienteering;
+import orientation.PathFinder;
+import navigation.Navigator;
+import odometry.Odometer;
+import constants.Constants;
+import constants.Map;
+import controller.MotorController;
+import controller.UltrasonicController;
+
 
 /**
  * 
@@ -15,29 +25,50 @@ package finitestatemachine;
  * 
  */
 public class EventHandler extends Thread{
-		
+	
+	private UltrasonicController ultrasonicController;
+	private Navigator navigator;
+	private MotorController motorController;
+	private Odometer odometer;
+	private Orienteering orienteering;
+	private Field field;
+	private PathFinder pathFinder;
 
+	
+	//CONSTRUCTOR
+	public EventHandler(){
+		motorController = new MotorController();
+		ultrasonicController = new UltrasonicController(motorController);
+		odometer = new Odometer(motorController);
+		navigator = new Navigator(motorController, odometer);
+		field = new Field(Map.map1);
+		orienteering = new Orienteering(field, navigator, ultrasonicController, odometer);
+		pathFinder = new PathFinder(field, navigator);
+	}
+	
 	/**
 	 * @return
 	 */
 	public boolean handleOrienteering() {
-		
-		return false;
+		motorController.grabBlock();
+		orienteering.orient();
+		return true;
 	}
 
 	/**
 	 * @return
 	 */
 	public boolean handleNavigatingToBlocks() {
-		// TODO Auto-generated method stub
-		return false;
+		navigator.turnTo(180);
+		pathFinder.findPath(orienteering.getCurrentTile(), field.getTileMap()[5][1]);
+		return true;
 	}
 
 	/**
 	 * @return
 	 */
 	public boolean handleFindingBlocks() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

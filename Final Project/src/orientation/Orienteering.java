@@ -2,16 +2,39 @@ package orientation;
 
 import java.util.ArrayList;
 
+import odometry.Odometer;
+import constants.Constants;
+import controller.UltrasonicController;
+import navigation.Navigator;
+import lejos.nxt.LCD;
+import lejos.nxt.Sound;
+import lejos.nxt.comm.RConsole;
+
 public class Orienteering {
 	
 	private Field field;
 	
 	private ArrayList<Action> actionList;
 	
-	private Block[] observationList = {Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED};
+	private Block[] observationList = {Block.OBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED};
 	
-	public Orienteering(Field field){
+	private Navigator navigator;
+	
+	private Odometer odometer;
+	
+	private UltrasonicController ultrasonicController;
+	
+	private Arrow trackingArrow;
+	
+	private int turnCounter = 0;
+	
+	private boolean[] orientationTracker = new boolean[4];
+	
+	public Orienteering(Field field, Navigator navigator, UltrasonicController ultrasonicController, Odometer odometer){
 		this.field = field;
+		this.navigator = navigator;
+		this.ultrasonicController = ultrasonicController;
+		this.odometer = odometer;
 		this.actionList = new ArrayList<Action>();
 	}
 	
@@ -27,16 +50,23 @@ public class Orienteering {
 			
 			updatePossibleStartingLocations(observation);
 								
-			performAction(observation);
+			performAction2(observation);
 							
 		
 		}
+		Sound.beep();
+		
+		odometer.setPosition(determineCurrentTile().getCoordinate().getX()+15,  determineCurrentTile().getCoordinate().getY()+15, getCurrentTheta());
+		
+		RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
+		
+		RConsole.println("" + determineStartingTile().tileIndex);
 		 
 	}
 	
 	private Block observe(int observationCounter){
-		//TODO: call to ultrasonicSensor controller
-		return observationList[observationCounter];
+		return ultrasonicController.isBlocked()? Block.OBSTRUCTED : Block.UNOBSTRUCTED; 
+		//return observationList[observationCounter];
 	}
 	
 	//decide which action to take based on observation
@@ -56,6 +86,41 @@ public class Orienteering {
 		
 	}
 	
+	private void performAction2(Block observation){
+		
+		if(observation == Block.OBSTRUCTED)
+			Sound.buzz();
+		
+		if(turnCounter < 3){
+			if(observation == Block.UNOBSTRUCTED){
+				orientationTracker[turnCounter] = true;
+				RConsole.println("blarfingar: " + turnCounter + " - " + orientationTracker[turnCounter]);
+			}
+			turnCounter++;
+			rotateCounterclockwise();
+		}else if(turnCounter == 3){
+			if(observation == Block.UNOBSTRUCTED){
+				orientationTracker[turnCounter] = true;
+				RConsole.println("blarfingar: " + turnCounter + " - " + orientationTracker[turnCounter]);
+			}
+			
+			//rotateCounterclockwise();
+
+			while(orientationTracker[turnCounter] == false){
+				turnCounter--;
+				rotateClockwise();
+			}
+			turnCounter = 0;
+			resetOrientationTrackers();
+			moveForward();
+		}
+	}
+	
+	private void resetOrientationTrackers(){
+		for(boolean tracker : orientationTracker)
+			tracker = false;
+	}
+	
 	private void updatePossibleStartingLocations(Block observation){
 		//iterate through entire tileMap and check the remaining viable arrows if they are still viable starting locations
 		for(Tile[] row : field.getTileMap()){
@@ -72,7 +137,7 @@ public class Orienteering {
 	int counter = 0;
 	//returns whether an arrow is a viable starting location
 	private boolean isPossibleStartingLocation(Arrow arrow, Block observation){
-		Arrow trackingArrow = arrow;
+		trackingArrow = arrow;
 		
 		//iterate through action list and apply action to tracking arrow
 		for(Action action : actionList){
@@ -131,19 +196,68 @@ public class Orienteering {
 		return null;
 	}
 	
+	private Arrow determineStartingArrow(){
+		for(Tile[] row : field.getTileMap()){
+			for(Tile tile : row){
+				for(Arrow a : tile.getArrows()){
+					if(a.isPossibleStartingLocation())
+						return a;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public Tile getCurrentTile(){
+		return determineCurrentTile();
+	}
+	
+	public double getCurrentTheta(){
+		switch(determienCurrentArrow().getOrientation()){
+		case NORTH : return 0.0;
+		case EAST : return 90.0;
+		case SOUTH : return 180.0;
+		case WEST : return 270.0;
+		default : return -1.0;
+		}
+	}
+	
+	
+	private Tile determineCurrentTile(){
+		Arrow tracker = determineStartingArrow();
+		
+		for(Action action : actionList){
+			tracker = retrieveArrow(tracker, action);
+		}
+		
+		return tracker.getTile();		
+	}
+	
+	private Arrow determienCurrentArrow(){
+		Arrow tracker = determineStartingArrow();
+		
+		for(Action action : actionList){
+			tracker = retrieveArrow(tracker, action);
+		}
+		
+		return tracker;	
+	}
+	
 	private void moveForward(){
 		actionList.add(Action.MOVE_FORWARD);
-		//TODO: call to navigation
+		//navigator.travelDistance(30);
+		navigator.travelBackwards(Constants.TILE_LENGTH);
 	}
 	
 	private void rotateClockwise(){
 		actionList.add(Action.ROTATE_CLOCKWISE);
-		//TODO: call to navigation
+		navigator.turnTo(-90);
 	}
 	
 	private void rotateCounterclockwise(){
 		actionList.add(Action.ROTATE_COUNTERCLOCKWISE);
-		//TODO: call to navigation
+		navigator.turnTo(90);
 		
 	}
 	

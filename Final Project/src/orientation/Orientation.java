@@ -673,68 +673,23 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package finitestatemachine;
+package orientation;
 
-import navigation.Navigator;
-import odometry.Odometer;
-import controller.MotorController;
-import controller.UltrasonicController;
-
-public class FiniteStateMachine extends Thread {
-	private State currentState;
-
-	private EventHandler eventHandler = new EventHandler();
-
-	private UltrasonicController ultrasonicController;
-	private Navigator navigator;
-	private MotorController motorController;
-	private Odometer odometer;
-
-	public FiniteStateMachine() {
-		this.currentState = State.Orienting;
-		motorController = new MotorController();
-		ultrasonicController = new UltrasonicController(motorController);
-		odometer = new Odometer(motorController);
-		navigator = new Navigator(motorController, odometer);
-	}
-
-	public void run() {
-		switch (currentState) {
-		case Orienting:
-			eventHandler.handleOrienteering();
-			eventHandler.handleNavigatingToBlocks();
-			/*if (eventHandler.handleOrienteering()){
-				changeState(State.NavigatingToBlocks);
-			}*/
-			break;
-		case NavigatingToBlocks:
-			if (eventHandler.handleNavigatingToBlocks())
-				changeState(State.FindingBlocks);
-			break;
-		case FindingBlocks:
-			//if (eventHandler.handleFindingBlocks())
-				//changeState(State.PickingUpBlock);
-			break;
-		case PickingUpBlock:
-			//if (eventHandler.handlePickingUpBlock())
-				//changeState(State.NavigatingToDropoff);
-			break;
-		case NavigatingToDropoff:
-			//if (eventHandler.handleNavigatingToDropOff())
-				//changeState(State.DroppingOffBlock);
-			break;
-		case DroppingOffBlock:
-			//if (eventHandler.handleDroppingOffBlock())
-				//changeState(State.NavigatingToBlocks);
-			break;
-		}
-	}
-
-	private void changeState(State newState) {
-		synchronized (currentState) {
-			currentState = newState;
-		}
-	}
+/**
+ * 
+ * DPM Final Project Group 15
+ * 
+ * Main - Oct 18, 2014
+ * 
+ * <p>
+ * <b>Description:</b>
+ * </p>
+ * <ul>
+ * </ul>
+ * 
+ */
+public enum Orientation {
 	
+	NORTH, EAST, SOUTH, WEST;
 	
 }

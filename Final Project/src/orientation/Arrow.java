@@ -8,12 +8,15 @@ public class Arrow {
 	
 	private Tile tile;
 	
+	private Orientation orientation;
+	
 	public int arrowIndex, arrowDirection;
 	
-	public Arrow(Tile tile, int arrowIndex){
+	public Arrow(Tile tile, int arrowIndex, Orientation orientation){
 		 this.tile = tile;
 		 this.possibleStartingLocation = tile.getBlock() == Block.OBSTRUCTED? false : true;
 		 this.arrowIndex = arrowIndex;
+		 this.orientation = orientation;
 		 this.arrowDirection = arrowIndex%4;
 	}
 	
@@ -47,6 +50,10 @@ public class Arrow {
 	
 	public void setImpossibleStartingLocation(){
 		possibleStartingLocation = false;
+	}
+	
+	public Orientation getOrientation(){
+		return this.orientation;
 	}
 	
 	public Tile getTile(){
