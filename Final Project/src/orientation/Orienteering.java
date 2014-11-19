@@ -27,6 +27,7 @@ public class Orienteering {
 	private Arrow trackingArrow;
 	
 	private int turnCounter = 0;
+	private int previousTurnCounter = 0;
 	
 	private boolean[] orientationTracker = new boolean[4];
 	
@@ -47,6 +48,8 @@ public class Orienteering {
 			
 			Block observation = observe(observationCounter);
 			observationCounter++;
+		
+			RConsole.println("possible starting locations " + field.getNumberOfPossibleStartingLocations());
 			
 			updatePossibleStartingLocations(observation);
 								
@@ -56,7 +59,10 @@ public class Orienteering {
 		}
 		Sound.beep();
 		
-		odometer.setPosition(determineCurrentTile().getCoordinate().getX()+15,  determineCurrentTile().getCoordinate().getY()+15, getCurrentTheta());
+		RConsole.println("Oriented: Current Theta" + getCurrentTheta() + "");
+		odometer.setPosition(determineCurrentTile().getCoordinate().getY()+15,  determineCurrentTile().getCoordinate().getX()+15, getCurrentTheta());
+		
+		odometer.orientation = determineCurrentArrow().getOrientation();
 		
 		RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
 		
@@ -94,22 +100,30 @@ public class Orienteering {
 		if(turnCounter < 3){
 			if(observation == Block.UNOBSTRUCTED){
 				orientationTracker[turnCounter] = true;
-				RConsole.println("blarfingar: " + turnCounter + " - " + orientationTracker[turnCounter]);
 			}
 			turnCounter++;
 			rotateCounterclockwise();
 		}else if(turnCounter == 3){
 			if(observation == Block.UNOBSTRUCTED){
 				orientationTracker[turnCounter] = true;
-				RConsole.println("blarfingar: " + turnCounter + " - " + orientationTracker[turnCounter]);
 			}
-			
-			//rotateCounterclockwise();
-
 			while(orientationTracker[turnCounter] == false){
-				turnCounter--;
-				rotateClockwise();
+								
+				if(orientationTracker[1]){
+					rotateClockwise();
+					rotateClockwise();
+					turnCounter -= 2;
+				}else if(orientationTracker[0]){
+					rotateClockwise();
+					rotateClockwise();
+					rotateClockwise();
+					turnCounter -= 3;
+				}else{				
+					rotateClockwise();
+					turnCounter--;
+				}
 			}
+			previousTurnCounter = turnCounter;
 			turnCounter = 0;
 			resetOrientationTrackers();
 			moveForward();
@@ -117,8 +131,18 @@ public class Orienteering {
 	}
 	
 	private void resetOrientationTrackers(){
-		for(boolean tracker : orientationTracker)
-			tracker = false;
+		for(int i=0;i<orientationTracker.length;i++)
+			orientationTracker[i] = false;
+	}
+	
+	private int invertOrientation(int turnCounter){
+		switch(turnCounter){
+		case 0 : return 2;
+		case 1: return 3;
+		case 2 : return 0;
+		case 3 : return 1;
+		default : return -1;
+		}
 	}
 	
 	private void updatePossibleStartingLocations(Block observation){
@@ -214,7 +238,7 @@ public class Orienteering {
 	}
 	
 	public double getCurrentTheta(){
-		switch(determienCurrentArrow().getOrientation()){
+		switch(determineCurrentArrow().getOrientation()){
 		case NORTH : return 0.0;
 		case EAST : return 90.0;
 		case SOUTH : return 180.0;
@@ -234,7 +258,7 @@ public class Orienteering {
 		return tracker.getTile();		
 	}
 	
-	private Arrow determienCurrentArrow(){
+	private Arrow determineCurrentArrow(){
 		Arrow tracker = determineStartingArrow();
 		
 		for(Action action : actionList){

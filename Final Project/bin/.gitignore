@@ -1,7 +1,7 @@
-/blockdetection/
-/main/
-/constants/
 /orientation/
-/finitestatemachine/
-/controller/
+/navigation/
 /odometry/
+/blockdetection/
+/controller/
+/constants/
+/finitestatemachine/

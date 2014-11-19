@@ -4,12 +4,15 @@ import lejos.nxt.NXTRegulatedMotor;
 import lejos.util.Delay;
 import constants.Constants;
 import controller.MotorController;
+import orientation.*;
 
 public class Odometer extends AbstractOdometer {
 	private double x2, y2, x1, y1, distanceX, distanceY, deltaD, deltaTheta;	
 	private NXTRegulatedMotor[] motors;
 	private Object lock = new Object();
 	long updateStart, updateEnd;
+	
+	public Orientation orientation;
 	
 	public Odometer(MotorController motorController) {		
 		x1 = x2 = y1 = y2 = distanceX = distanceY = deltaD = deltaTheta = 0.0;
@@ -65,5 +68,20 @@ public class Odometer extends AbstractOdometer {
 		updateEnd = System.currentTimeMillis();
 		if (updateEnd - updateStart < Constants.ODOMETER_PERIOD)			
 			Delay.msDelay(Constants.ODOMETER_PERIOD - (updateEnd - updateStart));		
+	}
+
+	/**
+	 * @param orientation2
+	 * @return
+	 */
+	public Orientation invertOrientation(Orientation orientation2) {
+		switch(orientation2){
+		case NORTH : return Orientation.SOUTH;
+		case EAST : return Orientation.WEST;
+		case SOUTH : return Orientation.NORTH;
+		case WEST : return Orientation.EAST;
+		default : return null;
+		}
+		
 	}
 }

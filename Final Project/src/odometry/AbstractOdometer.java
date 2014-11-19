@@ -30,7 +30,7 @@ public abstract class AbstractOdometer extends Thread {
 	 * @return
 	 */
 	public double getTheta() {
-		return theta;
+		return theta % 360;
 	}
 
 	/**

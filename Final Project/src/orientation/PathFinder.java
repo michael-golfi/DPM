@@ -2,6 +2,10 @@ package orientation;
 
 import java.util.ArrayList;
 
+import javax.xml.stream.events.XMLEvent;
+
+import odometry.Odometer;
+import lejos.nxt.Button;
 import lejos.nxt.comm.RConsole;
 import navigation.Navigator;
 
@@ -26,26 +30,119 @@ public class PathFinder {
 	
 	private Navigator navigator;
 	
-	public PathFinder(Field field, Navigator navigator){
+	private Odometer odometer;
+	
+	private Tile currentTile;
+	
+	public PathFinder(Field field, Navigator navigator, Odometer odometer){
 		this.field = field;
 		this.navigator = navigator;
+		this.odometer = odometer;
 	}
 	
 	public void findPath(Tile origin, Tile destination){
 		
 		TreeMap treeMap = buildTreeMap(origin, destination); 
 		
-		navigatePath(traverseTree(destination));
+		//navigatePath(traverseTree(destination));
+		navigatePath2(traverseTree(destination), origin);
 	
 	}
 	
 	public void navigatePath(ArrayList<Tile> path){
 		RConsole.println("path: " + path);
 		for(Tile tile : path){
-			navigator.travelTo((tile.getCoordinate().getX()+15), (tile.getCoordinate().getY()+15));
+			navigator.travelTo2((tile.getCoordinate().getY()+15.0), (tile.getCoordinate().getX()+15.0));
 		}
 		
-		navigator.turnTo(180);		
+		//navigator.turnTo(180);		
+	}
+	
+	public void navigatePath2(ArrayList<Tile> path, Tile origin){
+		currentTile = origin;
+		for(Tile tile : path){
+			
+			RConsole.println("CURRENT ORIENTATION: " + odometer.orientation);
+			RConsole.println("travel to: (" + tile.x + ", " + tile.y + ")");
+			//Button.waitForAnyPress();
+			
+			
+			switch(odometer.orientation){
+			case NORTH :
+				if(tile.x > currentTile.x){
+					navigator.turnTo(-90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.EAST;
+				}else if(tile.x < currentTile.x){
+					navigator.turnTo(90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.WEST;
+				}else if(tile.y > currentTile.y){
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.NORTH;
+				}else if(tile.y < currentTile.y){
+					navigator.turnTo(180);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.SOUTH;
+				}
+				break;
+			case EAST :
+				if(tile.x > currentTile.x){
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.EAST;
+				}else if(tile.x < currentTile.x){
+					navigator.turnTo(180);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.WEST;
+				}else if(tile.y > currentTile.y){
+					navigator.turnTo(90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.NORTH;
+				}else if(tile.y < currentTile.y){
+					navigator.turnTo(-90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.SOUTH;
+				}
+				break;
+			case SOUTH :
+				if(tile.x > currentTile.x){
+					navigator.turnTo(90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.EAST;
+				}else if(tile.x < currentTile.x){
+					navigator.turnTo(-90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.WEST;
+				}else if(tile.y > currentTile.y){
+					navigator.turnTo(180);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.NORTH;
+				}else if(tile.y < currentTile.y){
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.SOUTH;
+				}
+				break;
+			case WEST :
+				if(tile.x > currentTile.x){
+					navigator.turnTo(180);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.EAST;
+				}else if(tile.x < currentTile.x){;
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.WEST;
+				}else if(tile.y > currentTile.y){
+					navigator.turnTo(-90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.NORTH;
+				}else if(tile.y < currentTile.y){
+					navigator.turnTo(90);
+					navigator.travelDistance(30);
+					odometer.orientation = Orientation.SOUTH;
+				}
+				break;
+			}
+			currentTile = tile;
+		}
 	}
 	
 	//returns the path list (of tiles) 

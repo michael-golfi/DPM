@@ -7,17 +7,22 @@ public class Tile {
 	private Block block;
 	private Arrow[] arrow;
 
-	private Coordinate coordinate;	
+	private Coordinate coordinate;
+	
 	
 	//used for building TreeMap
 	private boolean seen;
 	
 	public int tileIndex;
+	public int x;
+	public int y;
 		
-	public Tile(Block block, int index){
+	public Tile(Block block, int index, int x, int y){
 		this.block = block;
 		this.tileIndex = index;
 		this.seen = false;
+		this.x = x;
+		this.y = y;
 		
 		initializeArrows();
 	}

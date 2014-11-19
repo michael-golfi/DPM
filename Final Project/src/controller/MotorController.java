@@ -124,6 +124,11 @@ public class MotorController {
 		leftMotor.setSpeed(speed);
 		rightMotor.setSpeed(speed);
 	}
+	
+	public void setSpeeds(int speed1, int speed2){
+		leftMotor.setSpeed(speed1);
+		rightMotor.setSpeed(speed2);
+	}
 
 	/**
 	 * Stop both motors

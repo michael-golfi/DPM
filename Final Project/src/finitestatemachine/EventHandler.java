@@ -1,5 +1,6 @@
 package finitestatemachine;
 
+import blockdetection.BlockFinding;
 import orientation.Field;
 import orientation.Orienteering;
 import orientation.PathFinder;
@@ -43,7 +44,7 @@ public class EventHandler extends Thread{
 		navigator = new Navigator(motorController, odometer);
 		field = new Field(Map.map1);
 		orienteering = new Orienteering(field, navigator, ultrasonicController, odometer);
-		pathFinder = new PathFinder(field, navigator);
+		pathFinder = new PathFinder(field, navigator, odometer);
 	}
 	
 	/**
@@ -60,6 +61,7 @@ public class EventHandler extends Thread{
 	 */
 	public boolean handleNavigatingToBlocks() {
 		navigator.turnTo(180);
+		//odometer.orientation = odometer.invertOrientation(odometer.orientation);
 		pathFinder.findPath(orienteering.getCurrentTile(), field.getTileMap()[5][1]);
 		return true;
 	}
@@ -68,7 +70,7 @@ public class EventHandler extends Thread{
 	 * @return
 	 */
 	public boolean handleFindingBlocks() {
-		
+		BlockFinding blockFinding = new BlockFinding(odometer, navigator, motorController);
 		return false;
 	}
 

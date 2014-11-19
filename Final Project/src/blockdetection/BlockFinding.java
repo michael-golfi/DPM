@@ -675,6 +675,14 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package blockdetection;
 
+import lejos.nxt.ColorSensor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
+import odometry.Odometer;
+import controller.ColourSensorController;
+import controller.MotorController;
+import navigation.Navigator;
+
 /**
  * 
  * DPM Final Project Group 15
@@ -688,24 +696,76 @@ package blockdetection;
  * </ul>
  * 
  */
-public interface BlockListener
-{
-	/**
-	 * 
-	 * DPM Final Project Group 15
-	 * 
-	 * Main - Oct 18, 2014
-	 * 
-	 * <p>
-	 * <b>Description:</b>
-	 * </p>
-	 * <ul>
-	 * </ul>
-	 * 
-	 */
-	public class BlockFinder {
+public class BlockFinding {
 
+	private Navigator navigator;
+	
+	private BlockDetector blockDetector;
+	
+	private MotorController motorController;
+	
+	private Odometer odometer;
+	
+	public BlockFinding(Odometer odometer, Navigator navigator, MotorController motorController){
+		this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1));
+		this.motorController = motorController;
+		this.odometer = odometer;
+		this.navigator = navigator;
+		
+		
+		initiateBlockListener();
+		
+		findBlock();
 	}
-
-	void onBlockDetected(int color);
+		
+		
+	private void initiateBlockListener(){
+	
+		blockDetector.setBlockListener(new BlockListener() {
+			
+			@Override
+			public void onBlockDetected(int color) {
+				//motorController.stop();
+				//motorController.openClaw();
+				//motorController.travel(30);
+				//motorController.grabBlock();
+				
+				Sound.beep();
+				
+				blockDetector.setListenForBlock(false);
+			}
+		});
+	}
+	
+	private void findBlock(){
+		charge();
+	}
+	
+	private void charge(){
+		motorController.openClaw();
+		navigator.travelDistance(50);
+		grab();
+		rewind();
+	}
+	
+	private void rewind(){
+		navigator.travelBackwards(50);
+		pivot();
+	}
+	
+	private void pivot(){
+		navigator.turnTo(-90);
+		navigator.travelDistance(10);
+		navigator.turnTo(90);
+		charge();
+	}
+	
+	private void grab(){
+		blockDetector.setListenForBlock(true);
+		motorController.stop();
+		//motorController.openClaw();
+		motorController.grabBlock();
+		blockDetector.setListenForBlock(false);
+		
+	}
 }

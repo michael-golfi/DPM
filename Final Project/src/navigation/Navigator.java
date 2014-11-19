@@ -1,5 +1,7 @@
 package navigation;
 
+import javax.microedition.location.dGPSCriteria;
+
 import lejos.nxt.comm.RConsole;
 import odometry.Odometer;
 import utils.Vector;
@@ -16,6 +18,12 @@ public class Navigator extends Thread implements Navigation {
 
 	private MotorController motorController;
 	private Odometer odometer;
+	
+	private final int ROTATE_SPEED = 150;
+	private final int FORWARD_SPEED = 250;
+	
+	private final float THETA_TOLERANCE = 3.0f;
+	private final float DISTANCE_TOLERANCE = 1.0f;
 
 	/**
 	 * A navigator that goes to specific points in the x,y plane
@@ -33,7 +41,7 @@ public class Navigator extends Thread implements Navigation {
 	 * @return the last angle measured by the odometer
 	 */
 	private double getOldTheta() {
-		return odometer.getPosition(new boolean[] { true, true, true })[2];
+		return odometer.getTheta();
 	}
 
 	@Override
@@ -95,6 +103,34 @@ public class Navigator extends Thread implements Navigation {
 		RConsole.println("Odometer x,y" + x +", " + y);
 		currentPosition = new Vector(y, x);
 	}
+	
+	public void travelTo2(double x, double y){
+		// USE THE FUNCTIONS setForwardSpeed and setRotationalSpeed from TwoWheeledRobot!
+		//loop until robot is within distance tolerance of the desired destination
+				
+		double minimalAngle;
+		
+		while(Math.abs(odometer.getX() - x) > DISTANCE_TOLERANCE || Math.abs(odometer.getY() - y) > DISTANCE_TOLERANCE){
+
+			//calculate min angle
+			minimalAngle = (Math.atan2(x - odometer.getX(), y - odometer.getY())) * (180.0 / Math.PI);
+
+			//if(minimalAngle < -0.0000005)
+			if(minimalAngle < 0)
+				minimalAngle+=360;
+
+			//continue to destination if we are not currently following an obstacle
+			turnTo(minimalAngle);		
+			//odometer.getTwoWheeledRobot().setForwardSpeed(FORWARD_SPEED);
+			motorController.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);			
+		}
+
+
+		motorController.setSpeeds(0, 0);
+		//odometer.getTwoWheeledRobot().setForwardSpeed(0);
+		//odometer.getTwoWheeledRobot().setRotationSpeed(0);
+
+	}
 
 	/**
 	 * Travel to a location without blocking the calling thread
@@ -112,5 +148,39 @@ public class Navigator extends Thread implements Navigation {
 	@Override
 	public void turnTo(double theta) {
 		motorController.rotate(theta);
+	}
+	
+	public void turnTo2(double theta){
+		//double offset = theta - (odometer.getTheta() < -1 ? odometer.getTheta() + 360 : odometer.getTheta());
+		
+		double offset = theta - odometer.getTheta();
+		
+		while(Math.abs(offset) > THETA_TOLERANCE){
+
+			//update offset
+			//offset = theta - (odometer.getTheta() < - 1? odometer.getTheta() + 360 : odometer.getTheta());
+			offset = theta - odometer.getTheta();
+			
+			//odometer.getTwoWheeledRobot().setForwardSpeed(0);
+			motorController.setSpeeds(0, 0);
+			
+			//turn motors based on offset
+			if(offset < -180){
+				//odometer.getTwoWheeledRobot().setRotationSpeed(ROTATE_SPEED);
+				motorController.setSpeeds(ROTATE_SPEED, -ROTATE_SPEED);
+			}else if(offset < 0){
+				//odometer.getTwoWheeledRobot().setRotationSpeed(-ROTATE_SPEED);
+				motorController.setSpeeds(-ROTATE_SPEED, ROTATE_SPEED);
+			}else if(offset > 180){
+				//odometer.getTwoWheeledRobot().setRotationSpeed(-ROTATE_SPEED);
+				motorController.setSpeeds(-ROTATE_SPEED, ROTATE_SPEED);
+			}else{
+				//odometer.getTwoWheeledRobot().setRotationSpeed(ROTATE_SPEED);
+				motorController.setSpeeds(ROTATE_SPEED, -ROTATE_SPEED);
+			}
+		}
+		//odometer.getTwoWheeledRobot().setRotationSpeed(0);
+		motorController.setSpeeds(0, 0);
+
 	}
 }

@@ -688,6 +688,7 @@ public class BlockDetector extends Thread {
 
 	public BlockDetector(ColorSensor colorSensor) {
 		this.colorSensor = colorSensor;
+		this.start();
 	}
 
 	/**
