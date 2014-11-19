@@ -104,6 +104,10 @@ public class MotorController {
 		leftMotor.rotate(-angle, waitLeft);
 		rightMotor.rotate(angle, waitRight);
 	}
+	
+	public void setClawAccleration(int acceleration){
+		sensorMotor.setAcceleration(acceleration);
+	}
 
 	/**
 	 * Set the maximum wheel accelerations

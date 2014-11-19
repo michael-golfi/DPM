@@ -42,7 +42,7 @@ public class EventHandler extends Thread{
 		ultrasonicController = new UltrasonicController(motorController);
 		odometer = new Odometer(motorController);
 		navigator = new Navigator(motorController, odometer);
-		field = new Field(Map.map1);
+		field = new Field(Map.map3);
 		orienteering = new Orienteering(field, navigator, ultrasonicController, odometer);
 		pathFinder = new PathFinder(field, navigator, odometer);
 	}

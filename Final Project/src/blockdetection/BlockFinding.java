@@ -715,6 +715,8 @@ public class BlockFinding {
 		
 		initiateBlockListener();
 		
+		motorController.setClawAccleration(50);
+		
 		findBlock();
 	}
 		
@@ -743,13 +745,13 @@ public class BlockFinding {
 	
 	private void charge(){
 		motorController.openClaw();
-		navigator.travelDistance(50);
+		navigator.travelDistance(45);
 		grab();
 		rewind();
 	}
 	
 	private void rewind(){
-		navigator.travelBackwards(50);
+		navigator.travelBackwards(45);
 		pivot();
 	}
 	
