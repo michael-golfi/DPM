@@ -676,6 +676,8 @@ Public License instead of this License.  But first, please read
 package odometry;
 
 import lejos.nxt.ColorSensor;
+import lejos.nxt.Motor;
+import lejos.nxt.comm.RConsole;
 
 /**
  * 
@@ -693,8 +695,9 @@ import lejos.nxt.ColorSensor;
 public class OdometerCorrection extends Thread{
 	
 	private Odometer odometer;
-	private ColorSensor leftColorSensor;
-	private ColorSensor rightColorSensor;
+	private ColorSensor leftColorSensor, rightColorSensor;
+	private int lastLeftValue, lastRightValue, leftValue, rightValue;
+	private boolean left, right;
 	
 	public OdometerCorrection(Odometer odometer){
 		this.odometer = odometer;
@@ -702,15 +705,34 @@ public class OdometerCorrection extends Thread{
 	
 	public void run(){
 		while(true){
-			
+			RConsole.println(
+				"X: " +	odometer.getX() + 
+				" Y: " + odometer.getY() + 
+				" Theta: " + odometer.getTheta());
+						
+			detectLine();
 		}
 	}
+	double x,y;
 	
 	/**
 	 * Implementation of a filtering algorithm to do line detection.
 	 * @return true for a line
 	 */
 	public boolean detectLine(){
+		leftValue = leftColorSensor.getNormalizedLightValue();
+		rightValue = rightColorSensor.getNormalizedLightValue();
+
+		if (lastLeftValue - leftValue > 10 ){
+			
+			
+			left = true;
+		} else if (lastRightValue - rightValue > 10){
+			
+			
+			right = true;
+		}
+		
 		return true;
 	}
 }
