@@ -673,13 +673,9 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package odometry;
+package controller;
 
-import controller.MotorController;
-import lejos.nxt.ColorSensor;
-import lejos.nxt.Sound;
-import lejos.nxt.comm.RConsole;
-import lejos.util.Delay;
+import lejos.nxt.SensorPort;
 
 /**
  * 
@@ -694,104 +690,11 @@ import lejos.util.Delay;
  * </ul>
  * 
  */
-public class OdometerCorrection extends Thread{
-	
-	private Odometer odometer;
-	private MotorController motorController;
-	
-	private ColorSensor leftColorSensor, rightColorSensor;
-	private int lastLeftValue, lastRightValue, leftValue, rightValue;
-	private boolean left, right;
-	private int leftTacho, rightTacho;
-	
-	private int countingState;
-	private static final int LEFT = -1, RIGHT = 1;	
-	
-	public OdometerCorrection(Odometer odometer, MotorController motorController){
-		this.odometer = odometer;
-	}
-	
-	public void run(){
-		while(true){
-			RConsole.println(
-				"X: " +	odometer.getX() + 
-				" Y: " + odometer.getY() + 
-				" Theta: " + odometer.getTheta());
-						
-			/*if (detectLine()){
-				left = right = false;
-				Sound.beep();
-			}*/
-			
-			leftValue = leftColorSensor.getNormalizedLightValue();
-			rightValue = rightColorSensor.getNormalizedLightValue();
+public interface BlackLineListener {
 
-			if (lastLeftValue - leftValue > 10 ){
-				rightTacho = motorController.getYTachometer();
-				waitForRightDetected();
-				
-				int deltaRightTacho = motorController.getYTachometer() - rightTacho;				
-				motorController.getMotors()[0].rotate(-deltaRightTacho * 360);
-			} 
-			
-			if (lastRightValue - rightValue > 10){
-				leftTacho = motorController.getXTachometer();
-				waitForLeftDetected();
-				
-				int deltaLeftTacho = motorController.getXTachometer() - leftTacho;				
-				motorController.getMotors()[1].rotate(-deltaLeftTacho * 360);
-			}
-			
-			Delay.msDelay(100);
-		}
-	}
-	
-	public void waitForLeftDetected(){
-		while(lastLeftValue - leftValue > 10){
-			lastLeftValue = leftValue;
-			Delay.msDelay(100);
-			leftValue = leftColorSensor.getNormalizedLightValue();
-		}
-	}
-	
-	public void waitForRightDetected(){
-		while(lastRightValue - rightValue > 10){
-			lastRightValue = rightValue;
-			Delay.msDelay(100);
-			rightValue = rightColorSensor.getNormalizedLightValue();
-		}
-	}
-	
-	
-	public void detectLine2(){
-		leftValue = leftColorSensor.getNormalizedLightValue();
-		rightValue = rightColorSensor.getNormalizedLightValue();
-
-		if (lastLeftValue - leftValue > 10 ){
-			rightTacho = motorController.getYTachometer();
-		} 
-		
-		if (lastRightValue - rightValue > 10){
-			leftTacho = motorController.getXTachometer();
-		}
-	}
-	
 	/**
-	 * Implementation of a filtering algorithm to do line detection.
-	 * @return true for a line
+	 * Handle when a black line is detected
 	 */
-	public boolean detectLine(){
-		leftValue = leftColorSensor.getNormalizedLightValue();
-		rightValue = rightColorSensor.getNormalizedLightValue();
+	void onBlackLineDetected(int sensor);
 
-		if (lastLeftValue - leftValue > 10 ){
-			left = true;
-		} 
-		
-		if (lastRightValue - rightValue > 10){
-			right = true;
-		}
-
-		return left && right;
-	}
 }

@@ -3,8 +3,11 @@ package main;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import odometry.Odometer;
+import odometry.OdometerCorrection;
 import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
+import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.Bluetooth;
@@ -33,7 +36,7 @@ public class Main
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		RConsole.open();
 		RConsole.println("Start");
 		
@@ -69,8 +72,8 @@ public class Main
 		RConsole.println("Started BlockDetector");
 		blockDetector.start();
 		
-		motorController.travel(70);
-		*/
+		motorController.travel(70);*/
+		
 		Button.waitForAnyPress();
 		RConsole.close();
 	}

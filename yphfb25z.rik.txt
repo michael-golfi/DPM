@@ -1,0 +1,37 @@
+﻿Merge remote-tracking branch 'origin/master'
+
+Conflicts:
+	Final Project/Main.nxd
+	Final Project/Main.nxj
+	Final Project/bin/.gitignore
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 2 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   .gitignore
+#	modified:   constants/Constants.class
+#	modified:   main/Main.class
+#	modified:   navigation/Navigation.class
+#	modified:   navigation/Navigator.class
+#	modified:   ../src/constants/Constants.java
+#	new file:   ../src/controller/BlackLineListener.java
+#	modified:   ../src/main/Main.java
+#	new file:   ../src/navigation/DistanceNavigator.java
+#	modified:   ../src/navigation/Navigation.java
+#	modified:   ../src/navigation/Navigator.java
+#	modified:   ../src/odometry/OdometerCorrection.java
+#
+
