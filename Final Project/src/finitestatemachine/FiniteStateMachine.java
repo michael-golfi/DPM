@@ -701,8 +701,8 @@ public class FiniteStateMachine extends Thread {
 	public void run() {
 		switch (currentState) {
 		case Orienting:
-			eventHandler.handleOrienteering();
-			eventHandler.handleNavigatingToBlocks();
+			//eventHandler.handleOrienteering();
+			//eventHandler.handleNavigatingToBlocks();
 			eventHandler.handleFindingBlocks();
 			/*if (eventHandler.handleOrienteering()){
 				changeState(State.NavigatingToBlocks);

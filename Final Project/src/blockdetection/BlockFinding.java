@@ -675,9 +675,13 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package blockdetection;
 
+import java.util.Stack;
+
 import lejos.nxt.ColorSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
+import lejos.nxt.comm.RConsole;
+import lejos.util.Delay;
 import odometry.Odometer;
 import controller.ColourSensorController;
 import controller.MotorController;
@@ -698,6 +702,19 @@ import navigation.Navigator;
  */
 public class BlockFinding {
 
+	/**
+	 * 
+	 * DPM Final Project Group 15
+	 * 
+	 * Main - Oct 18, 2014
+	 * 
+	 * <p>
+	 * <b>Description:</b>
+	 * </p>
+	 * <ul>
+	 * </ul>
+	 * 
+	 */
 	private Navigator navigator;
 	
 	private BlockDetector blockDetector;
@@ -706,16 +723,32 @@ public class BlockFinding {
 	
 	private Odometer odometer;
 	
+	public boolean blockGrabbed = false;
+	
+	private final long chargeDuration = 5000;
+	
+	private long chargeTimer, initialChargeTime;
+	
+	//private int[] distanceCap = {60, 40, 20};
+	
+	private Stack<Integer> distanceCap = new Stack<Integer>();
+	
+	private Scan scanner;
+	
 	public BlockFinding(Odometer odometer, Navigator navigator, MotorController motorController){
-		this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1));
+		//this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1), motorController, this);
 		this.motorController = motorController;
 		this.odometer = odometer;
 		this.navigator = navigator;
+		this.scanner = new Scan(odometer);
 		
+		distanceCap.addElement(20);
+		distanceCap.addElement(40);
+		distanceCap.addElement(60);
 		
-		initiateBlockListener();
+		//initiateBlockListener();
 		
-		motorController.setClawAccleration(50);
+		motorController.setClawAccleration(750);
 		
 		findBlock();
 	}
@@ -736,38 +769,133 @@ public class BlockFinding {
 				
 				blockDetector.setListenForBlock(false);
 			}
+			
+			@Override
+			public void onBlockDetected(){
+				Sound.beep();
+				/*motorController.getMotors()[0].forward();
+				motorController.getMotors()[1].forward();
+				motorController.getMotors()[0].setSpeed(1);
+				motorController.getMotors()[1].setSpeed(1);*/
+				
+//				blockGrabbed = true;
+				
+			}
 		});
 	}
 	
 	private void findBlock(){
-		charge();
+		
+		scan();
+		
+		/*motorController.openClaw();
+		while(blockGrabbed == false){
+			initialChargeTime = System.currentTimeMillis();
+			chargeTimer = 0;
+			charge();
+			if(blockGrabbed == false){
+				rewind();
+				pivot();
+			}
+		}*/
 	}
 	
 	private void charge(){
+		
 		motorController.openClaw();
-		navigator.travelDistance(45);
+		
+		try{
+			Thread.sleep(500);
+		}catch(Exception e){}
+		
+		motorController.getMotors()[0].setSpeed(200);
+		motorController.getMotors()[1].setSpeed(200);
+		motorController.getMotors()[0].forward();
+		motorController.getMotors()[1].forward();
+		
+		
+		/*while(scanner.distance > 10){
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}*/
+		
+		scanner.interrupt();
+		
+		try{
+			Thread.sleep(3500);
+		}catch(Exception e){}
+		
 		grab();
-		rewind();
+	}
+	
+	private void scan(){
+		
+		
+		initiateScan();
+
+	}
+	
+	private void initiateScan(){
+		
+		
+		
+		motorController.getMotors()[0].setSpeed(100);
+		motorController.getMotors()[1].setSpeed(100);
+		motorController.getMotors()[0].backward();
+		motorController.getMotors()[1].forward();
+		
+		scanner = new Scan(odometer);
+		scanner.start();
+		
+		while(scanner.distance < 150 || scanner.error == true){
+			
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		scanSweep();		
+		
+	}
+	
+	private void scanSweep(){
+		motorController.getMotors()[0].setSpeed(50);
+		motorController.getMotors()[1].setSpeed(50);
+		motorController.getMotors()[0].forward();
+		motorController.getMotors()[1].backward();
+		
+		while(scanner.distance > distanceCap.pop()){
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+				
+		try{
+			Thread.sleep(500);
+		}catch(Exception e){}
+		
+		charge();
+		
+		//motorController.getMotors()[0].forward();
+		//motorController.getMotors()[1].forward();
 	}
 	
 	private void rewind(){
-		navigator.travelBackwards(45);
-		pivot();
+		navigator.travelBackwards(60);
+		//pivot();
 	}
 	
 	private void pivot(){
 		navigator.turnTo(-90);
 		navigator.travelDistance(10);
 		navigator.turnTo(90);
-		charge();
+		//charge();
 	}
 	
 	private void grab(){
-		blockDetector.setListenForBlock(true);
 		motorController.stop();
-		//motorController.openClaw();
 		motorController.grabBlock();
-		blockDetector.setListenForBlock(false);
 		
 	}
 }

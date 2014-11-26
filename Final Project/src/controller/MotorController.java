@@ -140,6 +140,8 @@ public class MotorController {
 	public void stop() {
 		leftMotor.rotate(0);
 		rightMotor.rotate(0);
+		leftMotor.setSpeed(0);
+		rightMotor.setSpeed(0);
 		leftMotor.stop();
 		rightMotor.stop();
 	}
@@ -179,10 +181,10 @@ public class MotorController {
 	}
 	
 	public void openClaw(){
-		sensorMotor.rotateTo(100);
+		sensorMotor.rotateTo(300, true);
 	}
 		
 	public void grabBlock(){
-		sensorMotor.rotateTo(-150);
+		sensorMotor.rotateTo(-200, true);
 	}
 }

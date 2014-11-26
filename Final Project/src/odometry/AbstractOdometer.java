@@ -1,5 +1,7 @@
 package odometry;
 
+import lejos.nxt.comm.RConsole;
+
 /**
  * @author Michael Golfi #260552298
  * @author Paul Albert-Lebrun #260507074
