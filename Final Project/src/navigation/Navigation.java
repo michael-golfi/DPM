@@ -22,6 +22,13 @@ public interface Navigation {
 	 * @param y
 	 */
 	void travelTo(double x, double y);
+	
+	/**
+	 * Travel distance
+	 * 
+	 * @param distance
+	 */
+	void travelDistance(double distance);
 
 	/**
 	 * Rotate robot by theta degrees

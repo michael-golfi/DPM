@@ -1,7 +1,5 @@
 package navigation;
 
-import javax.microedition.location.dGPSCriteria;
-
 import lejos.nxt.comm.RConsole;
 import odometry.Odometer;
 import utils.Vector;
