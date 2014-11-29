@@ -724,20 +724,20 @@ public class DistanceNavigator implements Navigation{
 		destination = new Vector(x, y);
 		
 		synchronized (odometer) {
-			currentX = odometer.getY();
-			currentY = odometer.getX();			
+			currentX = odometer.getX();
+			currentY = odometer.getY();			
 		}
 		
 		location = new Vector(currentX, currentY);		
 		resultant = VectorOperations.subtract(destination, location);				
 		
-		RConsole.println("\n" +
+		/*RConsole.println("\n" +
 				" Currents X: " + currentX + " Y: " + currentY + 
 				" Destination: " + destination +
 				" Location " + location +
-				" Result " + resultant + "\n");
+				" Result " + resultant + "\n");*/
 		
-		angle = resultant.getAngle() - Math.toDegrees(odometer.getTheta());
+		angle = minAngle((resultant.getAngle() - Math.toDegrees(odometer.getTheta())), (resultant.getAngle() - Math.toDegrees(odometer.getTheta()))+360);
 		
 		RConsole.println("Rotate: " + angle + " Travel: " + resultant.getLength());
 		
@@ -745,6 +745,13 @@ public class DistanceNavigator implements Navigation{
 		travelDistance(resultant.getLength());		
 	}
 	
+	private double minAngle(double a, double b){
+		if(Math.abs(a) < Math.abs(b)){
+			return a;
+		}else{
+			return b;
+		}
+	}
 	
 	
 	public void travelDistance(double distance){

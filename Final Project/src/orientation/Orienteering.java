@@ -3,8 +3,10 @@ package orientation;
 import java.util.ArrayList;
 
 import odometry.Odometer;
+import odometry.OdometerCorrection;
 import constants.Constants;
 import controller.UltrasonicController;
+import navigation.DistanceNavigator;
 import navigation.Navigator;
 import lejos.nxt.LCD;
 import lejos.nxt.Sound;
@@ -20,6 +22,8 @@ public class Orienteering {
 	
 	private Navigator navigator;
 	
+	private DistanceNavigator navigator2;
+	
 	private Odometer odometer;
 	
 	private UltrasonicController ultrasonicController;
@@ -31,12 +35,14 @@ public class Orienteering {
 	
 	private boolean[] orientationTracker = new boolean[4];
 	
-	public Orienteering(Field field, Navigator navigator, UltrasonicController ultrasonicController, Odometer odometer){
+	public Orienteering(Field field, Navigator navigator, DistanceNavigator navigator2, UltrasonicController ultrasonicController, Odometer odometer){
 		this.field = field;
 		this.navigator = navigator;
+		this.navigator2 = navigator2;
 		this.ultrasonicController = ultrasonicController;
 		this.odometer = odometer;
 		this.actionList = new ArrayList<Action>();
+		
 	}
 	
 	//handles orienting algorithm
@@ -60,11 +66,16 @@ public class Orienteering {
 		Sound.beep();
 		
 		RConsole.println("Oriented: Current Theta" + getCurrentTheta() + "");
-		odometer.setPosition(determineCurrentTile().getCoordinate().getY()+15,  determineCurrentTile().getCoordinate().getX()+15, getCurrentTheta());
+		
+		odometer.setPosition(determineCurrentTile().getCoordinate().getX()+15,  determineCurrentTile().getCoordinate().getY()+15, Math.toRadians(getCurrentTheta()));
+		//odometer.setPosition(determineCurrentTile().getCoordinate().getX()+15,  determineCurrentTile().getCoordinate().getY()+15, getCurrentTheta());
 		
 		odometer.orientation = determineCurrentArrow().getOrientation();
 		
-		RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
+		synchronized (odometer) {
+			RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
+		}
+		
 		
 		RConsole.println("" + determineStartingTile().tileIndex);
 		 
@@ -239,10 +250,10 @@ public class Orienteering {
 	
 	public double getCurrentTheta(){
 		switch(determineCurrentArrow().getOrientation()){
-		case NORTH : return 0.0;
-		case EAST : return 90.0;
-		case SOUTH : return 180.0;
-		case WEST : return 270.0;
+		case NORTH : return 90.0;
+		case EAST : return 180.0;
+		case SOUTH : return 270.0;
+		case WEST : return 0.0;
 		default : return -1.0;
 		}
 	}
@@ -271,17 +282,20 @@ public class Orienteering {
 	private void moveForward(){
 		actionList.add(Action.MOVE_FORWARD);
 		//navigator.travelDistance(30);
-		navigator.travelBackwards(Constants.TILE_LENGTH);
+		//navigator.travelBackwards(Constants.TILE_LENGTH);
+		navigator2.travelDistance(Constants.TILE_LENGTH);
 	}
 	
 	private void rotateClockwise(){
 		actionList.add(Action.ROTATE_CLOCKWISE);
-		navigator.turnTo(-90);
+		//navigator.turnTo(-90);
+		navigator2.turnTo(-90);
 	}
 	
 	private void rotateCounterclockwise(){
 		actionList.add(Action.ROTATE_COUNTERCLOCKWISE);
-		navigator.turnTo(90);
+		//navigator.turnTo(90);
+		navigator2.turnTo(90);
 		
 	}
 	

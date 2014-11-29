@@ -1,6 +1,9 @@
 package odometry;
 
+import java.util.Stack;
+
 import lejos.nxt.NXTRegulatedMotor;
+import lejos.nxt.comm.RConsole;
 import lejos.util.Delay;
 import constants.Constants;
 import controller.MotorController;
@@ -22,6 +25,8 @@ public class Odometer extends AbstractOdometer {
 	}
 
 	public void updateOdometer() {
+		
+		
 		updateStart = System.currentTimeMillis();
 		
 		calculateX();
@@ -30,8 +35,8 @@ public class Odometer extends AbstractOdometer {
 		
 		synchronized (lock) {		
 			theta += deltaTheta;
-			x += deltaD * Math.sin(theta);
-			y += deltaD * Math.cos(theta);
+			y += deltaD * Math.sin(theta);
+			x += deltaD * Math.cos(theta);
 		}
 		waitForPeriodEnd();
 	}
@@ -40,7 +45,7 @@ public class Odometer extends AbstractOdometer {
 		synchronized (lock) {
 			this.x = x;
 			this.y = y;
-			this.theta = Math.toDegrees(theta);
+			this.theta = theta;
 		}
 	}
 	

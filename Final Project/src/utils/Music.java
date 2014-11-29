@@ -1,8 +1,8 @@
 /*
                     GNU GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
+                       Version 3, 29 June EIGTH_NOTE7
 
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ Copyright (C) EIGTH_NOTE7 Free Software Foundation, Inc. <http://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
@@ -532,7 +532,7 @@ patent license (a) in connection with copies of the covered work
 conveyed by you (or copies made from those copies), or (b) primarily
 for and in connection with specific products or compilations that
 contain the covered work, unless you entered into that arrangement,
-or that patent license was granted, prior to 28 March 2007.
+or that patent license was granted, prior to 28 March EIGTH_NOTE7.
 
   Nothing in this License shall be construed as excluding or limiting
 any implied license or other defenses to infringement that may
@@ -673,7 +673,9 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package blockdetection;
+package utils;
+
+import lejos.nxt.Sound;
 
 /**
  * 
@@ -688,26 +690,44 @@ package blockdetection;
  * </ul>
  * 
  */
-public interface BlockListener
-{
-	/**
-	 * 
-	 * DPM Final Project Group 15
-	 * 
-	 * Main - Oct 18, 2014
-	 * 
-	 * <p>
-	 * <b>Description:</b>
-	 * </p>
-	 * <ul>
-	 * </ul>
-	 * 
-	 */
-	public class BlockFinder {
-
-	}
-
-	void onBlockDetected(int color);
+public class Music extends Thread{
 	
-	void onBlockDetected();
+	private final int EIGTH_NOTE = 150;
+	private final int VOLUME = 50;
+	
+	public void run(){
+		Sound.playTone(932, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(932, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(932, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(932, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(932, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		
+		Sound.playTone(1047, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(1175, EIGTH_NOTE*2, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE*2);}catch(Exception e){}
+		
+		try{
+			Thread.sleep(400);
+		}catch(Exception e){}
+		
+		Sound.playTone(784, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(932, EIGTH_NOTE, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE);}catch(Exception e){}
+		Sound.playTone(1047, EIGTH_NOTE*2);
+		try{Thread.sleep(EIGTH_NOTE*2);}catch(Exception e){}
+		Sound.playTone(932, EIGTH_NOTE*2, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE*2);}catch(Exception e){}
+		Sound.playTone(784, EIGTH_NOTE*4, VOLUME);
+		try{Thread.sleep(EIGTH_NOTE*4);}catch(Exception e){}
+		try{
+			Thread.sleep(3000);
+		}catch(Exception e){}
+	}
 }

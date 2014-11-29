@@ -61,7 +61,7 @@ public class Navigator extends Thread implements Navigation {
 	 * @param distance
 	 */
 	public void travelDistance(double distance) {
-		motorController.travel(distance);		
+		motorController.travel(distance);
 	}
 	
 	/**

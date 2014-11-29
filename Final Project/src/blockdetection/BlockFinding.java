@@ -675,12 +675,18 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package blockdetection;
 
+import java.util.Stack;
+
 import lejos.nxt.ColorSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
+import lejos.nxt.comm.RConsole;
+import lejos.util.Delay;
 import odometry.Odometer;
+import utils.Music;
 import controller.ColourSensorController;
 import controller.MotorController;
+import navigation.DistanceNavigator;
 import navigation.Navigator;
 
 /**
@@ -696,9 +702,22 @@ import navigation.Navigator;
  * </ul>
  * 
  */
-public class BlockFinding {
+public class BlockFinding extends Thread{
 
-	private Navigator navigator;
+	/**
+	 * 
+	 * DPM Final Project Group 15
+	 * 
+	 * Main - Oct 18, 2014
+	 * 
+	 * <p>
+	 * <b>Description:</b>
+	 * </p>
+	 * <ul>
+	 * </ul>
+	 * 
+	 */
+	private DistanceNavigator navigator;
 	
 	private BlockDetector blockDetector;
 	
@@ -706,20 +725,46 @@ public class BlockFinding {
 	
 	private Odometer odometer;
 	
-	public BlockFinding(Odometer odometer, Navigator navigator, MotorController motorController){
-		this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1));
+	public boolean blockGrabbed = false;
+	
+	private boolean blockFound = false;
+	
+	private boolean interrupted = false;
+	
+	private final long chargeDuration = 5000;
+	
+	private long scanTimer, riseTime, fallTime, returnTimer, startTime;
+	
+	private final int[] distanceCap = {60, 30};
+	
+	private Scan scanner;
+	
+	public BlockFinding(Odometer odometer, DistanceNavigator navigator, MotorController motorController){
+		//this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1), motorController, this);
 		this.motorController = motorController;
 		this.odometer = odometer;
 		this.navigator = navigator;
+				
+		//this.scanner = new Scan(odometer, distanceCap[0]);
 		
+
+		//initiateBlockListener();
 		
-		initiateBlockListener();
-		
-		motorController.setClawAccleration(50);
+		motorController.setClawAccleration(750);
 		
 		findBlock();
 	}
-		
+	
+	public void run(){
+		while(true){
+			if(returnTimer >= 7000){
+				motorController.stop();
+				navigator.turnTo(25);
+				navigator.travelDistance(15);
+				initiateScan2(distanceCap[1]);
+			}
+		}
+	}
 		
 	private void initiateBlockListener(){
 	
@@ -736,38 +781,200 @@ public class BlockFinding {
 				
 				blockDetector.setListenForBlock(false);
 			}
+			
+			@Override
+			public void onBlockDetected(){
+				Sound.beep();
+				/*motorController.getMotors()[0].forward();
+				motorController.getMotors()[1].forward();
+				motorController.getMotors()[0].setSpeed(1);
+				motorController.getMotors()[1].setSpeed(1);*/
+				
+//				blockGrabbed = true;
+				
+			}
 		});
 	}
 	
 	private void findBlock(){
-		charge();
+		
+		scan();
+		
+		/*motorController.openClaw();
+		while(blockGrabbed == false){
+			initialChargeTime = System.currentTimeMillis();
+			chargeTimer = 0;
+			charge();
+			if(blockGrabbed == false){
+				rewind();
+				pivot();
+			}
+		}*/
 	}
 	
 	private void charge(){
+		
+		//if(scanner.distance < 20){
+		
 		motorController.openClaw();
-		navigator.travelDistance(45);
+		try{
+			Thread.sleep(500);
+		}catch(Exception e){}
+		
+		motorController.getMotors()[0].setSpeed(100);
+		motorController.getMotors()[1].setSpeed(100);
+		motorController.getMotors()[0].forward();
+		motorController.getMotors()[1].forward();
+		
+		while(scanner.distance > 8){
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		Sound.beep();
+		
+		try{
+			Thread.sleep(1000);
+		}catch(Exception e){}
+		
 		grab();
-		rewind();
+		
 	}
 	
-	private void rewind(){
-		navigator.travelBackwards(45);
-		pivot();
+	private void scan(){
+		
+		
+		initiateScan(distanceCap[0]);
+
 	}
 	
-	private void pivot(){
-		navigator.turnTo(-90);
-		navigator.travelDistance(10);
-		navigator.turnTo(90);
+	private void initiateScan(int distanceCap){
+		
+		
+		motorController.getMotors()[0].setSpeed(100);
+		motorController.getMotors()[1].setSpeed(100);
+		motorController.getMotors()[0].backward();
+		motorController.getMotors()[1].forward();
+		
+		scanner = new Scan(odometer, distanceCap);
+		scanner.start();
+		
+		RConsole.println("distance cap: " +(distanceCap-20));
+		
+		while(scanner.distance <= distanceCap-20/* || scanner.error == true*/){
+			
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		scanSweep(distanceCap);		
+		
+	}
+	
+	private void initiateScan2(int distanceCap){
+		
+		
+		motorController.getMotors()[0].setSpeed(100);
+		motorController.getMotors()[1].setSpeed(100);
+		motorController.getMotors()[0].backward();
+		motorController.getMotors()[1].forward();
+		
+		scanner = new Scan(odometer, distanceCap);
+		scanner.start();
+		
+		RConsole.println("distance cap: " +(distanceCap-20));
+		
+		while(scanner.distance <= 30/* || scanner.error == true*/){
+			
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		scanSweep(distanceCap);		
+		
+	}
+	
+	
+	private void scanSweep(int distanceCap){
+		
+		startTime = System.currentTimeMillis();
+		
+		if(!interrupted){
+			this.start();
+		}
+		
+		motorController.getMotors()[0].setSpeed(50);
+		motorController.getMotors()[1].setSpeed(50);
+		motorController.getMotors()[0].forward();
+		motorController.getMotors()[1].backward();
+		
+		
+		
+		while(scanner.distance > distanceCap-20){
+			if(!interrupted){
+				interrupted = true;
+				this.interrupt();
+			}
+			returnTimer = System.currentTimeMillis() - startTime; 
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		
+		
+		int distance = scanner.distance;
+		RConsole.println("Rise: " + distance);
+		Sound.buzz();
+		
+		riseTime = System.currentTimeMillis();
+		
+		while(scanner.distance < distance){
+			returnTimer = System.currentTimeMillis() - startTime;
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+			
+		}
+		
+		RConsole.println("Fall: " + scanner.distance);
+		
+		Sound.buzz();
+		
+		fallTime = System.currentTimeMillis();
+		
+		motorController.getMotors()[0].backward();
+		motorController.getMotors()[1].forward();
+		
+		
+		
+		while(scanTimer < (fallTime - riseTime - 2000)){
+			scanTimer = System.currentTimeMillis() - fallTime;
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		
+		Sound.beep();
+		
+		/*try{
+			Thread.sleep(400);
+		}catch(Exception e){}*/
+		
 		charge();
 	}
 	
+	
+	
 	private void grab(){
-		blockDetector.setListenForBlock(true);
 		motorController.stop();
-		//motorController.openClaw();
+		//navigator.travelDistance(20);
 		motorController.grabBlock();
-		blockDetector.setListenForBlock(false);
+		Music lowRider = new Music();
+		lowRider.start();
 		
 	}
 }

@@ -703,14 +703,16 @@ public class OdometerCorrection extends Thread {
 	private MotorController motorController;
 
 	private ColorSensor 
-			leftColorSensor = new ColorSensor(SensorPort.S2, Color.RED), 
-			rightColorSensor = new ColorSensor(SensorPort.S3, Color.RED);
+			leftColorSensor, 
+			rightColorSensor;
 	private int lastLeftValue, lastRightValue, leftValue, rightValue;
 	private boolean left, right;
 	private int leftTacho, rightTacho;
 
 	public OdometerCorrection(Odometer odometer, MotorController motorController) {
 		this.odometer = odometer;
+		this.leftColorSensor = new ColorSensor(SensorPort.S2, Color.RED);
+		this.rightColorSensor = new ColorSensor(SensorPort.S3, Color.RED);
 	}
 
 	private long dt, lastTime, currentTime, leftLineValue, rightLineValue;
@@ -725,31 +727,37 @@ public class OdometerCorrection extends Thread {
 			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
 			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
 
-			RConsole.println("Left: " + leftLineValue + " Right: " + rightLineValue);
+			//RConsole.println("Left: " + leftLineValue + " Right: " + rightLineValue);
 			
 			if (leftLineValue > 19 && rightLineValue > 19) {
 				// heading good, X Y correction
-
+				
+				Sound.beep();
+				
 				double x, y;
 				synchronized (odometer) {
-					x = odometer.getY();
-					y = odometer.getX();
+					x = odometer.getX();
+					y = odometer.getY();
 				}
 				double correctedX = nearest(x);
 				double correctedY = nearest(y);
 
 				switch (odometer.getRoundedTheta()) {
-				case 0:
-					odometer.setY(correctedX + Constants.DISTANCE_TO_CENTER);
-					break;
-				case 180:
-					odometer.setY(correctedX - Constants.DISTANCE_TO_CENTER);
+				case 270:
+				//case 0:
+					odometer.setX(correctedX + Constants.DISTANCE_TO_CENTER);
 					break;
 				case 90:
-					odometer.setX(correctedY + Constants.DISTANCE_TO_CENTER);
+					//case 180:
+					odometer.setX(correctedX - Constants.DISTANCE_TO_CENTER);
 					break;
-				case 270:
-					odometer.setX(correctedY - Constants.DISTANCE_TO_CENTER);
+				//case 90:
+				case 0:
+					odometer.setY(correctedY + Constants.DISTANCE_TO_CENTER);
+					break;
+				//case 270:
+				case 180:
+					odometer.setY(correctedY - Constants.DISTANCE_TO_CENTER);
 					break;
 				}
 				Delay.msDelay(500);
@@ -758,7 +766,7 @@ public class OdometerCorrection extends Thread {
 			} else if (rightLineValue > 19) {
 				// over angled
 			} else {
-				RConsole.println("Left: 0 Right: 0");
+				//RConsole.println("Left: 0 Right: 0");
 			}
 
 			lastLeftValue = leftValue;

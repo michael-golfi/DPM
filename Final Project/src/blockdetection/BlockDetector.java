@@ -675,7 +675,11 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package blockdetection;
 
+import controller.MotorController;
 import lejos.nxt.ColorSensor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
+import lejos.nxt.TouchSensor;
 import lejos.nxt.comm.RConsole;
 import lejos.robotics.Color;
 import lejos.util.Delay;
@@ -685,9 +689,15 @@ public class BlockDetector extends Thread {
 	private ColorSensor colorSensor;
 	private int calibratedLightValue = 0;
 	private boolean listenForBlock = true;
+	private TouchSensor touchSensor;
+	private MotorController motorController;
+	private BlockFinding blockFinding;
 
-	public BlockDetector(ColorSensor colorSensor) {
+	public BlockDetector(ColorSensor colorSensor, MotorController motorController, BlockFinding blockFinding) {
 		this.colorSensor = colorSensor;
+		this.touchSensor = new TouchSensor(SensorPort.S1);
+		this.motorController = motorController;
+		this.blockFinding = blockFinding;
 		this.start();
 	}
 
@@ -704,15 +714,31 @@ public class BlockDetector extends Thread {
 		calibrate();
 		RConsole.println("Calibrated");
 		while (true) {
-			if (isBlockDetected() && listenForBlock){
+			if(touchSensor.isPressed() && listenForBlock){
+				Sound.buzz();
+				blockFinding.blockGrabbed = true;
+				motorController.getMotors()[0].setSpeed(1);
+				motorController.getMotors()[1].setSpeed(1);
+				//motorController.getMotors()[0].stop();
+				//motorController.getMotors()[1].stop();
+				motorController.grabBlock();
+				motorController.getMotors()[0].setSpeed(150);
+				motorController.getMotors()[1].setSpeed(150);
+				motorController.getMotors()[0].backward();
+				motorController.getMotors()[1].backward();
+				listenForBlock = false;
+				blockListener.onBlockDetected();
+				
+			}
+			/*if (isBlockDetected() && listenForBlock){
 				RConsole.println("Block Detected");
 				blockListener.onBlockDetected(Color.BLUE); // neglect color
-			}
+			}*/
 			else{
 				RConsole.println("No Block");
 			}
 			
-			Delay.msDelay(1000);
+			Delay.msDelay(50);
 		}
 	}
 

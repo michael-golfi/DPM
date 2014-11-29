@@ -675,6 +675,17 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package blockdetection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import odometry.Odometer;
+import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.comm.RConsole;
+import lejos.util.Delay;
+import navigation.Navigator;
+import controller.UltrasonicController;
+
 /**
  * 
  * DPM Final Project Group 15
@@ -688,26 +699,89 @@ package blockdetection;
  * </ul>
  * 
  */
-public interface BlockListener
-{
-	/**
-	 * 
-	 * DPM Final Project Group 15
-	 * 
-	 * Main - Oct 18, 2014
-	 * 
-	 * <p>
-	 * <b>Description:</b>
-	 * </p>
-	 * <ul>
-	 * </ul>
-	 * 
-	 */
-	public class BlockFinder {
+public class Scan extends Thread{
 
-	}
-
-	void onBlockDetected(int color);
+	private UltrasonicSensor ultrasonicSensor;
 	
-	void onBlockDetected();
+	private int[] scannerReadings;
+	
+	private Odometer odometer;
+	
+	private Object lock = new Object();
+	
+	public int distance;
+	
+	public boolean error = true;
+	
+	public double blockAngle;
+	
+	public Scan(Odometer odometer, int distanceCap){
+		this.ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
+		this.odometer = odometer;
+	}
+	
+	public void run(){
+		
+		while(true){
+			//ultrasonicSensor.ping();
+			//Delay.msDelay(10);
+			
+			scannerReadings = new int[5];
+			
+			for(int i=0;i<5;i++){
+				scannerReadings[i] = ultrasonicSensor.getDistance();
+				
+				try{
+					Thread.sleep(50);
+				}catch(Exception e){}
+			}
+			filterDistance();
+			
+		
+			//RConsole.println("" + distance);
+			
+			/*synchronized (lock) {
+				scannerReadings.add(distance);
+			}*/
+			
+		}
+	}
+	
+	public void filterDistance(){
+		Arrays.sort(scannerReadings);
+		
+		RConsole.println(scannerReadings[0] + ", " +scannerReadings[1] + ", " +scannerReadings[2] + ", " +scannerReadings[3] + ", " +scannerReadings[4]);
+		
+		distance = scannerReadings[2];
+		
+		if(distance != 255)
+			error = false;
+	}
+	
+	
+	/*public int getReading(){
+		synchronized (lock) {
+			return scannerReadings.get(scannerReadings.size()-1);
+		}	
+	}*/
+	
+	
+	
+	private int getMin(){
+		
+		int min = Integer.MAX_VALUE;
+		
+		for(int reading : scannerReadings){
+			if(reading < min)
+				min = reading;
+		}
+		
+		//RConsole.println("min: " + min);
+		
+		return min;
+		
+	}
+	
+	
+	
 }

@@ -18,6 +18,7 @@ import test.UltrasonicTest;
 import utils.Vector;
 import constants.Constants;
 import controller.MotorController;
+import finitestatemachine.FiniteStateMachine;
 
 /**
  * 
@@ -35,11 +36,12 @@ public class Main
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		RConsole.open();
 		
-		MotorController motorController = new MotorController();
-		motorController.grabBlock();
+		/*MotorController motorController = new MotorController();
+		//motorController.grabBlock();
 		
 		Odometer odometer = new Odometer(motorController);
 		DistanceNavigator distanceNavigator = new DistanceNavigator(odometer);
@@ -47,23 +49,23 @@ public class Main
 		UltrasonicTest ultrasonicTest = new UltrasonicTest(motorController, odometer);
 		odometer.start();
 		
-		//odometerCorrection.start();
-		odometer.setX(-15);
-		odometer.setY(-15);
+		odometerCorrection.start();
+		odometer.setY(106);
+		odometer.setX(197.8);
 		odometer.setTheta(Math.toRadians(90));
 		
 		Delay.msDelay(2000);
 		
-		ultrasonicTest.start();
+		//ultrasonicTest.start();
 		
-		distanceNavigator.travelDistance(-120);
+		//distanceNavigator.travelDistance(-120);*/
 		
 		/*ArrayList<Vector> navigate = new ArrayList<>();
 		Vector[] points = new Vector[]{
-				new Vector(-15, 15),
-				new Vector(-15, 45),
-				new Vector(-15, 75),
-				new Vector(-15, 105),
+				new Vector(167, 106),
+				new Vector(106, 136.92),
+				new Vector(106, 106),
+				new Vector(106, 76)
 				/*new Vector(75, 15),
 				new Vector(75, -15),
 				new Vector(45, -15),
@@ -77,9 +79,10 @@ public class Main
 				new Vector(165, 75),
 				new Vector(165, 105),
 				new Vector(165, 135),
-				new Vector(165, 165)
-		};
+				new Vector(165, 165)*/
+		/*};
 		navigate.addAll(points);
+		//navigate.addAll(points);
 				
 		for(Vector vector : navigate)
 			distanceNavigator.travelTo(vector);
@@ -105,8 +108,8 @@ public class Main
 		
 		
 				
-		//FiniteStateMachine fsm = new FiniteStateMachine();
-		//fsm.start();
+		FiniteStateMachine fsm = new FiniteStateMachine();
+		fsm.start();
 		
 		/*UltrasonicSensor sensor = new UltrasonicSensor(SensorPort.S1);
 		while(true){
