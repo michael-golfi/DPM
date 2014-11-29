@@ -26,7 +26,7 @@ public class VectorOperations {
 	 * @return angle of the vector in degrees
 	 */
 	public static double angle(double x, double y) {
-		return Math.atan2(y, x) * CONVERT_TO_DEGREES;
+		return Math.toDegrees(Math.atan2(y, x));
 	}
 	
 	/**
