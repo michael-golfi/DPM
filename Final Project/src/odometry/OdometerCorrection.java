@@ -675,13 +675,10 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package odometry;
 
-import constants.Constants;
 import controller.MotorController;
 import lejos.nxt.ColorSensor;
-import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
 import lejos.nxt.comm.RConsole;
-import lejos.robotics.Color;
 import lejos.util.Delay;
 
 /**
@@ -697,110 +694,101 @@ import lejos.util.Delay;
  * </ul>
  * 
  */
-public class OdometerCorrection extends Thread {
-
+public class OdometerCorrection extends Thread{
+	
 	private Odometer odometer;
 	private MotorController motorController;
-
-	private ColorSensor 
-			leftColorSensor = new ColorSensor(SensorPort.S2, Color.RED), 
-			rightColorSensor = new ColorSensor(SensorPort.S3, Color.RED);
+	
+	private ColorSensor leftColorSensor, rightColorSensor;
 	private int lastLeftValue, lastRightValue, leftValue, rightValue;
 	private boolean left, right;
 	private int leftTacho, rightTacho;
-
-	public OdometerCorrection(Odometer odometer, MotorController motorController) {
+	
+	private int countingState;
+	private static final int LEFT = -1, RIGHT = 1;	
+	
+	public OdometerCorrection(Odometer odometer, MotorController motorController){
 		this.odometer = odometer;
 	}
-
-	private long dt, lastTime, currentTime, leftLineValue, rightLineValue;
-
-	public void run() {
-		while (true) {
-			currentTime = System.currentTimeMillis();
-			leftValue = leftColorSensor.getLightValue();
-			rightValue = rightColorSensor.getLightValue();
-
-			dt = lastTime - currentTime;
-			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
-			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
-
-			RConsole.println("Left: " + leftLineValue + " Right: " + rightLineValue);
+	
+	public void run(){
+		while(true){
+			RConsole.println(
+				"X: " +	odometer.getX() + 
+				" Y: " + odometer.getY() + 
+				" Theta: " + odometer.getTheta());
+						
+			/*if (detectLine()){
+				left = right = false;
+				Sound.beep();
+			}*/
 			
-			if (leftLineValue > 19 && rightLineValue > 19) {
-				// heading good, X Y correction
+			leftValue = leftColorSensor.getNormalizedLightValue();
+			rightValue = rightColorSensor.getNormalizedLightValue();
 
-				double x, y;
-				synchronized (odometer) {
-					x = odometer.getY();
-					y = odometer.getX();
-				}
-				double correctedX = nearest(x);
-				double correctedY = nearest(y);
-
-				switch (odometer.getRoundedTheta()) {
-				case 0:
-					odometer.setY(correctedX + Constants.DISTANCE_TO_CENTER);
-					break;
-				case 180:
-					odometer.setY(correctedX - Constants.DISTANCE_TO_CENTER);
-					break;
-				case 90:
-					odometer.setX(correctedY + Constants.DISTANCE_TO_CENTER);
-					break;
-				case 270:
-					odometer.setX(correctedY - Constants.DISTANCE_TO_CENTER);
-					break;
-				}
-				Delay.msDelay(500);
-			} else if (leftLineValue > 19) {
-				// under angled
-			} else if (rightLineValue > 19) {
-				// over angled
-			} else {
-				RConsole.println("Left: 0 Right: 0");
+			if (lastLeftValue - leftValue > 10 ){
+				rightTacho = motorController.getYTachometer();
+				waitForRightDetected();
+				
+				int deltaRightTacho = motorController.getYTachometer() - rightTacho;				
+				motorController.getMotors()[0].rotate(-deltaRightTacho * 360);
+			} 
+			
+			if (lastRightValue - rightValue > 10){
+				leftTacho = motorController.getXTachometer();
+				waitForLeftDetected();
+				
+				int deltaLeftTacho = motorController.getXTachometer() - leftTacho;				
+				motorController.getMotors()[1].rotate(-deltaLeftTacho * 360);
 			}
-
-			lastLeftValue = leftValue;
-			lastRightValue = rightValue;
-			lastTime = currentTime;
+			
+			Delay.msDelay(100);
 		}
 	}
-
-	private int nearest(double number) {
-		return (int) Math.round(number / 30) * 30;
-	}
-
-	public void waitForLeftDetected() {
-		while (lastLeftValue - leftValue > 10) {
+	
+	public void waitForLeftDetected(){
+		while(lastLeftValue - leftValue > 10){
 			lastLeftValue = leftValue;
 			Delay.msDelay(100);
 			leftValue = leftColorSensor.getNormalizedLightValue();
 		}
 	}
-
-	public void waitForRightDetected() {
-		while (lastRightValue - rightValue > 10) {
+	
+	public void waitForRightDetected(){
+		while(lastRightValue - rightValue > 10){
 			lastRightValue = rightValue;
 			Delay.msDelay(100);
 			rightValue = rightColorSensor.getNormalizedLightValue();
 		}
 	}
-
-	/**
-	 * Implementation of a filtering algorithm to do line detection.
-	 * 
-	 * @return true for a line
-	 */
-	public boolean detectLine() {
+	
+	
+	public void detectLine2(){
 		leftValue = leftColorSensor.getNormalizedLightValue();
 		rightValue = rightColorSensor.getNormalizedLightValue();
 
-		if (lastLeftValue - leftValue > 10) {
-			left = true;
+		if (lastLeftValue - leftValue > 10 ){
+			rightTacho = motorController.getYTachometer();
+		} 
+		
+		if (lastRightValue - rightValue > 10){
+			leftTacho = motorController.getXTachometer();
 		}
+	}
+	
+	/**
+	 * Implementation of a filtering algorithm to do line detection.
+	 * @return true for a line
+	 */
+	public boolean detectLine(){
+		leftValue = leftColorSensor.getNormalizedLightValue();
+		rightValue = rightColorSensor.getNormalizedLightValue();
 
-		if (lastRightValue - rightValue > 10) {
+		if (lastLeftValue - leftValue > 10 ){
+			left = true;
+		} 
+		
+		if (lastRightValue - rightValue > 10){
 			right = true;
 		}
 

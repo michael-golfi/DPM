@@ -37,7 +37,7 @@ public class Odometer extends AbstractOdometer {
 			theta += deltaTheta;
 			x += deltaD * Math.sin(theta);
 			y += deltaD * Math.cos(theta);
-		}
+		}	
 		waitForPeriodEnd();
 	}
 	
@@ -74,21 +74,7 @@ public class Odometer extends AbstractOdometer {
 		if (updateEnd - updateStart < Constants.ODOMETER_PERIOD)			
 			Delay.msDelay(Constants.ODOMETER_PERIOD - (updateEnd - updateStart));		
 	}
-	
-	public int getRoundedTheta(){
-		int heading = (int)Math.toDegrees(getTheta());
-		if (heading <= 15 && heading >= 345)
-			return 0;
-		else if (heading <= 105 && heading >= 75)
-			return 90;
-		else if (heading <= 195 && heading >= 165)
-			return 180;
-		else if (heading <= 285 && heading >= 295)
-			return 270;
-		else 
-			return 0;
-	}
-	
+
 	/**
 	 * @param orientation2
 	 * @return

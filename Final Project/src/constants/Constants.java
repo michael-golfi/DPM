@@ -37,7 +37,7 @@ public class Constants
 	/**
 	 * Wheel radius: {@value} cm
 	 */
-	public static final double WHEEL_RADIUS = 1.7;
+	public static final double WHEEL_RADIUS = 1.710000000;
 
 	/**
 	 * Robot tire-to-tire width: {@value} cm
@@ -62,5 +62,5 @@ public class Constants
 	/**
 	 * The y-distance from the center of the robot to the color sensors: {@value} cm.
 	 */
-	public static final double DISTANCE_TO_CENTER = 12;
+	public static final double DISTANCE_TO_CENTER = 7.1;
 }
