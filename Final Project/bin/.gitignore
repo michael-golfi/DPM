@@ -1,9 +1,7 @@
-/orientation/
 /navigation/
-/odometry/
-/blockdetection/
-/controller/
 /constants/
-/finitestatemachine/
+/controller/
+/odometry/
 /main/
 /utils/
+/test/

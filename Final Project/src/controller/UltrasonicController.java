@@ -17,7 +17,7 @@ public class UltrasonicController
 {
 	private MotorController motorController;
 	private UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(
-			SensorPort.S4);
+			SensorPort.S1);
 
 	public UltrasonicController(MotorController motorController)
 	{

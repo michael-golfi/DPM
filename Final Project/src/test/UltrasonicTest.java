@@ -673,16 +673,13 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package odometry;
+package test;
 
-import constants.Constants;
+import odometry.Odometer;
 import controller.MotorController;
-import lejos.nxt.ColorSensor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
+import controller.UltrasonicController;
+import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.RConsole;
-import lejos.robotics.Color;
-import lejos.util.Delay;
 
 /**
  * 
@@ -697,113 +694,22 @@ import lejos.util.Delay;
  * </ul>
  * 
  */
-public class OdometerCorrection extends Thread {
+public class UltrasonicTest extends Thread{
 
-	private Odometer odometer;
-	private MotorController motorController;
-
-	private ColorSensor 
-			leftColorSensor = new ColorSensor(SensorPort.S2, Color.RED), 
-			rightColorSensor = new ColorSensor(SensorPort.S3, Color.RED);
-	private int lastLeftValue, lastRightValue, leftValue, rightValue;
-	private boolean left, right;
-	private int leftTacho, rightTacho;
-
-	public OdometerCorrection(Odometer odometer, MotorController motorController) {
+	MotorController motorController;
+	Odometer odometer;
+	
+	public UltrasonicTest(MotorController motorController, Odometer odometer){
+		this.motorController = motorController;
 		this.odometer = odometer;
 	}
-
-	private long dt, lastTime, currentTime, leftLineValue, rightLineValue;
-
-	public void run() {
-		while (true) {
-			currentTime = System.currentTimeMillis();
-			leftValue = leftColorSensor.getLightValue();
-			rightValue = rightColorSensor.getLightValue();
-
-			dt = lastTime - currentTime;
-			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
-			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
-
-			RConsole.println("Left: " + leftLineValue + " Right: " + rightLineValue);
-			
-			if (leftLineValue > 19 && rightLineValue > 19) {
-				// heading good, X Y correction
-
-				double x, y;
-				synchronized (odometer) {
-					x = odometer.getY();
-					y = odometer.getX();
-				}
-				double correctedX = nearest(x);
-				double correctedY = nearest(y);
-
-				switch (odometer.getRoundedTheta()) {
-				case 0:
-					odometer.setY(correctedX + Constants.DISTANCE_TO_CENTER);
-					break;
-				case 180:
-					odometer.setY(correctedX - Constants.DISTANCE_TO_CENTER);
-					break;
-				case 90:
-					odometer.setX(correctedY + Constants.DISTANCE_TO_CENTER);
-					break;
-				case 270:
-					odometer.setX(correctedY - Constants.DISTANCE_TO_CENTER);
-					break;
-				}
-				Delay.msDelay(500);
-			} else if (leftLineValue > 19) {
-				// under angled
-			} else if (rightLineValue > 19) {
-				// over angled
-			} else {
-				RConsole.println("Left: 0 Right: 0");
-			}
-
-			lastLeftValue = leftValue;
-			lastRightValue = rightValue;
-			lastTime = currentTime;
+	
+	public void run(){
+		UltrasonicController ultrasonicController = new UltrasonicController(null);
+		while(true){
+			RConsole.println(
+					 "Odometer Y: " + odometer.getX() + 
+					" Ultrasonic Distance: " + ultrasonicController.getFilteredData());
 		}
-	}
-
-	private int nearest(double number) {
-		return (int) Math.round(number / 30) * 30;
-	}
-
-	public void waitForLeftDetected() {
-		while (lastLeftValue - leftValue > 10) {
-			lastLeftValue = leftValue;
-			Delay.msDelay(100);
-			leftValue = leftColorSensor.getNormalizedLightValue();
-		}
-	}
-
-	public void waitForRightDetected() {
-		while (lastRightValue - rightValue > 10) {
-			lastRightValue = rightValue;
-			Delay.msDelay(100);
-			rightValue = rightColorSensor.getNormalizedLightValue();
-		}
-	}
-
-	/**
-	 * Implementation of a filtering algorithm to do line detection.
-	 * 
-	 * @return true for a line
-	 */
-	public boolean detectLine() {
-		leftValue = leftColorSensor.getNormalizedLightValue();
-		rightValue = rightColorSensor.getNormalizedLightValue();
-
-		if (lastLeftValue - leftValue > 10) {
-			left = true;
-		}
-
-		if (lastRightValue - rightValue > 10) {
-			right = true;
-		}
-
-		return left && right;
 	}
 }
