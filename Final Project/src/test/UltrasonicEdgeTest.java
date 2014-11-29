@@ -677,7 +677,6 @@ package test;
 
 import lejos.nxt.comm.RConsole;
 import odometry.Odometer;
-import controller.MotorController;
 import controller.UltrasonicController;
 
 /**
@@ -693,13 +692,10 @@ import controller.UltrasonicController;
  * </ul>
  * 
  */
-public class UltrasonicTest extends Thread{
-
-	MotorController motorController;
+public class UltrasonicEdgeTest extends Thread{
 	Odometer odometer;
 	
-	public UltrasonicTest(MotorController motorController, Odometer odometer){
-		this.motorController = motorController;
+	public UltrasonicEdgeTest(Odometer odometer){
 		this.odometer = odometer;
 	}
 	

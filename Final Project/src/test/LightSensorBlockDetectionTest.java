@@ -675,10 +675,11 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package test;
 
+import lejos.nxt.ColorSensor;
+import lejos.nxt.ColorSensor.Color;
+import lejos.nxt.SensorPort;
 import lejos.nxt.comm.RConsole;
 import odometry.Odometer;
-import controller.MotorController;
-import controller.UltrasonicController;
 
 /**
  * 
@@ -693,22 +694,22 @@ import controller.UltrasonicController;
  * </ul>
  * 
  */
-public class UltrasonicTest extends Thread{
-
-	MotorController motorController;
+public class LightSensorBlockDetectionTest extends Thread {
+	
+	ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
 	Odometer odometer;
 	
-	public UltrasonicTest(MotorController motorController, Odometer odometer){
-		this.motorController = motorController;
+	public LightSensorBlockDetectionTest(Odometer odometer){
 		this.odometer = odometer;
 	}
 	
 	public void run(){
-		UltrasonicController ultrasonicController = new UltrasonicController(null);
+		Color color;
 		while(true){
+			color = colorSensor.getColor();
 			RConsole.println(
-					 "Y: " + odometer.getX() + 
-					" Distance: " + ultrasonicController.getFilteredData());
+					"Y " + odometer.getX() + 
+				   " R " + color.getRed() + " G " + color.getGreen() + " B " + color.getBlue());
 		}
 	}
 }

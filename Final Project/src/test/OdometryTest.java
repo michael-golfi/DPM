@@ -675,10 +675,13 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package test;
 
-import lejos.nxt.comm.RConsole;
-import odometry.Odometer;
+import navigation.DistanceNavigator;
 import controller.MotorController;
-import controller.UltrasonicController;
+import odometry.Odometer;
+import lejos.nxt.ColorSensor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.comm.RConsole;
+import lejos.robotics.Color;
 
 /**
  * 
@@ -692,23 +695,45 @@ import controller.UltrasonicController;
  * <ul>
  * </ul>
  * 
+ * public static final double WHEEL_RADIUS = 1.7;
+ * 
+ * public static double WIDTH = 19.63;
+ * 
  */
-public class UltrasonicTest extends Thread{
-
-	MotorController motorController;
+public class OdometryTest extends Thread {
 	Odometer odometer;
-	
-	public UltrasonicTest(MotorController motorController, Odometer odometer){
-		this.motorController = motorController;
+	MotorController motorController;
+	ColorSensor leftColorSensor = new ColorSensor(SensorPort.S2, Color.RED);
+	ColorSensor rightColorSensor = new ColorSensor(SensorPort.S3, Color.RED);
+
+	public OdometryTest(Odometer odometer, MotorController motorController) {
 		this.odometer = odometer;
+		this.motorController = motorController;
 	}
-	
-	public void run(){
-		UltrasonicController ultrasonicController = new UltrasonicController(null);
-		while(true){
-			RConsole.println(
-					 "Y: " + odometer.getX() + 
-					" Distance: " + ultrasonicController.getFilteredData());
+
+	public void run() {
+
+	}
+
+	private long dt, lastTime, currentTime, leftLineValue, rightLineValue;
+	private int lastLeftValue, lastRightValue, leftValue, rightValue;
+
+	public void testRadius() {
+		motorController.resetTachometers();
+		motorController.setAccelerations(2000);
+
+		while (leftLineValue < 19 && rightLineValue < 19) {
+			currentTime = System.currentTimeMillis();
+			leftValue = leftColorSensor.getLightValue();
+			rightValue = rightColorSensor.getLightValue();
+
+			dt = lastTime - currentTime;
+			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
+			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
 		}
+
+		RConsole.println("Motor Tachometer Values " + "Left: "
+				+ motorController.getXTachometer() + " Right: "
+				+ motorController.getYTachometer());
 	}
 }
