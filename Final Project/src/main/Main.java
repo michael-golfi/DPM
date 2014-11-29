@@ -2,22 +2,22 @@ package main;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
-import odometry.Odometer;
-import odometry.OdometerCorrection;
 import lejos.nxt.Button;
-import lejos.nxt.ColorSensor;
-import lejos.nxt.LCD;
-import lejos.nxt.SensorPort;
-import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.Motor;
 import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.NXTConnection;
 import lejos.nxt.comm.RConsole;
-import blockdetection.BlockDetector;
-import blockdetection.BlockListener;
+import lejos.util.Delay;
+import navigation.DistanceNavigator;
+import navigation.Navigator;
+import odometry.Odometer;
+import odometry.OdometerCorrection;
+import test.UltrasonicTest;
+import utils.Vector;
 import constants.Constants;
 import controller.MotorController;
-import controller.UltrasonicController;
 import finitestatemachine.FiniteStateMachine;
 
 /**
@@ -36,10 +36,78 @@ public class Main
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		RConsole.open();
-		RConsole.println("Start");
 		
+		/*MotorController motorController = new MotorController();
+		//motorController.grabBlock();
+		
+		Odometer odometer = new Odometer(motorController);
+		DistanceNavigator distanceNavigator = new DistanceNavigator(odometer);
+		OdometerCorrection odometerCorrection = new OdometerCorrection(odometer, motorController);
+		UltrasonicTest ultrasonicTest = new UltrasonicTest(motorController, odometer);
+		odometer.start();
+		
+		odometerCorrection.start();
+		odometer.setY(106);
+		odometer.setX(197.8);
+		odometer.setTheta(Math.toRadians(90));
+		
+		Delay.msDelay(2000);
+		
+		//ultrasonicTest.start();
+		
+		//distanceNavigator.travelDistance(-120);*/
+		
+		/*ArrayList<Vector> navigate = new ArrayList<>();
+		Vector[] points = new Vector[]{
+				new Vector(167, 106),
+				new Vector(106, 136.92),
+				new Vector(106, 106),
+				new Vector(106, 76)
+				/*new Vector(75, 15),
+				new Vector(75, -15),
+				new Vector(45, -15),
+				
+				
+				/*new Vector(75, 15),
+				new Vector(105, 15),
+				new Vector(130, 15),
+				new Vector(165, 15),
+				new Vector(165, 45),
+				new Vector(165, 75),
+				new Vector(165, 105),
+				new Vector(165, 135),
+				new Vector(165, 165)*/
+		/*};
+		navigate.addAll(points);
+		//navigate.addAll(points);
+				
+		for(Vector vector : navigate)
+			distanceNavigator.travelTo(vector);
+		
+		/*distanceNavigator.travelDistance(Constants.TILE_LENGTH * 2);
+		
+		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
+		
+		distanceNavigator.turnTo(-90);
+		
+		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
+		
+		distanceNavigator.travelDistance(Constants.TILE_LENGTH * 6);
+		
+		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
+		
+		distanceNavigator.turnTo(90);
+		
+		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
+		
+		distanceNavigator.travelDistance(Constants.TILE_LENGTH * 4);*/
+		
+		
+		
+				
 		FiniteStateMachine fsm = new FiniteStateMachine();
 		fsm.start();
 		

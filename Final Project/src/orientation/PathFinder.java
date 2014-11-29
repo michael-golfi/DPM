@@ -7,6 +7,7 @@ import javax.xml.stream.events.XMLEvent;
 import odometry.Odometer;
 import lejos.nxt.Button;
 import lejos.nxt.comm.RConsole;
+import navigation.DistanceNavigator;
 import navigation.Navigator;
 
 /**
@@ -30,13 +31,16 @@ public class PathFinder {
 	
 	private Navigator navigator;
 	
+	private DistanceNavigator navigator2;
+	
 	private Odometer odometer;
 	
 	private Tile currentTile;
 	
-	public PathFinder(Field field, Navigator navigator, Odometer odometer){
+	public PathFinder(Field field, Navigator navigator, DistanceNavigator navigator2, Odometer odometer){
 		this.field = field;
 		this.navigator = navigator;
+		this.navigator2 = navigator2;
 		this.odometer = odometer;
 	}
 	
@@ -44,15 +48,19 @@ public class PathFinder {
 		
 		TreeMap treeMap = buildTreeMap(origin, destination); 
 		
-		//navigatePath(traverseTree(destination));
-		navigatePath2(traverseTree(destination), origin);
+		navigatePath(traverseTree(destination));
+		//navigatePath2(traverseTree(destination), origin);
 	
 	}
 	
 	public void navigatePath(ArrayList<Tile> path){
 		RConsole.println("path: " + path);
 		for(Tile tile : path){
-			navigator.travelTo2((tile.getCoordinate().getY()+15.0), (tile.getCoordinate().getX()+15.0));
+			synchronized (odometer) {
+				RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
+				RConsole.println("Travel to: " + (tile.getCoordinate().getX()+15.0) + ", " + (tile.getCoordinate().getY()+15));
+			}
+			navigator2.travelTo((tile.getCoordinate().getX()+15.0), (tile.getCoordinate().getY()+15.0));
 		}
 		
 		//navigator.turnTo(180);		

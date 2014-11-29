@@ -683,8 +683,10 @@ import lejos.nxt.Sound;
 import lejos.nxt.comm.RConsole;
 import lejos.util.Delay;
 import odometry.Odometer;
+import utils.Music;
 import controller.ColourSensorController;
 import controller.MotorController;
+import navigation.DistanceNavigator;
 import navigation.Navigator;
 
 /**
@@ -700,7 +702,7 @@ import navigation.Navigator;
  * </ul>
  * 
  */
-public class BlockFinding {
+public class BlockFinding extends Thread{
 
 	/**
 	 * 
@@ -715,7 +717,7 @@ public class BlockFinding {
 	 * </ul>
 	 * 
 	 */
-	private Navigator navigator;
+	private DistanceNavigator navigator;
 	
 	private BlockDetector blockDetector;
 	
@@ -725,34 +727,44 @@ public class BlockFinding {
 	
 	public boolean blockGrabbed = false;
 	
+	private boolean blockFound = false;
+	
+	private boolean interrupted = false;
+	
 	private final long chargeDuration = 5000;
 	
-	private long chargeTimer, initialChargeTime;
+	private long scanTimer, riseTime, fallTime, returnTimer, startTime;
 	
-	//private int[] distanceCap = {60, 40, 20};
-	
-	private Stack<Integer> distanceCap = new Stack<Integer>();
+	private final int[] distanceCap = {60, 30};
 	
 	private Scan scanner;
 	
-	public BlockFinding(Odometer odometer, Navigator navigator, MotorController motorController){
+	public BlockFinding(Odometer odometer, DistanceNavigator navigator, MotorController motorController){
 		//this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1), motorController, this);
 		this.motorController = motorController;
 		this.odometer = odometer;
 		this.navigator = navigator;
-		this.scanner = new Scan(odometer);
+				
+		//this.scanner = new Scan(odometer, distanceCap[0]);
 		
-		distanceCap.addElement(20);
-		distanceCap.addElement(40);
-		distanceCap.addElement(60);
-		
+
 		//initiateBlockListener();
 		
 		motorController.setClawAccleration(750);
 		
 		findBlock();
 	}
-		
+	
+	public void run(){
+		while(true){
+			if(returnTimer >= 7000){
+				motorController.stop();
+				navigator.turnTo(25);
+				navigator.travelDistance(15);
+				initiateScan2(distanceCap[1]);
+			}
+		}
+	}
 		
 	private void initiateBlockListener(){
 	
@@ -802,42 +814,41 @@ public class BlockFinding {
 	
 	private void charge(){
 		
-		motorController.openClaw();
+		//if(scanner.distance < 20){
 		
+		motorController.openClaw();
 		try{
 			Thread.sleep(500);
 		}catch(Exception e){}
 		
-		motorController.getMotors()[0].setSpeed(200);
-		motorController.getMotors()[1].setSpeed(200);
+		motorController.getMotors()[0].setSpeed(100);
+		motorController.getMotors()[1].setSpeed(100);
 		motorController.getMotors()[0].forward();
 		motorController.getMotors()[1].forward();
 		
-		
-		/*while(scanner.distance > 10){
+		while(scanner.distance > 8){
 			try{
 				Thread.sleep(10);
 			}catch(Exception e){}
-		}*/
-		
-		scanner.interrupt();
+		}
+		Sound.beep();
 		
 		try{
-			Thread.sleep(3500);
+			Thread.sleep(1000);
 		}catch(Exception e){}
 		
 		grab();
+		
 	}
 	
 	private void scan(){
 		
 		
-		initiateScan();
+		initiateScan(distanceCap[0]);
 
 	}
 	
-	private void initiateScan(){
-		
+	private void initiateScan(int distanceCap){
 		
 		
 		motorController.getMotors()[0].setSpeed(100);
@@ -845,57 +856,125 @@ public class BlockFinding {
 		motorController.getMotors()[0].backward();
 		motorController.getMotors()[1].forward();
 		
-		scanner = new Scan(odometer);
+		scanner = new Scan(odometer, distanceCap);
 		scanner.start();
 		
-		while(scanner.distance < 150 || scanner.error == true){
+		RConsole.println("distance cap: " +(distanceCap-20));
+		
+		while(scanner.distance <= distanceCap-20/* || scanner.error == true*/){
 			
 			try{
 				Thread.sleep(10);
 			}catch(Exception e){}
 		}
 		
-		scanSweep();		
+		scanSweep(distanceCap);		
 		
 	}
 	
-	private void scanSweep(){
+	private void initiateScan2(int distanceCap){
+		
+		
+		motorController.getMotors()[0].setSpeed(100);
+		motorController.getMotors()[1].setSpeed(100);
+		motorController.getMotors()[0].backward();
+		motorController.getMotors()[1].forward();
+		
+		scanner = new Scan(odometer, distanceCap);
+		scanner.start();
+		
+		RConsole.println("distance cap: " +(distanceCap-20));
+		
+		while(scanner.distance <= 30/* || scanner.error == true*/){
+			
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		scanSweep(distanceCap);		
+		
+	}
+	
+	
+	private void scanSweep(int distanceCap){
+		
+		startTime = System.currentTimeMillis();
+		
+		if(!interrupted){
+			this.start();
+		}
+		
 		motorController.getMotors()[0].setSpeed(50);
 		motorController.getMotors()[1].setSpeed(50);
 		motorController.getMotors()[0].forward();
 		motorController.getMotors()[1].backward();
 		
-		while(scanner.distance > distanceCap.pop()){
+		
+		
+		while(scanner.distance > distanceCap-20){
+			if(!interrupted){
+				interrupted = true;
+				this.interrupt();
+			}
+			returnTimer = System.currentTimeMillis() - startTime; 
 			try{
 				Thread.sleep(10);
 			}catch(Exception e){}
 		}
-				
-		try{
-			Thread.sleep(500);
-		}catch(Exception e){}
+		
+		
+		
+		int distance = scanner.distance;
+		RConsole.println("Rise: " + distance);
+		Sound.buzz();
+		
+		riseTime = System.currentTimeMillis();
+		
+		while(scanner.distance < distance){
+			returnTimer = System.currentTimeMillis() - startTime;
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+			
+		}
+		
+		RConsole.println("Fall: " + scanner.distance);
+		
+		Sound.buzz();
+		
+		fallTime = System.currentTimeMillis();
+		
+		motorController.getMotors()[0].backward();
+		motorController.getMotors()[1].forward();
+		
+		
+		
+		while(scanTimer < (fallTime - riseTime - 2000)){
+			scanTimer = System.currentTimeMillis() - fallTime;
+			try{
+				Thread.sleep(10);
+			}catch(Exception e){}
+		}
+		
+		
+		Sound.beep();
+		
+		/*try{
+			Thread.sleep(400);
+		}catch(Exception e){}*/
 		
 		charge();
-		
-		//motorController.getMotors()[0].forward();
-		//motorController.getMotors()[1].forward();
 	}
 	
-	private void rewind(){
-		navigator.travelBackwards(60);
-		//pivot();
-	}
 	
-	private void pivot(){
-		navigator.turnTo(-90);
-		navigator.travelDistance(10);
-		navigator.turnTo(90);
-		//charge();
-	}
 	
 	private void grab(){
 		motorController.stop();
+		//navigator.travelDistance(20);
 		motorController.grabBlock();
+		Music lowRider = new Music();
+		lowRider.start();
 		
 	}
 }

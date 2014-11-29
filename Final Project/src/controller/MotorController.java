@@ -29,6 +29,8 @@ public class MotorController {
 	 */
 	public MotorController() {
 		resetTachometers();
+		setAccelerations(300);
+		setSpeeds(400);
 	}
 
 	

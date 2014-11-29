@@ -676,6 +676,8 @@ Public License instead of this License.  But first, please read
 package navigation;
 
 import odometry.Odometer;
+import utils.Vector;
+import utils.VectorOperations;
 import lejos.nxt.Motor;
 import lejos.nxt.comm.RConsole;
 import lejos.robotics.navigation.DifferentialPilot;
@@ -699,7 +701,7 @@ public class DistanceNavigator implements Navigation{
 	Odometer odometer;
 	
 	public DistanceNavigator(Odometer odometer){
-		differentialPilot = new DifferentialPilot(Constants.WHEEL_RADIUS, Constants.WIDTH, Motor.C, Motor.B);
+		differentialPilot = new DifferentialPilot(Constants.WHEEL_RADIUS * 2, Constants.WIDTH, Motor.C, Motor.B);
 		this.odometer = odometer;
 	}
 
@@ -707,23 +709,50 @@ public class DistanceNavigator implements Navigation{
 	public boolean isNavigating() {
 		return differentialPilot.isMoving();
 	}
-
+	
+	Vector destination, location, resultant;
+	double currentX, currentY, angle;
+	
+	public void travelTo(Vector vector){
+		travelTo(vector.getX(), vector.getY());
+	}
+	
 	@Override
 	public void travelTo(double x, double y) {
-		RConsole.println("Travel to: x: " + x + " y: " + y);
+		//RConsole.println("Travel to: x: " + x + " y: " + y);
 		
-		x -= odometer.getX();
-		y -= odometer.getY();
+		destination = new Vector(x, y);
 		
-		RConsole.println("Travel Distance: x: " + x + " y: " + y);
+		synchronized (odometer) {
+			currentX = odometer.getX();
+			currentY = odometer.getY();			
+		}
 		
-		double angle = Math.atan2(y, x);
-		double distance = Math.sqrt(x * x + y * y);
+		location = new Vector(currentX, currentY);		
+		resultant = VectorOperations.subtract(destination, location);				
+		
+		/*RConsole.println("\n" +
+				" Currents X: " + currentX + " Y: " + currentY + 
+				" Destination: " + destination +
+				" Location " + location +
+				" Result " + resultant + "\n");*/
+		
+		angle = minAngle((resultant.getAngle() - Math.toDegrees(odometer.getTheta())), (resultant.getAngle() - Math.toDegrees(odometer.getTheta()))+360);
+		
+		RConsole.println("Rotate: " + angle + " Travel: " + resultant.getLength());
 		
 		turnTo(angle);
-		
-		travelDistance(distance);
+		travelDistance(resultant.getLength());		
 	}
+	
+	private double minAngle(double a, double b){
+		if(Math.abs(a) < Math.abs(b)){
+			return a;
+		}else{
+			return b;
+		}
+	}
+	
 	
 	public void travelDistance(double distance){
 		RConsole.println("Travelling: " + distance + " cm");

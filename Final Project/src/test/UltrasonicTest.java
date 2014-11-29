@@ -673,18 +673,13 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package blockdetection;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+package test;
 
 import odometry.Odometer;
-import lejos.nxt.SensorPort;
+import controller.MotorController;
+import controller.UltrasonicController;
 import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.RConsole;
-import lejos.util.Delay;
-import navigation.Navigator;
-import controller.UltrasonicController;
 
 /**
  * 
@@ -699,89 +694,22 @@ import controller.UltrasonicController;
  * </ul>
  * 
  */
-public class Scan extends Thread{
+public class UltrasonicTest extends Thread{
 
-	private UltrasonicSensor ultrasonicSensor;
+	MotorController motorController;
+	Odometer odometer;
 	
-	private int[] scannerReadings;
-	
-	private Odometer odometer;
-	
-	private Object lock = new Object();
-	
-	public int distance;
-	
-	public boolean error = true;
-	
-	public double blockAngle;
-	
-	public Scan(Odometer odometer, int distanceCap){
-		this.ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
+	public UltrasonicTest(MotorController motorController, Odometer odometer){
+		this.motorController = motorController;
 		this.odometer = odometer;
 	}
 	
 	public void run(){
-		
+		UltrasonicController ultrasonicController = new UltrasonicController(null);
 		while(true){
-			//ultrasonicSensor.ping();
-			//Delay.msDelay(10);
-			
-			scannerReadings = new int[5];
-			
-			for(int i=0;i<5;i++){
-				scannerReadings[i] = ultrasonicSensor.getDistance();
-				
-				try{
-					Thread.sleep(50);
-				}catch(Exception e){}
-			}
-			filterDistance();
-			
-		
-			//RConsole.println("" + distance);
-			
-			/*synchronized (lock) {
-				scannerReadings.add(distance);
-			}*/
-			
+			RConsole.println(
+					 "Odometer Y: " + odometer.getX() + 
+					" Ultrasonic Distance: " + ultrasonicController.getFilteredData());
 		}
 	}
-	
-	public void filterDistance(){
-		Arrays.sort(scannerReadings);
-		
-		RConsole.println(scannerReadings[0] + ", " +scannerReadings[1] + ", " +scannerReadings[2] + ", " +scannerReadings[3] + ", " +scannerReadings[4]);
-		
-		distance = scannerReadings[2];
-		
-		if(distance != 255)
-			error = false;
-	}
-	
-	
-	/*public int getReading(){
-		synchronized (lock) {
-			return scannerReadings.get(scannerReadings.size()-1);
-		}	
-	}*/
-	
-	
-	
-	private int getMin(){
-		
-		int min = Integer.MAX_VALUE;
-		
-		for(int reading : scannerReadings){
-			if(reading < min)
-				min = reading;
-		}
-		
-		//RConsole.println("min: " + min);
-		
-		return min;
-		
-	}
-	
-	
-	
 }

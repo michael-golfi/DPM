@@ -100,7 +100,7 @@ public abstract class AbstractOdometer extends Thread {
 	 * 
 	 * @param x
 	 */
-	public void setX(double x) {
+	public void setY(double x) {
 		synchronized (lock) {
 			this.x = x;
 		}
@@ -111,7 +111,7 @@ public abstract class AbstractOdometer extends Thread {
 	 * 
 	 * @param y
 	 */
-	public void setY(double y) {
+	public void setX(double y) {
 		synchronized (lock) {
 			this.y = y;
 		}
