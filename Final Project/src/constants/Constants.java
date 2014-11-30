@@ -63,4 +63,8 @@ public class Constants
 	 * The y-distance from the center of the robot to the color sensors: {@value} cm.
 	 */
 	public static final double DISTANCE_TO_CENTER = 12;
+	/**
+	 * The distance from each color sensor: {@value} mm
+	 */
+	public static final double DISTANCE_FROM_COLOR_SENSORS = 63.78;
 }

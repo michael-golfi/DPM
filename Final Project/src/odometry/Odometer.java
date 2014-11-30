@@ -1,13 +1,10 @@
 package odometry;
 
-import java.util.Stack;
-
 import lejos.nxt.NXTRegulatedMotor;
-import lejos.nxt.comm.RConsole;
 import lejos.util.Delay;
+import orientation.Orientation;
 import constants.Constants;
 import controller.MotorController;
-import orientation.*;
 
 public class Odometer extends AbstractOdometer {
 	private double x2, y2, x1, y1, distanceX, distanceY, deltaD, deltaTheta;	
@@ -25,8 +22,6 @@ public class Odometer extends AbstractOdometer {
 	}
 
 	public void updateOdometer() {
-		
-		
 		updateStart = System.currentTimeMillis();
 		
 		calculateX();

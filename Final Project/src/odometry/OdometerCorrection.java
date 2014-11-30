@@ -698,26 +698,34 @@ import lejos.util.Delay;
  * 
  */
 public class OdometerCorrection extends Thread {
-
 	private Odometer odometer;
 	private MotorController motorController;
 
-	private ColorSensor 
-			leftColorSensor, 
-			rightColorSensor;
+	private static ColorSensor leftColorSensor = new ColorSensor(SensorPort.S2,
+			Color.RED), rightColorSensor = new ColorSensor(SensorPort.S3,
+			Color.RED);
 	private int lastLeftValue, lastRightValue, leftValue, rightValue;
 	private boolean left, right;
 	private int leftTacho, rightTacho;
 
 	public OdometerCorrection(Odometer odometer, MotorController motorController) {
 		this.odometer = odometer;
-		this.leftColorSensor = new ColorSensor(SensorPort.S2, Color.RED);
-		this.rightColorSensor = new ColorSensor(SensorPort.S3, Color.RED);
+
+		Delay.msDelay(1000);
+
+		rightColorSensor.setFloodlight(Color.RED);
+		leftColorSensor.setFloodlight(Color.RED);
+
+		while (!leftColorSensor.isFloodlightOn()
+				&& !rightColorSensor.isFloodlightOn()) {
+			Delay.msDelay(1000);
+		}
 	}
 
 	private long dt, lastTime, currentTime, leftLineValue, rightLineValue;
 
 	public void run() {
+		RConsole.println("OdometerCorrection \nLeft Right");
 		while (true) {
 			currentTime = System.currentTimeMillis();
 			leftValue = leftColorSensor.getLightValue();
@@ -727,46 +735,49 @@ public class OdometerCorrection extends Thread {
 			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
 			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
 
-			//RConsole.println("Left: " + leftLineValue + " Right: " + rightLineValue);
-			
+			RConsole.println(leftLineValue + " " + rightLineValue);
 			if (leftLineValue > 19 && rightLineValue > 19) {
 				// heading good, X Y correction
-				
+
 				Sound.beep();
-				
+
 				double x, y;
+				int theta;
 				synchronized (odometer) {
 					x = odometer.getX();
 					y = odometer.getY();
+					theta = odometer.getRoundedTheta();
 				}
+
 				double correctedX = nearest(x);
 				double correctedY = nearest(y);
 
-				switch (odometer.getRoundedTheta()) {
-				case 270:
-				//case 0:
-					odometer.setX(correctedX + Constants.DISTANCE_TO_CENTER);
-					break;
-				case 90:
-					//case 180:
-					odometer.setX(correctedX - Constants.DISTANCE_TO_CENTER);
-					break;
-				//case 90:
-				case 0:
-					odometer.setY(correctedY + Constants.DISTANCE_TO_CENTER);
-					break;
-				//case 270:
-				case 180:
-					odometer.setY(correctedY - Constants.DISTANCE_TO_CENTER);
-					break;
+				// RConsole.println("Nearest X " + correctedX + " Y " +
+				// correctedY);
+				RConsole.println("Correct XY Rounded Theta " + theta);
+				synchronized (odometer) {
+					switch (theta) {
+					case 0:
+						RConsole.println("Theta 0 " + correctedX);
+						odometer.setX(correctedX + Constants.DISTANCE_TO_CENTER);
+						break;
+					case 90:
+						RConsole.println("Theta 90 " + correctedY);
+						odometer.setY(correctedY + Constants.DISTANCE_TO_CENTER);
+						break;
+					case 180:
+						RConsole.println("Theta 180 " + correctedX);
+						odometer.setX(correctedX - Constants.DISTANCE_TO_CENTER);
+						break;
+					case 270:
+						RConsole.println("Theta 270 " + correctedY);
+						odometer.setY(correctedY - Constants.DISTANCE_TO_CENTER);
+						break;
+					}
 				}
 				Delay.msDelay(500);
 			} else if (leftLineValue > 19) {
-				// under angled
-			} else if (rightLineValue > 19) {
-				// over angled
-			} else {
-				//RConsole.println("Left: 0 Right: 0");
+				
 			}
 
 			lastLeftValue = leftValue;
