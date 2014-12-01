@@ -680,6 +680,7 @@ import java.util.Stack;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
+import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.RConsole;
 import lejos.util.Delay;
 import odometry.Odometer;
@@ -727,6 +728,8 @@ public class BlockFinding extends Thread{
 	
 	public boolean blockGrabbed = false;
 	
+	private UltrasonicSensor ultrasonicSensor;
+	
 	private boolean blockFound = false;
 	
 	private boolean interrupted = false;
@@ -739,9 +742,10 @@ public class BlockFinding extends Thread{
 	
 	private Scan scanner;
 	
-	public BlockFinding(Odometer odometer, DistanceNavigator navigator, MotorController motorController){
+	public BlockFinding(Odometer odometer, DistanceNavigator navigator, UltrasonicSensor ultrasonicSensor, MotorController motorController){
 		//this.blockDetector = new BlockDetector(new ColorSensor(SensorPort.S1), motorController, this);
 		this.motorController = motorController;
+		this.ultrasonicSensor = ultrasonicSensor;
 		this.odometer = odometer;
 		this.navigator = navigator;
 				
@@ -750,14 +754,14 @@ public class BlockFinding extends Thread{
 
 		//initiateBlockListener();
 		
-		motorController.setClawAccleration(750);
+		motorController.setClawAccleration(400);
 		
 		findBlock();
 	}
 	
 	public void run(){
 		while(true){
-			if(returnTimer >= 7000){
+			if(returnTimer >= 999999){//7000){
 				motorController.stop();
 				navigator.turnTo(25);
 				navigator.travelDistance(15);
@@ -856,7 +860,7 @@ public class BlockFinding extends Thread{
 		motorController.getMotors()[0].backward();
 		motorController.getMotors()[1].forward();
 		
-		scanner = new Scan(odometer, distanceCap);
+		scanner = new Scan(odometer, distanceCap, ultrasonicSensor);
 		scanner.start();
 		
 		RConsole.println("distance cap: " +(distanceCap-20));
@@ -880,7 +884,7 @@ public class BlockFinding extends Thread{
 		motorController.getMotors()[0].backward();
 		motorController.getMotors()[1].forward();
 		
-		scanner = new Scan(odometer, distanceCap);
+		scanner = new Scan(odometer, distanceCap, ultrasonicSensor);
 		scanner.start();
 		
 		RConsole.println("distance cap: " +(distanceCap-20));
@@ -973,8 +977,14 @@ public class BlockFinding extends Thread{
 		motorController.stop();
 		//navigator.travelDistance(20);
 		motorController.grabBlock();
+		
+		Delay.msDelay(1000);
+		
 		Music lowRider = new Music();
 		lowRider.start();
+		
+		
+		navigator.travelTo(15, 45);
 		
 	}
 }

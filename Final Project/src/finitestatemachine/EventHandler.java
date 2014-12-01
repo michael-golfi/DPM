@@ -1,7 +1,10 @@
 package finitestatemachine;
 
+import lejos.nxt.SensorPort;
+import lejos.nxt.UltrasonicSensor;
 import blockdetection.BlockFinding;
 import orientation.Field;
+import orientation.NavigateToDropOff;
 import orientation.Orienteering;
 import orientation.PathFinder;
 import navigation.DistanceNavigator;
@@ -27,30 +30,35 @@ import controller.UltrasonicController;
  * </ul>
  * 
  */
-public class EventHandler extends Thread{
+public class EventHandler{
 	
 	private UltrasonicController ultrasonicController;
+	private UltrasonicSensor ultrasonicSensor;
 	private Navigator navigator;
 	private DistanceNavigator navigator2;
 	private MotorController motorController;
 	private Odometer odometer;
 	private OdometerCorrection odometerCorrection;
 	private Orienteering orienteering;
-	private Field field;
+	private Field field, field2;
 	private PathFinder pathFinder;
+	private NavigateToDropOff navigateToDropOff;
 
 	
 	//CONSTRUCTOR
 	public EventHandler(){
 		motorController = new MotorController();
 		ultrasonicController = new UltrasonicController(motorController);
+		ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
 		odometer = new Odometer(motorController);
 		odometerCorrection = new OdometerCorrection(odometer, motorController);
 		navigator = new Navigator(motorController, odometer);
 		navigator2 = new DistanceNavigator(odometer);
-		field = new Field(Map.map1);
-		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, odometer);
+		field = new Field(Map.map2);
+		field2 = new Field(Map.map2);
+		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, ultrasonicSensor, odometer);
 		pathFinder = new PathFinder(field, navigator, navigator2, odometer);
+		navigateToDropOff = new NavigateToDropOff(field2, navigator, navigator2, odometer);
 	}
 	
 	/**
@@ -59,6 +67,7 @@ public class EventHandler extends Thread{
 	public boolean handleOrienteering() {
 		//motorController.grabBlock();
 		odometer.start();
+		//odometerCorrection.start();
 		orienteering.orient();
 		return true;
 	}
@@ -67,7 +76,6 @@ public class EventHandler extends Thread{
 	 * @return
 	 */
 	public boolean handleNavigatingToBlocks() {
-		odometerCorrection.start();
 		//navigator.turnTo(180);
 		//odometer.orientation = odometer.invertOrientation(odometer.orientation);
 		pathFinder.findPath(orienteering.getCurrentTile(), field.getTileMap()[5][1]);
@@ -78,7 +86,7 @@ public class EventHandler extends Thread{
 	 * @return
 	 */
 	public boolean handleFindingBlocks() {
-		BlockFinding blockFinding = new BlockFinding(odometer, navigator2, motorController);
+		BlockFinding blockFinding = new BlockFinding(odometer, navigator2, ultrasonicSensor, motorController);
 		return false;
 	}
 
@@ -94,7 +102,7 @@ public class EventHandler extends Thread{
 	 * @return
 	 */
 	public boolean handleNavigatingToDropOff() {
-		// TODO Auto-generated method stub
+		navigateToDropOff.navigateToDropOff(field2.getTileMap()[5][5]);
 		return false;
 	}
 
@@ -102,7 +110,7 @@ public class EventHandler extends Thread{
 	 * @return
 	 */
 	public boolean handleDroppingOffBlock() {
-		// TODO Auto-generated method stub
+		motorController.openClaw();
 		return false;
 	}
 

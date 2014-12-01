@@ -6,6 +6,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import odometry.Odometer;
 import lejos.nxt.Button;
+import lejos.nxt.Sound;
 import lejos.nxt.comm.RConsole;
 import navigation.DistanceNavigator;
 import navigation.Navigator;
@@ -23,7 +24,7 @@ import navigation.Navigator;
  * </ul>
  * 
  */
-public class PathFinder {
+public class NavigateToDropOff {
 	
 	private Field field;
 	
@@ -37,7 +38,7 @@ public class PathFinder {
 	
 	private Tile currentTile;
 	
-	public PathFinder(Field field, Navigator navigator, DistanceNavigator navigator2, Odometer odometer){
+	public NavigateToDropOff(Field field, Navigator navigator, DistanceNavigator navigator2, Odometer odometer){
 		this.field = field;
 		this.navigator = navigator;
 		this.navigator2 = navigator2;
@@ -180,8 +181,6 @@ public class PathFinder {
 	
 	//returns a breadth-first tree map with the destination as the root
 	private TreeMap buildTreeMap(Tile origin, Tile destination){
-		System.out.println(origin.tileIndex);
-		
 		ArrayList<TileNode> traversalQueue = new ArrayList<TileNode>(); 
 		
 		TileNode root = new TileNode(destination, null);
@@ -193,6 +192,8 @@ public class PathFinder {
 		
 		
 		while(field.eachTileSeen() == false){
+			
+			
 			TileNode crt = traversalQueue.get(0);
 			
 			for(Tile neighbourTile : crt.getTile().getUnobstructedNeighbours()){
@@ -200,9 +201,10 @@ public class PathFinder {
 				TileNode child = new TileNode(neighbourTile, crt);
 				
 				if(child.getTile().isSeen() == false){
-										
-					if(child.getTile() == origin){
+									
+					if(child.getTile().tileIndex == 41){
 						originNode = child;
+						Sound.beep();
 					}
 					
 					crt.addChild(child);
@@ -213,8 +215,7 @@ public class PathFinder {
 			}
 			traversalQueue.remove(0);
 		
-		}
-		
+		}		
 		return treeMap;		
 	}
 	

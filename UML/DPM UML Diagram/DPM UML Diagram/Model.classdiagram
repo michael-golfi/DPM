@@ -1764,48 +1764,6 @@
                   </relationshipOwnedElementsInternal>
                   <elementDefinition Id="b3adbda1-f74e-4fbe-8a44-2f8b2e61fd26" />
                 </association>
-                <association Id="223184da-89c7-4841-b94b-f62cbe43c2d5" isDerived="false" sourceEndRoleName="EventHandler" targetEndRoleName="Orient" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="13c576d1-a906-402e-b357-560d027e7d5d" LastKnownName="Orient" />
-                  <relationshipOwnedElementsInternal>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="9311feb2-42df-4f39-8791-ee677f65ba26" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="db372bcf-4f48-4ec6-9874-32cba32cc729" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="660846a7-f852-4aca-a56d-b31449cf26ec" name="Orient" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <elementDefinition Id="926ca0a0-bfbc-4d7e-9b3a-53a13879d67c" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                  </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="cb9ec05c-1bb5-4d5c-ad39-0521c75b4d27" />
-                </association>
-                <association Id="3997b9ab-e227-4696-bb12-17bfa289b4de" isDerived="false" sourceEndRoleName="EventHandler" targetEndRoleName="PathFinder" isLeaf="false" isAbstract="false">
-                  <classMoniker Id="3e9df7a6-e5b9-4962-bd12-2263170350df" LastKnownName="PathFinder" />
-                  <relationshipOwnedElementsInternal>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="0c517ba0-79d5-4df4-ab8f-31f805762768" name="EventHandler" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                        <elementDefinition Id="6189790a-7f35-4379-aa3a-6c9d57763e2e" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                    <associationHasOwnedEnds>
-                      <memberEnd Id="0dbdb40f-406b-4b37-a50a-d2606b5be158" name="PathFinder" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                        <lowerValueInternal>
-                          <literalString Id="4899d0cb-3065-4cde-8664-8688979d672e" name="Lower" value="1">
-                            <elementDefinition Id="b717795c-3052-442a-a9f9-f8e2a9cdba13" />
-                          </literalString>
-                        </lowerValueInternal>
-                        <upperValueInternal>
-                          <literalString Id="aad1ca71-2af5-4ae8-adb1-efa7cb1302cf" name="Upper" value="*">
-                            <elementDefinition Id="0a25fbbd-180a-49a3-9757-d7e6ab29fc7f" />
-                          </literalString>
-                        </upperValueInternal>
-                        <elementDefinition Id="5c921652-fb27-461e-8511-d2a1b0391158" />
-                      </memberEnd>
-                    </associationHasOwnedEnds>
-                  </relationshipOwnedElementsInternal>
-                  <elementDefinition Id="c56a70c8-3bba-4763-bd43-5eada305bf9a" />
-                </association>
               </targetEnds>
               <ownedOperationsInternal>
                 <operation Id="d6950079-112c-43d6-a362-ba02a87f4342" name="handleOrienteering" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">

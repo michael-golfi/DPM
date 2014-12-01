@@ -704,6 +704,12 @@ public class FiniteStateMachine extends Thread {
 			eventHandler.handleOrienteering();
 			eventHandler.handleNavigatingToBlocks();
 			eventHandler.handleFindingBlocks();
+			eventHandler.handleNavigatingToDropOff();
+			eventHandler.handleDroppingOffBlock();
+			eventHandler.handleNavigatingToBlocks();
+			eventHandler.handleFindingBlocks();
+			eventHandler.handleNavigatingToDropOff();
+			eventHandler.handleDroppingOffBlock();
 			/*if (eventHandler.handleOrienteering()){
 				changeState(State.NavigatingToBlocks);
 			}*/
