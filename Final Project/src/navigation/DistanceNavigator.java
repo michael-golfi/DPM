@@ -739,7 +739,7 @@ public class DistanceNavigator implements Navigation{
 		
 		angle = minAngle((resultant.getAngle() - Math.toDegrees(odometer.getTheta())), (resultant.getAngle() - Math.toDegrees(odometer.getTheta()))+360);
 		
-		RConsole.println("Rotate: " + angle + " Travel: " + resultant.getLength());
+		//RConsole.println("Rotate: " + angle + " Travel: " + resultant.getLength());
 		
 		turnTo(angle);
 		travelDistance(resultant.getLength());		

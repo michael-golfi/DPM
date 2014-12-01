@@ -715,8 +715,8 @@ public class Scan extends Thread{
 	
 	public double blockAngle;
 	
-	public Scan(Odometer odometer, int distanceCap){
-		this.ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
+	public Scan(Odometer odometer, int distanceCap, UltrasonicSensor ultrasonicSensor){
+		this.ultrasonicSensor = ultrasonicSensor;
 		this.odometer = odometer;
 	}
 	
@@ -750,7 +750,7 @@ public class Scan extends Thread{
 	public void filterDistance(){
 		Arrays.sort(scannerReadings);
 		
-		RConsole.println(scannerReadings[0] + ", " +scannerReadings[1] + ", " +scannerReadings[2] + ", " +scannerReadings[3] + ", " +scannerReadings[4]);
+		//RConsole.println(scannerReadings[0] + ", " +scannerReadings[1] + ", " +scannerReadings[2] + ", " +scannerReadings[3] + ", " +scannerReadings[4]);
 		
 		distance = scannerReadings[2];
 		

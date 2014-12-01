@@ -2,6 +2,7 @@ package orientation;
 
 import java.util.ArrayList;
 
+import blockdetection.Scan;
 import odometry.Odometer;
 import odometry.OdometerCorrection;
 import constants.Constants;
@@ -10,9 +11,11 @@ import navigation.DistanceNavigator;
 import navigation.Navigator;
 import lejos.nxt.LCD;
 import lejos.nxt.Sound;
+import lejos.nxt.UltrasonicSensor;
 import lejos.nxt.comm.RConsole;
+import lejos.util.Delay;
 
-public class Orienteering {
+public class Orienteering extends Thread{
 	
 	private Field field;
 	
@@ -30,25 +33,43 @@ public class Orienteering {
 	
 	private Arrow trackingArrow;
 	
+	private Scan scanner;
+	
+	private long accTime;
+	
 	private int turnCounter = 0;
 	private int previousTurnCounter = 0;
 	
+	private boolean getOutOfHere = true;
+	
 	private boolean[] orientationTracker = new boolean[4];
 	
-	public Orienteering(Field field, Navigator navigator, DistanceNavigator navigator2, UltrasonicController ultrasonicController, Odometer odometer){
+	public Orienteering(Field field, Navigator navigator, DistanceNavigator navigator2, UltrasonicController ultrasonicController, UltrasonicSensor ultrasonicSensor, Odometer odometer){
 		this.field = field;
 		this.navigator = navigator;
 		this.navigator2 = navigator2;
 		this.ultrasonicController = ultrasonicController;
+		this.scanner = new Scan(odometer, 0, ultrasonicSensor);
+		scanner.start();
 		this.odometer = odometer;
 		this.actionList = new ArrayList<Action>();
 		
 	}
 	
+	public void run(){
+		long startTime = System.currentTimeMillis();
+		while(true){
+			accTime = System.currentTimeMillis() - startTime;
+		}
+	}
+	
 	//handles orienting algorithm
 	public void orient(){
 		
+		
 		int observationCounter = 0;
+		
+		this.start();
 		
 		while(field.foundStartingLocation() == false){
 			
@@ -65,6 +86,12 @@ public class Orienteering {
 		}
 		Sound.beep();
 		
+		this.interrupt();
+		
+		RConsole.println("Time: " + accTime);
+		
+		RConsole.println("observations: " + observationCounter);
+		
 		RConsole.println("Oriented: Current Theta" + getCurrentTheta() + "");
 		
 		odometer.setPosition(determineCurrentTile().getCoordinate().getX()+15,  determineCurrentTile().getCoordinate().getY()+15, Math.toRadians(getCurrentTheta()));
@@ -76,13 +103,23 @@ public class Orienteering {
 			RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
 		}
 		
+		RConsole.println("Starting Tile: " + determineStartingTile().tileIndex);
+		RConsole.println("Current Tile: " + determineCurrentTile().tileIndex + " direction: " + determineCurrentArrow().getOrientation());
 		
-		RConsole.println("" + determineStartingTile().tileIndex);
 		 
 	}
 	
 	private Block observe(int observationCounter){
-		return ultrasonicController.isBlocked()? Block.OBSTRUCTED : Block.UNOBSTRUCTED; 
+		int distance = 0;
+		while(distance == 0){
+			distance = scanner.distance;
+			Delay.msDelay(100);
+		}
+		RConsole.println("US sensor: " + distance);
+		
+		return distance < 30? Block.OBSTRUCTED : Block.UNOBSTRUCTED;
+		
+		//return ultrasonicController.isBlocked()? Block.OBSTRUCTED : Block.UNOBSTRUCTED; 
 		//return observationList[observationCounter];
 	}
 	
@@ -105,6 +142,15 @@ public class Orienteering {
 	
 	private void performAction2(Block observation){
 		
+		/*if(getOutOfHere){
+			if(observation == Block.UNOBSTRUCTED){
+				moveForward();
+				return;
+			}else{
+				getOutOfHere = false;
+			}
+		}*/
+		
 		if(observation == Block.OBSTRUCTED)
 			Sound.buzz();
 		
@@ -125,9 +171,10 @@ public class Orienteering {
 					rotateClockwise();
 					turnCounter -= 2;
 				}else if(orientationTracker[0]){
-					rotateClockwise();
-					rotateClockwise();
-					rotateClockwise();
+					rotateCounterclockwise();
+					//rotateClockwise();
+					//rotateClockwise();
+					//rotateClockwise();
 					turnCounter -= 3;
 				}else{				
 					rotateClockwise();
@@ -138,6 +185,7 @@ public class Orienteering {
 			turnCounter = 0;
 			resetOrientationTrackers();
 			moveForward();
+			//getOutOfHere = true;
 		}
 	}
 	
@@ -251,9 +299,9 @@ public class Orienteering {
 	public double getCurrentTheta(){
 		switch(determineCurrentArrow().getOrientation()){
 		case NORTH : return 90.0;
-		case EAST : return 180.0;
+		case EAST : return 0;
 		case SOUTH : return 270.0;
-		case WEST : return 0.0;
+		case WEST : return 180.0;
 		default : return -1.0;
 		}
 	}

@@ -20,7 +20,7 @@ public class Map {
 		   {new Tile(Block.UNOBSTRUCTED, 32, -1, 2),  new Tile(Block.UNOBSTRUCTED, 33, 0, 2), new Tile(Block.UNOBSTRUCTED, 34, 1, 2), new Tile(Block.UNOBSTRUCTED, 35, 2, 2), new Tile(Block.OBSTRUCTED, 36, 3, 2),  new Tile(Block.UNOBSTRUCTED, 37, 4, 2), new Tile(Block.UNOBSTRUCTED, 38, 5, 2), new Tile(Block.OBSTRUCTED, 39, 6, 2)},
 		   {new Tile(Block.UNOBSTRUCTED, 40, -1, 1),  new Tile(Block.UNOBSTRUCTED, 41, 0, 1), new Tile(Block.UNOBSTRUCTED, 42, 1, 1), new Tile(Block.UNOBSTRUCTED, 43, 2, 1), new Tile(Block.OBSTRUCTED, 44, 3, 1),  new Tile(Block.UNOBSTRUCTED, 45, 4, 1), new Tile(Block.OBSTRUCTED, 46, 5, 1), new Tile(Block.OBSTRUCTED, 47, 6, 1)},
 		   {new Tile(Block.UNOBSTRUCTED, 48, -1, 0),  new Tile(Block.UNOBSTRUCTED, 49, 0, 0), new Tile(Block.UNOBSTRUCTED, 50, 1, 0), new Tile(Block.UNOBSTRUCTED, 51, 2, 0), new Tile(Block.OBSTRUCTED, 52, 3, 0),  new Tile(Block.UNOBSTRUCTED, 53, 4, 0), new Tile(Block.UNOBSTRUCTED, 54, 5, 0), new Tile(Block.UNOBSTRUCTED, 55, 6, 0)},
-		   {new Tile(Block.UNOBSTRUCTED, 56, -1, -1),  new Tile(Block.UNOBSTRUCTED, 57, 0, -1), new Tile(Block.UNOBSTRUCTED, 58, 1, -1), new Tile(Block.UNOBSTRUCTED, 59, 2, -1), new Tile(Block.UNOBSTRUCTED, 59, 3, -1),  new Tile(Block.UNOBSTRUCTED, 60, 4, -1), new Tile(Block.UNOBSTRUCTED, 61, 5, -1), new Tile(Block.OBSTRUCTED, 62, 6, -1)},
+		   {new Tile(Block.UNOBSTRUCTED, 56, -1, -1),  new Tile(Block.UNOBSTRUCTED, 57, 0, -1), new Tile(Block.UNOBSTRUCTED, 58, 1, -1), new Tile(Block.UNOBSTRUCTED, 59, 2, -1), new Tile(Block.UNOBSTRUCTED, 60, 3, -1),  new Tile(Block.UNOBSTRUCTED, 61, 4, -1), new Tile(Block.UNOBSTRUCTED, 62, 5, -1), new Tile(Block.OBSTRUCTED, 63, 6, -1)},
 		   };
 	
 	public static final Tile[][] map2 ={
@@ -31,7 +31,7 @@ public class Map {
 		   {new Tile(Block.UNOBSTRUCTED, 32, -1, 2),  new Tile(Block.UNOBSTRUCTED, 33, 0, 2), new Tile(Block.OBSTRUCTED, 34, 1, 2), new Tile(Block.UNOBSTRUCTED, 35, 2, 2), new Tile(Block.UNOBSTRUCTED, 36, 3, 2),  new Tile(Block.UNOBSTRUCTED, 37, 4, 2), new Tile(Block.UNOBSTRUCTED, 38, 5, 2), new Tile(Block.UNOBSTRUCTED, 39, 6, 2)},
 		   {new Tile(Block.UNOBSTRUCTED, 40, -1, 1),  new Tile(Block.UNOBSTRUCTED, 41, 0, 1), new Tile(Block.UNOBSTRUCTED, 42, 1, 1), new Tile(Block.UNOBSTRUCTED, 43, 2, 1), new Tile(Block.UNOBSTRUCTED, 44, 3, 1),  new Tile(Block.UNOBSTRUCTED, 45, 4, 1), new Tile(Block.UNOBSTRUCTED, 46, 5, 1), new Tile(Block.UNOBSTRUCTED, 47, 6, 1)},
 		   {new Tile(Block.UNOBSTRUCTED, 48, -1, 0),  new Tile(Block.UNOBSTRUCTED, 49, 0, 0), new Tile(Block.UNOBSTRUCTED, 50, 1, 0), new Tile(Block.OBSTRUCTED, 51, 2, 0), new Tile(Block.UNOBSTRUCTED, 52, 3, 0),  new Tile(Block.UNOBSTRUCTED, 53, 4, 0), new Tile(Block.UNOBSTRUCTED, 54, 5, 0), new Tile(Block.OBSTRUCTED, 55, 6, 0)},
-		   {new Tile(Block.UNOBSTRUCTED, 56, -1, -1),  new Tile(Block.UNOBSTRUCTED, 57, 0, -1), new Tile(Block.OBSTRUCTED, 58, 1, -1), new Tile(Block.UNOBSTRUCTED, 59, 2, -1), new Tile(Block.UNOBSTRUCTED, 59, 3, -1),  new Tile(Block.OBSTRUCTED, 60, 4, -1), new Tile(Block.UNOBSTRUCTED, 61, 5, -1), new Tile(Block.OBSTRUCTED, 62, 6, -1)},
+		   {new Tile(Block.UNOBSTRUCTED, 56, -1, -1),  new Tile(Block.UNOBSTRUCTED, 57, 0, -1), new Tile(Block.OBSTRUCTED, 58, 1, -1), new Tile(Block.UNOBSTRUCTED, 59, 2, -1), new Tile(Block.UNOBSTRUCTED, 60, 3, -1),  new Tile(Block.OBSTRUCTED, 61, 4, -1), new Tile(Block.UNOBSTRUCTED, 62, 5, -1), new Tile(Block.OBSTRUCTED, 63, 6, -1)},
 		   }; 
 	
 	public static final Tile[][] map3 ={
@@ -42,7 +42,7 @@ public class Map {
 		   {new Tile(Block.UNOBSTRUCTED, 32, -1, 2),  new Tile(Block.UNOBSTRUCTED, 33, 0, 2), new Tile(Block.OBSTRUCTED, 34, 1, 2), new Tile(Block.OBSTRUCTED, 35, 2, 2), new Tile(Block.UNOBSTRUCTED, 36, 3, 2),  new Tile(Block.UNOBSTRUCTED, 37, 4, 2), new Tile(Block.UNOBSTRUCTED, 38, 5, 2), new Tile(Block.UNOBSTRUCTED, 39, 6, 2)},
 		   {new Tile(Block.UNOBSTRUCTED, 40, -1, 1),  new Tile(Block.UNOBSTRUCTED, 41, 0, 1), new Tile(Block.UNOBSTRUCTED, 42, 1, 1), new Tile(Block.OBSTRUCTED, 43, 2, 1), new Tile(Block.UNOBSTRUCTED, 44, 3, 1),  new Tile(Block.UNOBSTRUCTED, 45, 4, 1), new Tile(Block.UNOBSTRUCTED, 46, 5, 1), new Tile(Block.UNOBSTRUCTED, 47, 6, 1)},
 		   {new Tile(Block.UNOBSTRUCTED, 48, -1, 0),  new Tile(Block.UNOBSTRUCTED, 49, 0, 0), new Tile(Block.UNOBSTRUCTED, 50, 1, 0), new Tile(Block.UNOBSTRUCTED, 51, 2, 0), new Tile(Block.UNOBSTRUCTED, 52, 3, 0),  new Tile(Block.UNOBSTRUCTED, 53, 4, 0), new Tile(Block.UNOBSTRUCTED, 54, 5, 0), new Tile(Block.UNOBSTRUCTED, 55, 6, 0)},
-		   {new Tile(Block.UNOBSTRUCTED, 56, -1, -1),  new Tile(Block.UNOBSTRUCTED, 57, 0, -1), new Tile(Block.UNOBSTRUCTED, 58, 1, -1), new Tile(Block.UNOBSTRUCTED, 59, 2, -1), new Tile(Block.OBSTRUCTED, 59, 3, -1),  new Tile(Block.OBSTRUCTED, 60, 4, -1), new Tile(Block.UNOBSTRUCTED, 61, 5, -1), new Tile(Block.OBSTRUCTED, 62, 6, -1)},
+		   {new Tile(Block.UNOBSTRUCTED, 56, -1, -1),  new Tile(Block.UNOBSTRUCTED, 57, 0, -1), new Tile(Block.UNOBSTRUCTED, 58, 1, -1), new Tile(Block.UNOBSTRUCTED, 59, 2, -1), new Tile(Block.OBSTRUCTED, 60, 3, -1),  new Tile(Block.OBSTRUCTED, 61, 4, -1), new Tile(Block.UNOBSTRUCTED, 62, 5, -1), new Tile(Block.OBSTRUCTED, 63, 6, -1)},
 		   }; 
 	
 }

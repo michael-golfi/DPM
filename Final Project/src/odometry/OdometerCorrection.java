@@ -734,11 +734,16 @@ public class OdometerCorrection extends Thread {
 			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
 			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
 
+<<<<<<< HEAD
 			if (leftLineValue > CORRECTION_THRESHOLD
 					&& rightLineValue > CORRECTION_THRESHOLD) {
+=======
+			//RConsole.println(leftLineValue + " " + rightLineValue);
+			if (leftLineValue > 19 && rightLineValue > 19) {
+>>>>>>> 804149c6c0bbc9af527e78d4569d3d030f4728f9
 				// heading good, X Y correction
 
-				Sound.beep();
+				//Sound.beep();
 
 				synchronized (odometer) {
 					x = odometer.getX();
@@ -749,23 +754,29 @@ public class OdometerCorrection extends Thread {
 				double correctedX = nearest(x);
 				double correctedY = nearest(y);
 
+<<<<<<< HEAD
 				RConsole.println("Correct XY Rounded Theta " + theta);
+=======
+				// RConsole.println("Nearest X " + correctedX + " Y " +
+				// correctedY);
+				//RConsole.println("Correct XY Rounded Theta " + theta);
+>>>>>>> 804149c6c0bbc9af527e78d4569d3d030f4728f9
 				synchronized (odometer) {
 					switch (theta) {
 					case 0:
-						RConsole.println("Theta 0 " + correctedX);
+						//RConsole.println("Theta 0 " + correctedX);
 						odometer.setX(correctedX + Constants.DISTANCE_TO_CENTER);
 						break;
 					case 90:
-						RConsole.println("Theta 90 " + correctedY);
+						//RConsole.println("Theta 90 " + correctedY);
 						odometer.setY(correctedY + Constants.DISTANCE_TO_CENTER);
 						break;
 					case 180:
-						RConsole.println("Theta 180 " + correctedX);
+						//RConsole.println("Theta 180 " + correctedX);
 						odometer.setX(correctedX - Constants.DISTANCE_TO_CENTER);
 						break;
 					case 270:
-						RConsole.println("Theta 270 " + correctedY);
+						//RConsole.println("Theta 270 " + correctedY);
 						odometer.setY(correctedY - Constants.DISTANCE_TO_CENTER);
 						break;
 					}
