@@ -64,7 +64,12 @@ public class Constants
 	 */
 	public static final double DISTANCE_TO_CENTER = 12;
 	/**
-	 * The distance from each color sensor: {@value} mm
+	 * The distance from each color sensor: {@value} cm
 	 */
-	public static final double DISTANCE_FROM_COLOR_SENSORS = 63.78;
+	public static final double DISTANCE_FROM_COLOR_SENSORS = 6.378;
+	
+	/**
+	 * A timeout to wait for color sensor line detection failure: {@value} milliseconds
+	 */
+	public static final int CORRECTION_TIMEOUT = 2000;
 }

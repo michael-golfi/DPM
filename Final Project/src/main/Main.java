@@ -32,16 +32,16 @@ import finitestatemachine.FiniteStateMachine;
  */
 public class Main
 {
-
 	/**
 	 * @param args
 	 */
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
-		RConsole.open();
+		RConsole.openAny(1000);
 		
 		MotorController motorController = new MotorController();
-		//motorController.grabBlock();
+		Motor.C.setAcceleration(200);
+		Motor.B.setAcceleration(200);
 		
 		Odometer odometer = new Odometer(motorController);
 		DistanceNavigator distanceNavigator = new DistanceNavigator(odometer);
@@ -60,6 +60,9 @@ public class Main
 				new Vector(-15, 15),
 				new Vector(15, 15),
 				new Vector(45, 15),
+				new Vector(45, 45),
+				new Vector(45, 75),
+				new Vector(15, 75),
 				/*new Vector(75, 15),
 				new Vector(75, -15),
 				new Vector(45, -15),
@@ -80,62 +83,6 @@ public class Main
 		for(Vector vector : navigate)
 			distanceNavigator.travelTo(vector);
 		
-		/*distanceNavigator.travelDistance(Constants.TILE_LENGTH * 2);
-		
-		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
-		
-		distanceNavigator.turnTo(-90);
-		
-		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
-		
-		distanceNavigator.travelDistance(Constants.TILE_LENGTH * 6);
-		
-		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
-		
-		distanceNavigator.turnTo(90);
-		
-		RConsole.println("" + odometer.getX() + ", " + odometer.getY() + " " + odometer.getTheta());
-		
-		distanceNavigator.travelDistance(Constants.TILE_LENGTH * 4);*/
-		
-		
-		
-				
-//		FiniteStateMachine fsm = new FiniteStateMachine();
-		//fsm.start();
-		
-		/*UltrasonicSensor sensor = new UltrasonicSensor(SensorPort.S1);
-		while(true){
-			RConsole.println("" + sensor.getDistance());
-			try{
-				Thread.sleep(500);
-			}catch(Exception e){}
-		}*/
-		
-		/*ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
-		RConsole.println("Started ColorSensor");
-		BlockDetector blockDetector = new BlockDetector(colorSensor);
-		MotorController motorController = new MotorController();
-		
-		blockDetector.setBlockListener(new BlockListener() {
-			
-			@Override
-			public void onBlockDetected(int color) {
-				motorController.stop();
-				motorController.openClaw();
-				motorController.travel(20);
-				motorController.grabBlock();
-				
-				blockDetector.setListenForBlock(false);
-			}
-		});
-		
-		RConsole.println("Started BlockDetector");
-		blockDetector.start();
-		
-		motorController.travel(70);*/
-		
-		Button.waitForAnyPress();
 		RConsole.close();
 	}
 	
