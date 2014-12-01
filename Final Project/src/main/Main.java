@@ -38,9 +38,9 @@ public class Main
 	 */
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
-		RConsole.open();
+		//RConsole.open();
 		
-		MotorController motorController = new MotorController();
+		/*MotorController motorController = new MotorController();
 		//motorController.grabBlock();
 		
 		Odometer odometer = new Odometer(motorController);
@@ -74,8 +74,8 @@ public class Main
 				new Vector(165, 105),
 				new Vector(165, 135),
 				new Vector(165, 165)*/
-		};
-		navigate.addAll(points);
+		//};
+		/*navigate.addAll(points);
 				
 		for(Vector vector : navigate)
 			distanceNavigator.travelTo(vector);
@@ -98,11 +98,9 @@ public class Main
 		
 		distanceNavigator.travelDistance(Constants.TILE_LENGTH * 4);*/
 		
-		
-		
-				
-//		FiniteStateMachine fsm = new FiniteStateMachine();
-		//fsm.start();
+			
+		FiniteStateMachine fsm = new FiniteStateMachine();
+		fsm.start();
 		
 		/*UltrasonicSensor sensor = new UltrasonicSensor(SensorPort.S1);
 		while(true){
