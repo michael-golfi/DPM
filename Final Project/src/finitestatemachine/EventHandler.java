@@ -40,9 +40,11 @@ public class EventHandler{
 	private Odometer odometer;
 	private OdometerCorrection odometerCorrection;
 	private Orienteering orienteering;
-	private Field field, field2;
-	private PathFinder pathFinder;
-	private NavigateToDropOff navigateToDropOff;
+	private static Field field;
+	private static PathFinder pathFinder;
+	private static NavigateToDropOff navigateToDropOff;
+	
+	private Class ref;
 
 	
 	//CONSTRUCTOR
@@ -55,10 +57,20 @@ public class EventHandler{
 		navigator = new Navigator(motorController, odometer);
 		navigator2 = new DistanceNavigator(odometer);
 		field = new Field(Map.map2);
-		field2 = new Field(Map.map2);
+
 		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, ultrasonicSensor, odometer);
 		pathFinder = new PathFinder(field, navigator, navigator2, odometer);
-		navigateToDropOff = new NavigateToDropOff(field2, navigator, navigator2, odometer);
+		
+		
+		
+	}
+	
+	public Odometer getOdometer(){
+		return odometer;
+	}
+	
+	public DistanceNavigator getNavigator(){
+		return navigator2;
 	}
 	
 	/**
@@ -67,7 +79,7 @@ public class EventHandler{
 	public boolean handleOrienteering() {
 		//motorController.grabBlock();
 		odometer.start();
-		//odometerCorrection.start();
+		odometerCorrection.start();
 		orienteering.orient();
 		return true;
 	}
@@ -102,7 +114,7 @@ public class EventHandler{
 	 * @return
 	 */
 	public boolean handleNavigatingToDropOff() {
-		navigateToDropOff.navigateToDropOff(field2.getTileMap()[5][5]);
+		//navigateToDropOff.navigateToDropOff(field2.getTileMap()[5][5]);
 		return false;
 	}
 

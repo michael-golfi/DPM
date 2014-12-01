@@ -37,13 +37,14 @@ public class Main
 	 */
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
-<<<<<<< HEAD
+
+	/*	
 		RConsole.openAny(1000);
 		
 		MotorController motorController = new MotorController();
 		Motor.C.setAcceleration(200);
 		Motor.B.setAcceleration(200);
-=======
+
 		//RConsole.open();
 		
 		/*MotorController motorController = new MotorController();
@@ -146,7 +147,6 @@ public class Main
 		motorController.travel(70);*/
 		
 		Button.waitForAnyPress();
->>>>>>> 804149c6c0bbc9af527e78d4569d3d030f4728f9
 		RConsole.close();
 	}
 	

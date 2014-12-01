@@ -43,6 +43,8 @@ public class NavigateToDropOff {
 		this.navigator = navigator;
 		this.navigator2 = navigator2;
 		this.odometer = odometer;
+		
+		field.reset();
 	}
 	
 	public void findPath(Tile origin, Tile destination){
@@ -58,11 +60,16 @@ public class NavigateToDropOff {
 		
 		TreeMap treeMap = buildTreeMap(field.getTileMap()[5][1], dropoff);
 		
+		//RConsole.open();
+		//treeMap.print();
+		//Button.waitForAnyPress();
+		
 		navigatePath(traverseTree(dropoff));
 	}
 	
 	public void navigatePath(ArrayList<Tile> path){
-		RConsole.println("path: " + path.size());
+		//RConsole.open();
+		RConsole.println("path: " + path);
 		for(Tile tile : path){
 			//synchronized (odometer) {
 				//RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
@@ -78,8 +85,8 @@ public class NavigateToDropOff {
 		currentTile = origin;
 		for(Tile tile : path){
 			
-			RConsole.println("CURRENT ORIENTATION: " + odometer.orientation);
-			RConsole.println("travel to: (" + tile.x + ", " + tile.y + ")");
+			//RConsole.println("CURRENT ORIENTATION: " + odometer.orientation);
+			//RConsole.println("travel to: (" + tile.x + ", " + tile.y + ")");
 			//Button.waitForAnyPress();
 			
 			

@@ -675,8 +675,11 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package finitestatemachine;
 
+import orientation.Field;
+import orientation.NavigateToDropOff;
 import navigation.Navigator;
 import odometry.Odometer;
+import constants.Map;
 import controller.MotorController;
 import controller.UltrasonicController;
 
@@ -704,12 +707,19 @@ public class FiniteStateMachine extends Thread {
 			eventHandler.handleOrienteering();
 			eventHandler.handleNavigatingToBlocks();
 			eventHandler.handleFindingBlocks();
-			eventHandler.handleNavigatingToDropOff();
+			
+			Field field = new Field(Map.map2);
+			
+			NavigateToDropOff navigateToDropOff = new NavigateToDropOff(field, null, eventHandler.getNavigator(), eventHandler.getOdometer());
+			navigateToDropOff.navigateToDropOff(field.getTileMap()[5][5]);
+			
+			
+			/*eventHandler.handleNavigatingToDropOff();
 			eventHandler.handleDroppingOffBlock();
 			eventHandler.handleNavigatingToBlocks();
 			eventHandler.handleFindingBlocks();
 			eventHandler.handleNavigatingToDropOff();
-			eventHandler.handleDroppingOffBlock();
+			eventHandler.handleDroppingOffBlock();*/
 			/*if (eventHandler.handleOrienteering()){
 				changeState(State.NavigatingToBlocks);
 			}*/

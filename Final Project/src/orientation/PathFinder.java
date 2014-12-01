@@ -42,6 +42,7 @@ public class PathFinder {
 		this.navigator = navigator;
 		this.navigator2 = navigator2;
 		this.odometer = odometer;
+		field.reset();
 	}
 	
 	public void findPath(Tile origin, Tile destination){

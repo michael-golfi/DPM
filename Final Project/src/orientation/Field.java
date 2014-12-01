@@ -103,6 +103,14 @@ public class Field {
 	//	return size;
 	//}
 	
+	public void reset(){
+		for(Tile[] row : tileMap){
+			for(Tile tile : row){
+				tile.reset();
+			}
+		}
+	}
+	
 	public boolean eachTileSeen(){
 		for(Tile[] row : tileMap){
 			for(Tile tile : row){

@@ -48,6 +48,10 @@ public class Tile {
 		this.seen = true;
 	}
 	
+	public void reset(){
+		this.seen = false;
+	}
+	
 	public boolean isSeen(){
 		return this.seen;
 	}

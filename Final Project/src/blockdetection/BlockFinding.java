@@ -754,7 +754,7 @@ public class BlockFinding extends Thread{
 
 		//initiateBlockListener();
 		
-		motorController.setClawAccleration(400);
+		motorController.setClawAccleration(200);
 		
 		findBlock();
 	}

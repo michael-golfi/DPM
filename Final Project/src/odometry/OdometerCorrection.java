@@ -733,14 +733,12 @@ public class OdometerCorrection extends Thread {
 			dt = lastTime - currentTime;
 			leftLineValue = Math.abs(100 * (lastLeftValue - leftValue) / dt);
 			rightLineValue = Math.abs(100 * (lastRightValue - rightValue) / dt);
-
-<<<<<<< HEAD
+			
 			if (leftLineValue > CORRECTION_THRESHOLD
 					&& rightLineValue > CORRECTION_THRESHOLD) {
-=======
 			//RConsole.println(leftLineValue + " " + rightLineValue);
 			if (leftLineValue > 19 && rightLineValue > 19) {
->>>>>>> 804149c6c0bbc9af527e78d4569d3d030f4728f9
+
 				// heading good, X Y correction
 
 				//Sound.beep();
@@ -754,13 +752,13 @@ public class OdometerCorrection extends Thread {
 				double correctedX = nearest(x);
 				double correctedY = nearest(y);
 
-<<<<<<< HEAD
+
 				RConsole.println("Correct XY Rounded Theta " + theta);
-=======
+
 				// RConsole.println("Nearest X " + correctedX + " Y " +
 				// correctedY);
 				//RConsole.println("Correct XY Rounded Theta " + theta);
->>>>>>> 804149c6c0bbc9af527e78d4569d3d030f4728f9
+
 				synchronized (odometer) {
 					switch (theta) {
 					case 0:
@@ -851,6 +849,7 @@ public class OdometerCorrection extends Thread {
 			lastLeftValue = leftValue;
 			lastRightValue = rightValue;
 			lastTime = currentTime;			
+		}
 		}
 	}
 
