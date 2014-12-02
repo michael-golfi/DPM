@@ -59,18 +59,24 @@ public class PathFinder {
 		TreeMap treeMap = buildTreeMap(field.getTileMap()[5][1], dropoff);
 		
 		navigatePath(traverseTree(dropoff));
+		
+		treeMap = null;
+		field = null;
 	}
 	
 	public void navigatePath(ArrayList<Tile> path){
+		//RConsole.open();
 		RConsole.println("path: " + path.size());
+		
 		for(Tile tile : path){
 			//synchronized (odometer) {
 				//RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
-				//RConsole.println("Travel to: " + (tile.getCoordinate().getX()+15.0) + ", " + (tile.getCoordinate().getY()+15));
+				
+			RConsole.println("Travel to: " + (tile.getCoordinate().getX()+15.0) + ", " + (tile.getCoordinate().getY()+15));
 			//}
 			navigator2.travelTo((tile.getCoordinate().getX()+15.0), (tile.getCoordinate().getY()+15.0));
 		}
-		
+		//RConsole.close();
 		//navigator.turnTo(180);		
 	}
 	
@@ -181,7 +187,6 @@ public class PathFinder {
 	
 	//returns a breadth-first tree map with the destination as the root
 	private TreeMap buildTreeMap(Tile origin, Tile destination){
-		System.out.println(origin.tileIndex);
 		
 		ArrayList<TileNode> traversalQueue = new ArrayList<TileNode>(); 
 		
@@ -204,6 +209,7 @@ public class PathFinder {
 										
 					if(child.getTile() == origin){
 						originNode = child;
+						//return treeMap;
 					}
 					
 					crt.addChild(child);

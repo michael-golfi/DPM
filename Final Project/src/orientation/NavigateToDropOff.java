@@ -58,13 +58,15 @@ public class NavigateToDropOff {
 	
 	public void navigateToDropOff(Tile dropoff){
 		
-		TreeMap treeMap = buildTreeMap(field.getTileMap()[5][1], dropoff);
+		TreeMap treeMap = buildTreeMap(field.getTileMap()[9][1], dropoff);
 		
 		//RConsole.open();
 		//treeMap.print();
 		//Button.waitForAnyPress();
 		
 		navigatePath(traverseTree(dropoff));
+		
+		treeMap = null;
 	}
 	
 	public void navigatePath(ArrayList<Tile> path){
@@ -73,7 +75,7 @@ public class NavigateToDropOff {
 		for(Tile tile : path){
 			//synchronized (odometer) {
 				//RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
-				//RConsole.println("Travel to: " + (tile.getCoordinate().getX()+15.0) + ", " + (tile.getCoordinate().getY()+15));
+				RConsole.println("Travel to: " + (tile.getCoordinate().getX()+15.0) + ", " + (tile.getCoordinate().getY()+15));
 			//}
 			navigator2.travelTo((tile.getCoordinate().getX()+15.0), (tile.getCoordinate().getY()+15.0));
 		}
@@ -196,11 +198,9 @@ public class NavigateToDropOff {
 		traversalQueue.add(root);
 		
 		TreeMap treeMap = new TreeMap(root);
-		
-		
+				
 		while(field.eachTileSeen() == false){
-			
-			
+						
 			TileNode crt = traversalQueue.get(0);
 			
 			for(Tile neighbourTile : crt.getTile().getUnobstructedNeighbours()){
@@ -212,6 +212,7 @@ public class NavigateToDropOff {
 					if(child.getTile().tileIndex == 41){
 						originNode = child;
 						Sound.beep();
+						//return treeMap;
 					}
 					
 					crt.addChild(child);

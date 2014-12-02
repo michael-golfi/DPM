@@ -21,7 +21,7 @@ public class Orienteering extends Thread{
 	
 	private ArrayList<Action> actionList;
 	
-	private Block[] observationList = {Block.OBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED};
+	private Block[] observationList = {Block.OBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.UNOBSTRUCTED, Block.UNOBSTRUCTED, Block.OBSTRUCTED, Block.OBSTRUCTED};
 	
 	private Navigator navigator;
 	
@@ -102,6 +102,8 @@ public class Orienteering extends Thread{
 		synchronized (odometer) {
 			RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
 		}
+		
+		System.out.println("Starting tile: " + determineStartingTile().tileIndex);
 		
 		RConsole.println("Starting Tile: " + determineStartingTile().tileIndex);
 		RConsole.println("Current Tile: " + determineCurrentTile().tileIndex + " direction: " + determineCurrentArrow().getOrientation());

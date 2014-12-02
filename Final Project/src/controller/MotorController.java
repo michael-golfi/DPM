@@ -127,6 +127,7 @@ public class MotorController {
 	
 	public void setClawAccleration(int acceleration){
 		sensorMotor.setAcceleration(acceleration);
+		sensorMotor.setSpeed(acceleration);
 	}
 
 	/**
@@ -205,6 +206,6 @@ public class MotorController {
 	}
 		
 	public void grabBlock(){
-		sensorMotor.rotateTo(-200, true);
+		sensorMotor.rotateTo(-150, true);
 	}
 }

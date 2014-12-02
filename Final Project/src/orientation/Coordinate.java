@@ -722,14 +722,20 @@ public class Coordinate {
 	public static double calcY(int i, int j){
 		int y = 0;
 		switch(i){
-		case 0 : y = 6; break;
-		case 1 : y = 5; break;
-		case 2 : y = 4; break;
-		case 3 : y = 3; break;
-		case 4 : y = 2; break;
-		case 5 : y = 1; break;
-		case 6 : y = 0; break;
-		case 7 : y = -1; break;
+		case 0 : y = 10; break;
+		case 1 : y = 9; break;
+		case 2 : y = 8; break;
+		case 3 : y = 7; break;
+		case 4 : y = 6; break;
+		case 5 : y = 5; break;
+		case 6 : y = 4; break;
+		case 7 : y = 3; break;
+		case 8 : y = 2; break;
+		case 9 : y = 1; break;
+		case 10 : y = 0; break;
+		case 11 : y = -1; break;
+		
+		
 		}
 		
 		return y *= Constants.TILE_LENGTH;		
