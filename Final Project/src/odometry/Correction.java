@@ -675,11 +675,10 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
 package odometry;
 
+import java.util.Arrays;
+
 import lejos.nxt.ColorSensor;
-import lejos.nxt.SensorPort;
 import lejos.nxt.comm.RConsole;
-import lejos.robotics.Color;
-import lejos.util.Delay;
 import constants.Constants;
 import controller.MotorController;
 import exception.TimerExceededException;
@@ -711,17 +710,34 @@ public class Correction extends Thread{
 		this.motorController = motorController;
 		left = sensors[0];
 		right = sensors[1];
+		
 	}
 
 	public void run() {
+		long leftValue = 0, rightValue = 0;
+		int[] leftValues = new int[10];
+		int[] rightValues = new int[10];
+				
+		lastLeft = left.getRawLightValue();
+		lastRight = right.getRawLightValue();
+		
 		while (true) {
-			currentTime = System.currentTimeMillis();
+			currentTime = System.currentTimeMillis();			
+			
 			leftLight = left.getRawLightValue();
 			rightLight = right.getRawLightValue();
-
-			//RConsole.println("Left Value " +leftLight + " Right Value " + rightLight);
 			
-			if (leftLight < 500 && leftLight > 0) {
+			for(int i = 0; i < leftValues.length; i++)
+				leftValues[i] = Math.abs(lastLeft - left.getRawLightValue());			
+			for(int i = 0; i < rightValues.length; i++)
+				rightValues[i] = Math.abs(lastRight - right.getRawLightValue());
+			
+			Arrays.sort(leftValues);
+			Arrays.sort(rightValues);
+			
+			RConsole.println("Left " + leftValues[4] + " Right " + rightValues[4]);
+			
+			if (leftValue > 20) {
 				try {
 					synchronized (odometer) {
 						x = odometer.getX();
@@ -731,37 +747,36 @@ public class Correction extends Thread{
 
 					int tachoRight = motorController.getYTachometer();
 
-					RConsole.println("Tacho Right " + tachoRight);
+					//RConsole.println("Tacho Right " + tachoRight);
 					
 					waitForRight();
 
 					int newTachoRight = motorController.getYTachometer();
 
-					RConsole.println("New Tacho Right " + newTachoRight);
+					//RConsole.println("New Tacho Right " + newTachoRight);
 					
-					//double distance = (newTachoRight - tachoRight) / 2;
 					double distance = getDistanceFromTachometer(newTachoRight - tachoRight);
 
-					RConsole.println("Distance " + distance);
+					//RConsole.println("Distance " + distance);
 					
 					double correctionAngle = Math.atan2(distance, Constants.DISTANCE_FROM_COLOR_SENSORS);
 
-					RConsole.println("Correction " + Math.toDegrees(correctionAngle));
+					//RConsole.println("Correction " + Math.toDegrees(correctionAngle));
 					
 					double offset = Math.sin(correctionAngle) * distance;
 					
-					RConsole.println("Offset " + offset);
+					//RConsole.println("Offset " + offset);
 
 					setCorrectionCoordinates(x, y, theta, offset);
 					
 					synchronized (odometer) {
 						odometer.setTheta(Math.toRadians(theta) - correctionAngle); 
-						RConsole.println("New Odometer Values " + odometer.getX() + " " + odometer.getY() + " " + odometer.getTheta());
+						//RConsole.println("New Odometer Values " + odometer.getX() + " " + odometer.getY() + " " + odometer.getTheta());
 					}
 				} catch (TimerExceededException ex) {
-					RConsole.println("Timer Exceeded");
+					//RConsole.println("Timer Exceeded");
 				}
-			} else if (rightLight < 570 && rightLight > 0) {
+			} else if (rightValue > 20) {
 				try {
 					synchronized (odometer) {
 						x = odometer.getX();
@@ -771,13 +786,13 @@ public class Correction extends Thread{
 
 					int tachoLeft = motorController.getXTachometer();
 
-					RConsole.println("Tacho Left " + tachoLeft);
+					//RConsole.println("Tacho Left " + tachoLeft);
 					
 					waitForLeft();
 
 					int newTachoLeft = motorController.getXTachometer();
 					
-					RConsole.println("New Tacho Left " + newTachoLeft);
+					//RConsole.println("New Tacho Left " + newTachoLeft);
 
 					//double distance = (newTachoLeft - tachoLeft) / 2;
 					double distance = getDistanceFromTachometer(newTachoLeft - tachoLeft);
@@ -786,22 +801,22 @@ public class Correction extends Thread{
 
 					double correctionAngle = Math.atan2(distance, Constants.DISTANCE_FROM_COLOR_SENSORS);
 					
-					RConsole.println("Correction " + Math.toDegrees(correctionAngle));
+					//RConsole.println("Correction " + Math.toDegrees(correctionAngle));
 
 					double offset = Math.sin(correctionAngle) * distance;
 					
-					RConsole.println("Offset " + offset);
+					//RConsole.println("Offset " + offset);
 
 					setCorrectionCoordinates(x, y, theta, offset);
 					
 					synchronized (odometer) {
 						odometer.setTheta(Math.toRadians(theta) + correctionAngle);
-						RConsole.println("New Odometer Values " + odometer.getX() + " " + odometer.getY() + " " + odometer.getTheta());
+						//RConsole.println("New Odometer Values " + odometer.getX() + " " + odometer.getY() + " " + odometer.getTheta());
 					}
 					
-					RConsole.println("Odometer Set");
+					//RConsole.println("Odometer Set");
 				} catch (TimerExceededException ex) {
-					RConsole.println("Timer Exceeded");
+					//RConsole.println("Timer Exceeded");
 				}
 			}
 
@@ -815,29 +830,43 @@ public class Correction extends Thread{
 		return (int) Math.round(number / 30) * 30;
 	}
 
-	public void waitForLeft() throws TimerExceededException {
+	public void waitForLeft() throws TimerExceededException {		
 		timer = 0;
-		while (left.getRawLightValue() > 500) {
+		int lastLightValue = 0, currentLightValue = 0;
+		long filteredValue = 0;
+		
+		while (filteredValue < 25) {
+			currentLightValue = left.getLightValue();
 			currentTime = System.currentTimeMillis();
-
+			
+			filteredValue = differentialFilter(currentLightValue, lastLightValue, (currentTime - lastTime));
+			
 			if (timer > 2000)
 				throw new TimerExceededException();
 
 			timer += (currentTime - lastTime);
 			lastTime = currentTime;
+			lastLightValue = currentLightValue;
 		}
 	}
 
 	public void waitForRight() throws TimerExceededException {
 		timer = 0;
-		while (right.getRawLightValue() > 570) {
+		int lastLightValue = 0, currentLightValue = 0;
+		long filteredValue = 0;
+		
+		while (filteredValue < 25) {
+			currentLightValue = right.getLightValue();
 			currentTime = System.currentTimeMillis();
-
+			
+			filteredValue = differentialFilter(currentLightValue, lastLightValue, (currentTime - lastTime));
+			
 			if (timer > 2000)
 				throw new TimerExceededException();
 
 			timer += (currentTime - lastTime);
 			lastTime = currentTime;
+			lastLightValue = currentLightValue;
 		}
 	}
 
@@ -845,7 +874,7 @@ public class Correction extends Thread{
 			double offset) {
 		double correctedX = nearest(x);
 		double correctedY = nearest(y);
-		RConsole.println("Correct X " + correctedX + " Y " + correctedY);
+		//RConsole.println("Correct X " + correctedX + " Y " + correctedY);
 		synchronized (odometer) {
 			switch (theta) {
 			case 0:
@@ -870,5 +899,9 @@ public class Correction extends Thread{
 	
 	private double getDistanceFromTachometer(int tachoDifference) {
 		return Math.PI * Constants.WHEEL_RADIUS * tachoDifference / 180.0;
+	}
+	
+	private long differentialFilter(int currentValue, int lastValue, long dt){
+		return 100 * (lastValue - currentValue) / dt;
 	}
 }
