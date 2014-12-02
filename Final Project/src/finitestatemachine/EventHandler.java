@@ -1,7 +1,9 @@
 package finitestatemachine;
 
+import lejos.nxt.ColorSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
+import lejos.nxt.ColorSensor.Color;
 import lejos.util.Delay;
 import blockdetection.BlockFinding;
 import orientation.Field;
@@ -11,6 +13,7 @@ import orientation.PathFinder;
 import orientation.Tile;
 import navigation.DistanceNavigator;
 import navigation.Navigator;
+import odometry.Correction;
 import odometry.Odometer;
 import odometry.OdometerCorrection;
 import constants.Constants;
@@ -57,8 +60,12 @@ public class EventHandler{
 		odometer = new Odometer(motorController);
 		//odometerCorrection = new OdometerCorrection(odometer, motorController);
 		navigator = new Navigator(motorController, odometer);
-		navigator2 = new DistanceNavigator(odometer);
-		field = new Field(Map.map1);
+		
+		//navigator2 = new DistanceNavigator(odometer);
+		
+		navigator2 = new DistanceNavigator(odometer, motorController);
+
+		field = new Field(Map.map2);
 
 		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, ultrasonicSensor, odometer);
 		
@@ -79,9 +86,14 @@ public class EventHandler{
 	 * @return
 	 */
 	public boolean handleOrienteering() {
+		
+		//ColorSensor[] sensors = new ColorSensor[]{ new ColorSensor(SensorPort.S2, Color.RED), new ColorSensor(SensorPort.S3, Color.RED)};	
+		
 		//motorController.grabBlock();
 		odometer.start();
+		//Correction odometerCorrection = new Correction(odometer, motorController, sensors);
 		//odometerCorrection.start();
+
 		orienteering.orient();
 
 		handleNavigatingToBlocks(orienteering.getCurrentTile());
@@ -98,8 +110,19 @@ public class EventHandler{
 		//odometer.orientation = odometer.invertOrientation(odometer.orientation);
 		pathFinder = new PathFinder(field, navigator, navigator2, odometer);
 		pathFinder.findPath(origin, field.getTileMap()[9][1]);
+		
+		
+		System.out.println(pathFinder.secondLastTile.x);
+		if(pathFinder.secondLastTile.x < 0){
+			navigator2.turnTo(-90);
+		}else if(pathFinder.secondLastTile.x > 0){
+			navigator2.turnTo(90);
+		}
+		
 		pathFinder = null;
 		System.gc();
+		
+		
 		return true;
 	}
 

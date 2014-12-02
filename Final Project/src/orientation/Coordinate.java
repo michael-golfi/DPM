@@ -696,9 +696,12 @@ public class Coordinate {
 	private double x;
 	private double y;
 	
+	public double yy;
+	
 	public Coordinate(double x, double y){
 		this.x = x;
 		this.y = y;
+		this.yy = y;
 	}
 	
 	public double getX(){

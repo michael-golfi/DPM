@@ -772,7 +772,8 @@ public class DistanceNavigator implements Navigation{
 	public void turnTo(double theta) {
 		RConsole.println("Turning: " + theta + " degrees");
 		motorController.setRotating(true);		
-		differentialPilot.rotate(theta);		
+		differentialPilot.rotate(theta);
+				
 		motorController.setRotating(false);			
 	}
 }

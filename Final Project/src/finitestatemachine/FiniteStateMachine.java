@@ -707,15 +707,17 @@ public class FiniteStateMachine extends Thread {
 			eventHandler.handleOrienteering();
 			//eventHandler.handleNavigatingToBlocks();
 			
-			
 			while(true){
+				
+				
+
 			
 				eventHandler.handleFindingBlocks();
-					
-				Field field = new Field(Map.map1);
 				
+				
+				Field field = new Field(Map.map2);
 				NavigateToDropOff navigateToDropOff = new NavigateToDropOff(field, null, eventHandler.getNavigator(), eventHandler.getOdometer());
-				navigateToDropOff.navigateToDropOff(field.getTileMap()[6][0]);
+				navigateToDropOff.navigateToDropOff(field.getTileMap()[3][2]);
 				
 				field = null;
 				navigateToDropOff = null;
@@ -723,7 +725,12 @@ public class FiniteStateMachine extends Thread {
 				
 				eventHandler.handleDroppingOffBlock();
 				
-				eventHandler.handleNavigatingToBlocks(field.getTileMap()[6][0]);
+				field = new Field(Map.map2);
+				
+				eventHandler.handleNavigatingToBlocks(field.getTileMap()[3][2]);
+				
+				field = null;
+				System.gc();
 				
 				
 			}

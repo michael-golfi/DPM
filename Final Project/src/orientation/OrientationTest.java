@@ -6,7 +6,7 @@ import constants.Map;
 public class OrientationTest {
 	public static void main(String[] args){
 		
-		Field field = new Field(Map.map1);
+		/*Field field = new Field(Map.map2);
 		
 		/*Orienteering orienteering = new Orienteering(field);
 		
@@ -14,7 +14,7 @@ public class OrientationTest {
 		System.out.println(field.getTileMap()[3][2]);
 		orienteering.orient();*/
 		
-		System.out.println(field.getTileMap()[5][1].getCoordinate());
+		//System.out.println(field.getTileMap()[5][1].getCoordinate());
 		Button.waitForAnyPress();
 	}
 }

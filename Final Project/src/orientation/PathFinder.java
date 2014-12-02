@@ -35,6 +35,8 @@ public class PathFinder {
 	
 	private Odometer odometer;
 	
+	public Tile secondLastTile;
+	
 	private Tile currentTile;
 	
 	public PathFinder(Field field, Navigator navigator, DistanceNavigator navigator2, Odometer odometer){
@@ -65,6 +67,9 @@ public class PathFinder {
 	}
 	
 	public void navigatePath(ArrayList<Tile> path){
+		try{
+			secondLastTile = path.get(path.size()-2);
+		}catch(Exception e){}
 		//RConsole.open();
 		RConsole.println("path: " + path.size());
 		

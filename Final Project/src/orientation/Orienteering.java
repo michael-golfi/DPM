@@ -37,10 +37,14 @@ public class Orienteering extends Thread{
 	
 	private long accTime;
 	
+	private int observationCounter;
+	
 	private int turnCounter = 0;
 	private int previousTurnCounter = 0;
 	
-	private boolean getOutOfHere = true;
+	private int blockedObservationCounter = 0;
+	
+	private boolean getOutOfHere = false;
 	
 	private boolean[] orientationTracker = new boolean[4];
 	
@@ -67,7 +71,7 @@ public class Orienteering extends Thread{
 	public void orient(){
 		
 		
-		int observationCounter = 0;
+		observationCounter = 0;
 		
 		this.start();
 		
@@ -103,7 +107,7 @@ public class Orienteering extends Thread{
 			RConsole.println("odometer: (" + odometer.getX() + ", " + odometer.getY() + ") -- " + Math.toDegrees(odometer.getTheta()));
 		}
 		
-		System.out.println("Starting tile: " + determineStartingTile().tileIndex);
+		System.out.println("start: " + determineStartingTile().tileIndex);
 		
 		RConsole.println("Starting Tile: " + determineStartingTile().tileIndex);
 		RConsole.println("Current Tile: " + determineCurrentTile().tileIndex + " direction: " + determineCurrentArrow().getOrientation());
@@ -153,8 +157,23 @@ public class Orienteering extends Thread{
 			}
 		}*/
 		
-		if(observation == Block.OBSTRUCTED)
+		if(observation == Block.OBSTRUCTED){
+			blockedObservationCounter++;
 			Sound.buzz();
+		}
+		
+		//System.out.println(observationCounter + " -- " + blockedObservationCounter);
+		
+		if(observationCounter >= 16 && blockedObservationCounter < 6 && getOutOfHere == false){
+			Sound.twoBeeps();
+			getOutOfHere = true;
+		}
+		
+		if(observation == Block.UNOBSTRUCTED && getOutOfHere == true){
+			moveForward();
+			getOutOfHere = false;
+			return;
+		}
 		
 		if(turnCounter < 3){
 			if(observation == Block.UNOBSTRUCTED){

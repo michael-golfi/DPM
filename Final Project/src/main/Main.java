@@ -12,6 +12,7 @@ import odometry.Correction;
 import odometry.Odometer;
 import utils.Vector;
 import controller.MotorController;
+import finitestatemachine.FiniteStateMachine;
 
 /**
  * 
@@ -30,14 +31,14 @@ import controller.MotorController;
  */
 public class Main {
 	public static void main(String[] args) {
-		RConsole.open();
+		//RConsole.open();
 	
-		testCorrection();
-		/*FiniteStateMachine fsm = new FiniteStateMachine(); 
+		//testCorrection();
+		FiniteStateMachine fsm = new FiniteStateMachine(); 
 		fsm.start();
-		*/
-		Button.waitForAnyPress();
-		RConsole.close();
+		
+		//Button.waitForAnyPress();
+		//RConsole.close();
 	}
 
 	public static void getMapAndDropOffLocation(){
