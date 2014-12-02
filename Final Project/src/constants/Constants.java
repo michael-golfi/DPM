@@ -9,6 +9,8 @@ package constants;
  */
 public class Constants
 {
+	public static int DROPOFF_X, DROPOFF_Y, MAP;
+	
 	/**
 	 * LCD Refresh Period: {@value}
 	 */
@@ -42,7 +44,7 @@ public class Constants
 	/**
 	 * Robot tire-to-tire width: {@value} cm
 	 */
-	public static double WIDTH = 19.63;
+	public static double WIDTH = 19.64;
 
 	/**
 	 * The period of Correction for the Odometer: {@value}

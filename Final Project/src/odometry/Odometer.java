@@ -84,6 +84,20 @@ public class Odometer extends AbstractOdometer {
 			return 0;
 	}
 	
+	public double getRoundedThetaRadians(){
+		int heading = (int)Math.toDegrees(getTheta());
+		if (heading <= 15 && heading >= 345)
+			return 0;
+		else if (heading <= 105 && heading >= 75)
+			return (Math.PI / 2);
+		else if (heading <= 195 && heading >= 165)
+			return Math.PI;
+		else if (heading <= 285 && heading >= 295)
+			return (3 * Math.PI / 2);
+		else 
+			return 0;
+	}
+	
 	/**
 	 * @param orientation2
 	 * @return

@@ -682,6 +682,7 @@ import lejos.nxt.Motor;
 import lejos.nxt.comm.RConsole;
 import lejos.robotics.navigation.DifferentialPilot;
 import constants.Constants;
+import controller.MotorController;
 
 /**
  * 
@@ -698,10 +699,12 @@ import constants.Constants;
  */
 public class DistanceNavigator implements Navigation{
 	DifferentialPilot differentialPilot;
+	MotorController motorController;
 	Odometer odometer;
 	
-	public DistanceNavigator(Odometer odometer){
+	public DistanceNavigator(Odometer odometer, MotorController motorController){
 		differentialPilot = new DifferentialPilot(Constants.WHEEL_RADIUS * 2, Constants.WIDTH, Motor.C, Motor.B);
+		this.motorController = motorController;
 		this.odometer = odometer;
 	}
 
@@ -713,16 +716,17 @@ public class DistanceNavigator implements Navigation{
 	Vector destination, location, resultant;
 	double currentX, currentY, angle;
 	
+	/**
+	 * Travel to a point in the XY plane dictated by a vector
+	 * @param vector
+	 */
 	public void travelTo(Vector vector){
 		travelTo(vector.getX(), vector.getY());
 	}
 	
 	@Override
-	public void travelTo(double x, double y) {
-		//RConsole.println("Travel to: x: " + x + " y: " + y);
-		
-		destination = new Vector(x, y);
-		
+	public void travelTo(double x, double y) {		
+		destination = new Vector(x, y);		
 		synchronized (odometer) {
 			currentX = odometer.getX();
 			currentY = odometer.getY();			
@@ -738,30 +742,37 @@ public class DistanceNavigator implements Navigation{
 				" Result " + resultant + "\n");*/
 		
 		angle = minAngle((resultant.getAngle() - Math.toDegrees(odometer.getTheta())), (resultant.getAngle() - Math.toDegrees(odometer.getTheta()))+360);
-		
-		//RConsole.println("Rotate: " + angle + " Travel: " + resultant.getLength());
-		
 		turnTo(angle);
 		travelDistance(resultant.getLength());		
 	}
 	
+	/**
+	 * Gets the minimum of the absolute value of the angles
+	 * @param a
+	 * @param b
+	 * @return minimum angle
+	 */
 	private double minAngle(double a, double b){
-		if(Math.abs(a) < Math.abs(b)){
-			return a;
-		}else{
-			return b;
-		}
+		return Math.abs(a) < Math.abs(b) ? a : b;
 	}
 	
-	
+	/**
+	 * Travel distance ahead
+	 */
 	public void travelDistance(double distance){
 		RConsole.println("Travelling: " + distance + " cm");
 		differentialPilot.travel(distance);
 	}
 
+	/**
+	 * Turn the robot theta degrees
+	 * @param theta
+	 */
 	@Override
 	public void turnTo(double theta) {
 		RConsole.println("Turning: " + theta + " degrees");
-		differentialPilot.rotate(theta);
+		motorController.setRotating(true);		
+		differentialPilot.rotate(theta);		
+		motorController.setRotating(false);			
 	}
 }

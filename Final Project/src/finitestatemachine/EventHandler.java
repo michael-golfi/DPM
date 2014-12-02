@@ -55,8 +55,8 @@ public class EventHandler{
 		odometer = new Odometer(motorController);
 		odometerCorrection = new OdometerCorrection(odometer, motorController);
 		navigator = new Navigator(motorController, odometer);
-		navigator2 = new DistanceNavigator(odometer);
-		field = new Field(Map.map2);
+		navigator2 = new DistanceNavigator(odometer, motorController);
+		field = new Field(Map.map1);
 
 		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, ultrasonicSensor, odometer);
 		pathFinder = new PathFinder(field, navigator, navigator2, odometer);

@@ -29,7 +29,7 @@ public class MotorController {
 	 */
 	public MotorController() {
 		resetTachometers();
-		//setAccelerations(300);
+		setAccelerations(3000);
 		setSpeeds(400);
 	}
 
@@ -72,6 +72,24 @@ public class MotorController {
 	 */
 	public boolean isNavigating() {
 		return leftMotor.isMoving() || rightMotor.isMoving();
+	}
+	
+	private boolean rotating;
+	
+	/**
+	 * Set the robot is rotating
+	 * @param rotating
+	 */
+	public void setRotating(boolean rotating){
+		this.rotating = rotating;
+	}
+	
+	/**
+	 * Checks if the robot is rotating
+	 * @return true if the robot is turning
+	 */
+	public boolean isRotating(){
+		return rotating;
 	}
 
 	/**

@@ -708,7 +708,7 @@ public class FiniteStateMachine extends Thread {
 			eventHandler.handleNavigatingToBlocks();
 			eventHandler.handleFindingBlocks();
 			
-			Field field = new Field(Map.map2);
+			Field field = new Field(Map.map1);
 			
 			NavigateToDropOff navigateToDropOff = new NavigateToDropOff(field, null, eventHandler.getNavigator(), eventHandler.getOdometer());
 			navigateToDropOff.navigateToDropOff(field.getTileMap()[5][5]);
