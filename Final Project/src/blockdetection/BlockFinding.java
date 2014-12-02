@@ -754,7 +754,7 @@ public class BlockFinding extends Thread{
 
 		//initiateBlockListener();
 		
-		motorController.setClawAccleration(200);
+		
 		
 		findBlock();
 	}
@@ -838,7 +838,7 @@ public class BlockFinding extends Thread{
 		Sound.beep();
 		
 		try{
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		}catch(Exception e){}
 		
 		grab();
@@ -976,9 +976,12 @@ public class BlockFinding extends Thread{
 	private void grab(){
 		motorController.stop();
 		//navigator.travelDistance(20);
+		motorController.setClawAccleration(100);
 		motorController.grabBlock();
 		
-		Delay.msDelay(1000);
+		Delay.msDelay(3000);
+		
+		motorController.setClawAccleration(750);
 		
 		Music lowRider = new Music();
 		lowRider.start();

@@ -2,11 +2,13 @@ package finitestatemachine;
 
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
+import lejos.util.Delay;
 import blockdetection.BlockFinding;
 import orientation.Field;
 import orientation.NavigateToDropOff;
 import orientation.Orienteering;
 import orientation.PathFinder;
+import orientation.Tile;
 import navigation.DistanceNavigator;
 import navigation.Navigator;
 import odometry.Odometer;
@@ -53,13 +55,13 @@ public class EventHandler{
 		ultrasonicController = new UltrasonicController(motorController);
 		ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
 		odometer = new Odometer(motorController);
-		odometerCorrection = new OdometerCorrection(odometer, motorController);
+		//odometerCorrection = new OdometerCorrection(odometer, motorController);
 		navigator = new Navigator(motorController, odometer);
 		navigator2 = new DistanceNavigator(odometer);
-		field = new Field(Map.map2);
+		field = new Field(Map.map1);
 
 		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, ultrasonicSensor, odometer);
-		pathFinder = new PathFinder(field, navigator, navigator2, odometer);
+		
 		
 		
 		
@@ -79,18 +81,25 @@ public class EventHandler{
 	public boolean handleOrienteering() {
 		//motorController.grabBlock();
 		odometer.start();
-		odometerCorrection.start();
+		//odometerCorrection.start();
 		orienteering.orient();
+
+		handleNavigatingToBlocks(orienteering.getCurrentTile());
+		
+		orienteering = null;
 		return true;
 	}
 
 	/**
 	 * @return
 	 */
-	public boolean handleNavigatingToBlocks() {
+	public boolean handleNavigatingToBlocks(Tile origin) {
 		//navigator.turnTo(180);
 		//odometer.orientation = odometer.invertOrientation(odometer.orientation);
-		pathFinder.findPath(orienteering.getCurrentTile(), field.getTileMap()[5][1]);
+		pathFinder = new PathFinder(field, navigator, navigator2, odometer);
+		pathFinder.findPath(origin, field.getTileMap()[9][1]);
+		pathFinder = null;
+		System.gc();
 		return true;
 	}
 
@@ -99,6 +108,8 @@ public class EventHandler{
 	 */
 	public boolean handleFindingBlocks() {
 		BlockFinding blockFinding = new BlockFinding(odometer, navigator2, ultrasonicSensor, motorController);
+		blockFinding = null;
+		
 		return false;
 	}
 
@@ -123,6 +134,13 @@ public class EventHandler{
 	 */
 	public boolean handleDroppingOffBlock() {
 		motorController.openClaw();
+		Delay.msDelay(2000);
+		navigator2.travelDistance(-10);
+		motorController.grabBlock();
+		
+		navigator2.turnTo(180);
+		navigator2.travelDistance(-10);
+		
 		return false;
 	}
 

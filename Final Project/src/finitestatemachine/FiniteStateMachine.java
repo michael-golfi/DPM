@@ -705,13 +705,30 @@ public class FiniteStateMachine extends Thread {
 		switch (currentState) {
 		case Orienting:
 			eventHandler.handleOrienteering();
-			eventHandler.handleNavigatingToBlocks();
-			eventHandler.handleFindingBlocks();
+			//eventHandler.handleNavigatingToBlocks();
 			
-			Field field = new Field(Map.map2);
 			
-			NavigateToDropOff navigateToDropOff = new NavigateToDropOff(field, null, eventHandler.getNavigator(), eventHandler.getOdometer());
-			navigateToDropOff.navigateToDropOff(field.getTileMap()[5][5]);
+			while(true){
+			
+				eventHandler.handleFindingBlocks();
+					
+				Field field = new Field(Map.map1);
+				
+				NavigateToDropOff navigateToDropOff = new NavigateToDropOff(field, null, eventHandler.getNavigator(), eventHandler.getOdometer());
+				navigateToDropOff.navigateToDropOff(field.getTileMap()[6][0]);
+				
+				field = null;
+				navigateToDropOff = null;
+				System.gc();
+				
+				eventHandler.handleDroppingOffBlock();
+				
+				eventHandler.handleNavigatingToBlocks(field.getTileMap()[6][0]);
+				
+				
+			}
+			
+		
 			
 			
 			/*eventHandler.handleNavigatingToDropOff();
@@ -723,10 +740,10 @@ public class FiniteStateMachine extends Thread {
 			/*if (eventHandler.handleOrienteering()){
 				changeState(State.NavigatingToBlocks);
 			}*/
-			break;
+			//break;
 		case NavigatingToBlocks:
-			if (eventHandler.handleNavigatingToBlocks())
-				changeState(State.FindingBlocks);
+			//if (eventHandler.handleNavigatingToBlocks())
+				//changeState(State.FindingBlocks);
 			break;
 		case FindingBlocks:
 			//if (eventHandler.handleFindingBlocks())
