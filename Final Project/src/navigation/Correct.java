@@ -673,19 +673,9 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.*/
-package odometry;
+package navigation;
 
-import java.util.Arrays;
-
-import navigation.DistanceNavigator;
-import navigation.Navigator;
-import lejos.nxt.Button;
-import lejos.nxt.ColorSensor;
-import lejos.nxt.Sound;
-import lejos.nxt.comm.RConsole;
-import constants.Constants;
-import controller.MotorController;
-import exception.TimerExceededException;
+import lejos.robotics.navigation.DifferentialPilot;
 
 /**
  * 
@@ -700,207 +690,26 @@ import exception.TimerExceededException;
  * </ul>
  * 
  */
-public class Correction extends Thread{
-	Odometer odometer;
-	MotorController motorController;
-	ColorSensor left, right;
-	private DistanceNavigator navigator;
-	
-	final int filterCap = 140;
-	
-	boolean waiting = false;
-	
-	boolean leftLine = false, rightLine = false;
-	
-	long leftTime, rightTime;
-	
-	long currentTime, lastTime, timer;
-	int leftLight, rightLight, lastLeft, lastRight, theta;
-	double x, y;
+public class Correct extends Thread{
 
-	public Correction(Odometer odometer, DistanceNavigator navigator, MotorController motorController, ColorSensor[] sensors) {
-		this.odometer = odometer;
-		this.motorController = motorController;
-		this.navigator = navigator;
-		left = sensors[0];
-		right = sensors[1];
-		
-	}
-
-	public void run() {
-		long leftValue = 0, rightValue = 0;
-		int[] leftValues = new int[7];
-		int[] rightValues = new int[7];
-				
-		lastLeft = left.getRawLightValue();
-		lastRight = right.getRawLightValue();
-		
-		while (true) {
-			
-			
-			
-			currentTime = System.currentTimeMillis();			
-			
-			leftLight = left.getRawLightValue();
-			rightLight = right.getRawLightValue();
-			
-			for(int i = 0; i < leftValues.length; i++)
-				leftValues[i] = Math.abs(lastLeft - left.getRawLightValue());			
-			for(int i = 0; i < rightValues.length; i++)
-				rightValues[i] = Math.abs(lastRight - right.getRawLightValue());
-			
-			Arrays.sort(leftValues);
-			Arrays.sort(rightValues);
-			
-			RConsole.println("Left " + leftValues[3] + " Right " + rightValues[3]);
-			//System.out.println("Left " + leftValues[4] + " Right " + rightValues[4]);
-			
-			if (leftValues[3] > filterCap) {
-				if(motorController.isRotating() == false){				
-					leftLine = true;
-				
-					leftTime = System.currentTimeMillis();
-				}
-				
-			}
-			if (rightValues[3] > filterCap) {
-				if(motorController.isRotating() == false){
-				
-					rightLine = true;
-					rightTime = System.currentTimeMillis();
-				}
-			}
-			
-			if(rightLine && leftLine){
-				
-				rightLine = leftLine = false;
-				
-				Sound.beep();
-				
-				computeCorrection();
-			}
-		}
+	public DifferentialPilot differentialPilot;
+	
+	public double t;
+	
+	public int direction;
+	
+	public Correct(DifferentialPilot differentialPilot, int direction, double t){
+		this.differentialPilot = differentialPilot;
+		this.t = t;
+		this.direction = direction;
 	}
 	
-	private void computeCorrection(){
-		
-		System.out.println(leftTime - rightTime);
-		
-		if(Math.abs(leftTime - rightTime) < 100) //no correction to be done
-			return;
-			
-			if(leftTime > rightTime){ //right sensor beeped first
-				//motorController.setLeftSpeed(500);
-				motorController.setRightSpeed(5);
-				
-				try{
-					Thread.sleep(500);
-				}catch(Exception e){}
-				
-				//motorController.setLeftSpeed(400);
-				motorController.setRightSpeed(400);
-				
-			}else if(rightTime > leftTime){ //left sensor beeped first
-				
-				//motorController.setRightSpeed(1000);
-				motorController.setLeftSpeed(5);
-				
-				try{
-					Thread.sleep(500);
-				}catch(Exception e){}
-				
-				//motorController.setRightSpeed(400);
-				motorController.setLeftSpeed(400);
-				
-			}
-		
-		
-		
-		
-	}
-
-	private int nearest(double number) {
-		return (int) Math.round(number / 30) * 30;
-	}
-
-	public void waitForLeft() throws TimerExceededException {		
-		timer = 0;
-		int lastLightValue = left.getRawLightValue(), currentLightValue = left.getRawLightValue();
-		long filteredValue = 0;
-		
-		while (filteredValue < filterCap) {
-			currentLightValue = left.getLightValue();
-			currentTime = System.currentTimeMillis();
-			
-			filteredValue = Math.abs(lastLightValue - currentLightValue);
-			
-			if (timer > 2000)
-				throw new TimerExceededException();
-
-			timer += (currentTime - lastTime);
-			lastTime = currentTime;
-			lastLightValue = currentLightValue;
-		}
-		
-		waiting = false;
-		
-		navigator.correctRightwards(timer);
-	}
-
-	public void waitForRight() throws TimerExceededException {
-		timer = 0;
-		int lastLightValue = right.getRawLightValue(), currentLightValue = right.getRawLightValue();
-		long filteredValue = 0;
-		
-		while (filteredValue < filterCap) {
-			currentLightValue = right.getLightValue();
-			currentTime = System.currentTimeMillis();
-			
-			filteredValue = Math.abs(lastLightValue - currentLightValue);
-			
-			if (timer > 2000)
-				throw new TimerExceededException();
-
-			timer += (currentTime - lastTime);
-			lastTime = currentTime;
-			lastLightValue = currentLightValue;
-		}
-		waiting = false;
-		navigator.correctLeftwards(timer);
-	}
-
-	private void setCorrectionCoordinates(double x, double y, int theta,
-			double offset) {
-		double correctedX = nearest(x);
-		double correctedY = nearest(y);
-		//RConsole.println("Correct X " + correctedX + " Y " + correctedY);
-		synchronized (odometer) {
-			switch (theta) {
-			case 0:
-				odometer.setX(correctedX + Constants.DISTANCE_TO_CENTER
-						);
-				break;
-			case 90:
-				odometer.setY(correctedY + Constants.DISTANCE_TO_CENTER
-						);
-				break;
-			case 180:
-				odometer.setX(correctedX - Constants.DISTANCE_TO_CENTER
-						);
-				break;
-			case 270:
-				odometer.setY(correctedY - Constants.DISTANCE_TO_CENTER
-						);
-				break;
-			}
-		}
+	public void run(){
+		correct();
 	}
 	
-	private double getDistanceFromTachometer(int tachoDifference) {
-		return Math.PI * Constants.WHEEL_RADIUS * tachoDifference / 180.0;
-	}
-	
-	private long differentialFilter(int currentValue, int lastValue, long dt){
-		return 100 * (lastValue - currentValue) / dt;
+	public void correct(){
+		differentialPilot.arc(direction*1, t/10);
+		this.interrupt();
 	}
 }

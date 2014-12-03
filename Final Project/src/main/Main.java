@@ -32,7 +32,7 @@ import finitestatemachine.FiniteStateMachine;
 public class Main {
 	public static void main(String[] args) {
 		//RConsole.open();
-	
+		Button.waitForAnyPress();
 		//testCorrection();
 		FiniteStateMachine fsm = new FiniteStateMachine(); 
 		fsm.start();
@@ -100,9 +100,9 @@ public class Main {
 		MotorController motorController = new MotorController();
 		Odometer odometer = new Odometer(motorController);
 		odometer.start();
-		Correction odometerCorrection = new Correction(
-				odometer, motorController, sensors);
-		odometerCorrection.start();
+		//Correction odometerCorrection = new Correction(
+			//	odometer, motorController, sensors);
+		//odometerCorrection.start();
 
 		synchronized (odometer) {
 			odometer.setX(-15.0);

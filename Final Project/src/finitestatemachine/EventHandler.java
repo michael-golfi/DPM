@@ -43,11 +43,13 @@ public class EventHandler{
 	private DistanceNavigator navigator2;
 	private MotorController motorController;
 	private Odometer odometer;
-	private OdometerCorrection odometerCorrection;
+	//private OdometerCorrection odometerCorrection;
 	private Orienteering orienteering;
 	private static Field field;
 	private static PathFinder pathFinder;
 	private static NavigateToDropOff navigateToDropOff;
+
+	public Correction odometerCorrection;
 	
 	private Class ref;
 
@@ -65,7 +67,7 @@ public class EventHandler{
 		
 		navigator2 = new DistanceNavigator(odometer, motorController);
 
-		field = new Field(Map.map2);
+		field = new Field(Map.map5);
 
 		orienteering = new Orienteering(field, navigator, navigator2, ultrasonicController, ultrasonicSensor, odometer);
 		
@@ -87,17 +89,18 @@ public class EventHandler{
 	 */
 	public boolean handleOrienteering() {
 		
-		//ColorSensor[] sensors = new ColorSensor[]{ new ColorSensor(SensorPort.S2, Color.RED), new ColorSensor(SensorPort.S3, Color.RED)};	
+			
 		
 		//motorController.grabBlock();
 		odometer.start();
-		//Correction odometerCorrection = new Correction(odometer, motorController, sensors);
+		ColorSensor[] sensors = new ColorSensor[]{ new ColorSensor(SensorPort.S2, Color.RED), new ColorSensor(SensorPort.S3, Color.RED)};
+		odometerCorrection = new Correction(odometer, navigator2, motorController, sensors);
 		//odometerCorrection.start();
 
 		orienteering.orient();
 
 		handleNavigatingToBlocks(orienteering.getCurrentTile());
-		
+		//handleNavigatingToBlocks(field.getTileMap()[0][0]);
 		orienteering = null;
 		return true;
 	}
@@ -108,6 +111,8 @@ public class EventHandler{
 	public boolean handleNavigatingToBlocks(Tile origin) {
 		//navigator.turnTo(180);
 		//odometer.orientation = odometer.invertOrientation(odometer.orientation);
+		
+		
 		pathFinder = new PathFinder(field, navigator, navigator2, odometer);
 		pathFinder.findPath(origin, field.getTileMap()[9][1]);
 		
@@ -130,6 +135,9 @@ public class EventHandler{
 	 * @return
 	 */
 	public boolean handleFindingBlocks() {
+		
+		odometerCorrection.interrupt();
+		
 		BlockFinding blockFinding = new BlockFinding(odometer, navigator2, ultrasonicSensor, motorController);
 		blockFinding = null;
 		

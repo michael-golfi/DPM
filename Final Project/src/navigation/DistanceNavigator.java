@@ -773,7 +773,25 @@ public class DistanceNavigator implements Navigation{
 		RConsole.println("Turning: " + theta + " degrees");
 		motorController.setRotating(true);		
 		differentialPilot.rotate(theta);
-				
+	
 		motorController.setRotating(false);			
+	}
+	
+	public void correctRightwards(long t){
+		Correct correct;
+		if(motorController.isRotating() == false){
+			correct = new Correct(differentialPilot, -5, (double)(t));
+			differentialPilot.arc(-5, t/100);
+			//correct.start();
+		}
+	}
+	
+	public void correctLeftwards(long t){
+		Correct correct;
+		if(motorController.isRotating() == false){
+			correct = new Correct(differentialPilot, 5, (double)(t));
+			differentialPilot.arc(5, t/100);
+			//correct.start();
+		}
 	}
 }

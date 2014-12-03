@@ -30,7 +30,15 @@ public class MotorController {
 	public MotorController() {
 		resetTachometers();
 		setAccelerations(3000);
-		setSpeeds(400);
+		setSpeeds(300);
+	}
+	
+	public void setLeftSpeed(int speed){
+		leftMotor.setSpeed(speed);
+	}
+	
+	public void setRightSpeed(int speed){
+		rightMotor.setSpeed(speed);
 	}
 
 	

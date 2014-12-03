@@ -44,7 +44,7 @@ public class Constants
 	/**
 	 * Robot tire-to-tire width: {@value} cm
 	 */
-	public static double WIDTH = 19.64;
+	public static double WIDTH = 18.636;
 
 	/**
 	 * The period of Correction for the Odometer: {@value}
